@@ -22,4 +22,4 @@ university-promotions>=0.1.0,<0.2
 university-subscriptions>=0.1.0,<0.2
 
 gunicorn>=23,<24
-whitenoise>=6.7,<7
+whitenoise>=6.12.0,<7
