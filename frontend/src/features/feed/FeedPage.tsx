@@ -4,6 +4,7 @@ import { type FeedName, useFeed } from "@/api/queries/social";
 import { ButtonLink } from "@/components/ui/Button";
 import { Tabs } from "@/components/ui/Tabs";
 import { Seo } from "@/components/Seo";
+import { Sponsored } from "@/features/promotions/Sponsored";
 
 import { Composer } from "./Composer";
 import { PostList } from "./PostList";
@@ -23,6 +24,7 @@ export default function FeedPage() {
       <h1 className="visually-hidden">Your feed</h1>
       <Composer />
       <Tabs label="Feeds" value={tab} onChange={setTab} items={TABS} />
+      <Sponsored placement="feed" />
       <PostList
         query={feed}
         empty={

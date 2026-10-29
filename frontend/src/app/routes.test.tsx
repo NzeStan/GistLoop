@@ -194,6 +194,108 @@ const me = {
   created_at: "2026-08-29T10:00:00Z",
   last_login: null,
 };
+const tunde = { id: "u2", handle: "tunde", display_name: "Tunde Bakare", avatar_url: null };
+const message = {
+  id: "m1",
+  conversation: "cv1",
+  sender: tunde,
+  body: "See you at the hackathon",
+  status: "visible",
+  reply_to: null,
+  is_mine: false,
+  edited_at: null,
+  created_at: "2026-10-28T10:00:00Z",
+};
+const conversation = {
+  id: "cv1",
+  kind: "direct",
+  title: "",
+  participants: [{ ...user, avatar_url: null }, tunde],
+  state: "active",
+  is_admin: false,
+  muted: false,
+  archived: false,
+  unread_count: 1,
+  last_message: message,
+  last_message_at: "2026-10-28T10:00:00Z",
+};
+const opportunity = {
+  id: "op1",
+  kind: "internship",
+  title: "Frontend intern",
+  organization_name: "Paystack",
+  organization_url: "https://paystack.com",
+  description: "Build checkout experiences.",
+  location: "Lagos",
+  work_mode: "hybrid",
+  pay_min_minor: 15000000,
+  pay_max_minor: 25000000,
+  currency: "NGN",
+  pay_period: "month",
+  deadline: "2030-11-30T22:59:00Z",
+  starts_on: null,
+  apply_method: "in_app",
+  apply_url: "",
+  apply_email: "",
+  audience: "public",
+  scope_id: "",
+  tags: ["react"],
+  status: "open",
+  verified: true,
+  poster: tunde,
+  applications_count: 1,
+  published_at: "2026-10-20T10:00:00Z",
+  closed_at: null,
+  created_at: "2026-10-20T10:00:00Z",
+  viewer: { is_poster: false, saved: false, application_status: null },
+};
+const application = {
+  id: "ap1",
+  opportunity: { id: "op1", title: "Frontend intern", organization_name: "Paystack", status: "open" },
+  applicant: { ...user, avatar_url: null },
+  cover_note: "I love React",
+  contact_email: "amaka@gistloop.test",
+  has_resume: true,
+  status: "submitted",
+  decided_at: null,
+  created_at: "2026-10-28T10:00:00Z",
+};
+const campaign = {
+  id: "cp1",
+  name: "Back to school sale",
+  kind: "ad",
+  content_type: "",
+  object_id: "",
+  headline: "Textbooks at half price",
+  body: "This week only",
+  image_url: null,
+  call_to_action: "shop_now",
+  destination_url: "https://shop.example",
+  institution_ids: [],
+  placements: ["feed", "marketplace"],
+  starts_at: "2026-10-28T00:00:00Z",
+  ends_at: "2030-11-28T00:00:00Z",
+  budget_minor: 1000000,
+  currency: "NGN",
+  cpm_minor: 150000,
+  impression_cap: 6666,
+  status: "active",
+  review_note: "",
+  impressions: 1200,
+  clicks: 36,
+  spent_minor: 180000,
+  created_at: "2026-10-28T00:00:00Z",
+};
+const plan = {
+  key: "plus",
+  name: "Plus",
+  description: "No adverts and a profile badge.",
+  prices: [
+    { interval: "month", currency: "NGN", amount_minor: 150000 },
+    { interval: "year", currency: "NGN", amount_minor: 1500000 },
+  ],
+  entitlements: [{ key: "premium.ad_free", label: "No adverts" }],
+};
 const page = (results: unknown[]) => ({ count: results.length, next: null, previous: null, results });
 const cursor = (results: unknown[]) => ({ next: null, previous: null, results });
 
@@ -228,6 +330,125 @@ const order = {
 };
 
 const API: [RegExp, unknown][] = [
+  // Anonymous inbox
+  [
+    /\/api\/v1\/anonymous\/me\/inbox\/messages\//,
+    page([
+      {
+        id: "q1",
+        body: "What's your favourite course?",
+        status: "visible",
+        read_at: null,
+        answer: "",
+        answer_public: false,
+        answered_at: null,
+        created_at: "2026-10-28T10:00:00Z",
+      },
+    ]),
+  ],
+  [
+    /\/api\/v1\/anonymous\/me\/inbox\//,
+    { enabled: true, prompt: "Ask me anything", unread_count: 1, blocked_senders: 0 },
+  ],
+  [
+    /\/api\/v1\/anonymous\/inboxes\/tunde\/answers\//,
+    page([{ id: "a1", question: "Best lecturer?", answer: "Dr Okafor, easily.", answered_at: "2026-10-28T10:00:00Z" }]),
+  ],
+  [/\/api\/v1\/anonymous\/inboxes\/tunde\//, { owner: tunde, prompt: "Ask Tunde about startups", answers_count: 1 }],
+  // Messaging
+  [/\/api\/v1\/messaging\/unread\//, { conversations: 1, messages: 1, requests: 0 }],
+  [/\/api\/v1\/messaging\/settings\//, { allow_requests: true }],
+  [/\/api\/v1\/messaging\/conversations\/cv1\/messages\//, cursor([message])],
+  [/\/api\/v1\/messaging\/conversations\/cv1\//, conversation],
+  [/\/api\/v1\/messaging\/conversations\//, page([conversation])],
+  // Opportunities and announcements
+  [/\/api\/v1\/opportunities\/me\/applications\//, page([application])],
+  [/\/api\/v1\/opportunities\/me\/(saved|posted)\//, page([opportunity])],
+  [/\/api\/v1\/opportunities\/op1\/applications\//, page([application])],
+  [/\/api\/v1\/opportunities\/op1\//, opportunity],
+  [/\/api\/v1\/opportunities\//, page([opportunity])],
+  [
+    /\/api\/v1\/me\/announcements\//,
+    page([
+      {
+        id: "an1",
+        institution: { id: "i1", name: "University of Lagos", slug: "unilag", is_verified: true },
+        title: "Exam timetable released",
+        body: "Check the portal.",
+        category: "exams",
+        audience: "members",
+        campus: null,
+        academic_unit: null,
+        priority: "important",
+        pinned: true,
+        status: "published",
+        verified: true,
+        published_at: "2026-10-28T10:00:00Z",
+        expires_at: null,
+        created_at: "2026-10-28T10:00:00Z",
+      },
+    ]),
+  ],
+  // Promotions and premium
+  [
+    /\/api\/v1\/promotions\/serve\//,
+    [
+      {
+        token: "t1",
+        campaign_id: "cp1",
+        kind: "ad",
+        label: "Sponsored",
+        advertiser: tunde,
+        content: null,
+        creative: { headline: "Textbooks at half price", body: "", image_url: null, call_to_action: "shop_now" },
+      },
+    ],
+  ],
+  [
+    /\/api\/v1\/promotions\/options\//,
+    {
+      placements: ["feed", "events", "marketplace", "opportunities"],
+      boostable: { "social.post": "Post" },
+      cpm_minor: { NGN: 150000 },
+      min_budget_minor: { NGN: 500000 },
+      require_payment: true,
+    },
+  ],
+  [
+    /\/api\/v1\/promotions\/campaigns\/cp1\/stats\//,
+    {
+      impressions: 1200,
+      clicks: 36,
+      click_through_rate: 0.03,
+      spent_minor: 180000,
+      budget_minor: 1000000,
+      currency: "NGN",
+      daily: [],
+    },
+  ],
+  [/\/api\/v1\/promotions\/campaigns\/cp1\//, campaign],
+  [/\/api\/v1\/promotions\/campaigns\//, page([campaign])],
+  [/\/api\/v1\/subscriptions\/plans\//, [plan]],
+  [
+    /\/api\/v1\/subscriptions\/me\//,
+    {
+      subscription: {
+        id: "sub1",
+        plan: "plus",
+        plan_name: "Plus",
+        interval: "month",
+        currency: "NGN",
+        status: "active",
+        current_period_start: "2026-10-28T10:00:00Z",
+        current_period_end: "2026-11-27T10:00:00Z",
+        cancel_at_period_end: false,
+        payment_due: null,
+        periods: [],
+        created_at: "2026-10-28T10:00:00Z",
+      },
+      entitlements: ["premium.ad_free"],
+    },
+  ],
   [
     /\/api\/v1\/payments\/PAY_1\/verify\//,
     {
@@ -472,6 +693,10 @@ const PUBLIC: [string, RegExp][] = [
   ["/login", /Welcome back/],
   ["/register", /Join GistLoop/],
   ["/forgot-password", /Forgot your password/],
+  ["/opportunities", /Frontend intern/],
+  ["/opportunities/op1", /Sign in to apply/],
+  ["/u/tunde/ask", /Sign in to ask/],
+  ["/premium", /More GistLoop, no adverts/],
   ["/nowhere", /This conversation has moved on/],
 ];
 
@@ -493,6 +718,23 @@ const MEMBER: [string, RegExp][] = [
   ["/events/new", /Publish event/],
   ["/events/tickets", /No tickets yet/],
   ["/payments/return?reference=PAY_1", /Payment received/],
+  ["/feed", /Textbooks at half price/],
+  ["/inbox", /What's your favourite course/],
+  ["/u/tunde/ask", /Dr Okafor, easily/],
+  ["/messages", /See you at the hackathon/],
+  ["/messages/cv1", /See you at the hackathon/],
+  ["/messages/new?to=tunde", /Tunde Bakare/],
+  ["/announcements", /Exam timetable released/],
+  ["/opportunities", /Frontend intern/],
+  ["/opportunities/op1", /Apply now/],
+  ["/opportunities/new", /Post an opportunity/],
+  ["/opportunities/mine", /Withdraw/],
+  ["/opportunities/op1/applicants", /I love React/],
+  ["/promote", /Back to school sale/],
+  ["/promote/new", /New advert/],
+  ["/promote/new?type=social.post&id=p1", /Boost your post/],
+  ["/promote/cp1", /Click rate/],
+  ["/premium", /Your plan/],
 ];
 
 describe("every page renders", () => {

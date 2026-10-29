@@ -16,6 +16,7 @@ import { EmptyState, ErrorState } from "@/components/ui/States";
 import { brand } from "@/config/brand";
 import styles from "@/features/content/Browse.module.css";
 import { BrowseShell } from "@/features/content/BrowseShell";
+import { Sponsored } from "@/features/promotions/Sponsored";
 import { useDebounced } from "@/lib/hooks";
 import { formatDate, formatTime, humanize } from "@/lib/format";
 
@@ -128,6 +129,7 @@ export default function EventsPage() {
           style={{ alignSelf: "center" }}
         />
       </div>
+      <Sponsored placement="events" />
       {events.isPending ? (
         <div className={styles.grid}>
           {Array.from({ length: 6 }, (_, i) => (

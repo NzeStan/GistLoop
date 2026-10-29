@@ -17,6 +17,7 @@ import { EmptyState, ErrorState } from "@/components/ui/States";
 import { brand } from "@/config/brand";
 import styles from "@/features/content/Browse.module.css";
 import { BrowseShell } from "@/features/content/BrowseShell";
+import { Sponsored } from "@/features/promotions/Sponsored";
 import { useDebounced } from "@/lib/hooks";
 
 import { BuyPanel } from "./BuyPanel";
@@ -126,6 +127,7 @@ export default function MarketplacePage() {
           <option value="-price">Price: high to low</option>
         </Select>
       </div>
+      <Sponsored placement="marketplace" />
       {listings.isPending ? (
         <div className={styles.grid}>
           {Array.from({ length: 8 }, (_, i) => (

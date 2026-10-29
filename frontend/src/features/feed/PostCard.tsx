@@ -1,4 +1,4 @@
-import { Bookmark, Flag, Heart, MessageCircle, MoreHorizontal, Repeat2, Share2, Trash2 } from "lucide-react";
+import { Bookmark, Flag, Heart, Megaphone, MessageCircle, MoreHorizontal, Repeat2, Share2, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 
@@ -9,7 +9,7 @@ import { useAuth } from "@/auth/AuthProvider";
 import { RichText } from "@/components/RichText";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { Dialog } from "@/components/ui/Dialog";
 import { Skeleton } from "@/components/ui/Spinner";
 import { useToast } from "@/components/ui/Toast";
@@ -121,14 +121,26 @@ export function PostCard({ post, linkToDetail = true }: { post: Post; linkToDeta
         {menu && (
           <div className="cluster" style={{ "--cluster-gap": "var(--space-2)" } as React.CSSProperties}>
             {post.viewer.is_author ? (
-              <Button
-                size="sm"
-                variant="secondary"
-                leading={<Trash2 size={14} />}
-                onClick={() => setConfirmDelete(true)}
-              >
-                Delete
-              </Button>
+              <>
+                {post.visibility === "public" && !post.is_repost && (
+                  <ButtonLink
+                    size="sm"
+                    variant="secondary"
+                    leading={<Megaphone size={14} />}
+                    to={`/promote/new?type=social.post&id=${post.id}`}
+                  >
+                    Boost
+                  </ButtonLink>
+                )}
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  leading={<Trash2 size={14} />}
+                  onClick={() => setConfirmDelete(true)}
+                >
+                  Delete
+                </Button>
+              </>
             ) : (
               <Button
                 size="sm"

@@ -1,4 +1,4 @@
-import { CalendarDays, Link as LinkIcon, Settings, Store } from "lucide-react";
+import { CalendarDays, Link as LinkIcon, MessageCircleQuestion, MessagesSquare, Settings, Store } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router";
 
 import { errorMessage } from "@/api/errors";
@@ -68,9 +68,29 @@ export default function ProfilePage() {
                 Edit profile
               </ButtonLink>
             ) : status === "signed-in" ? (
-              <Button variant={relationship ? "secondary" : "primary"} loading={follow.isPending} onClick={onFollow}>
-                {relationship === "active" ? "Following" : relationship === "pending" ? "Requested" : "Follow"}
-              </Button>
+              <>
+                <ButtonLink
+                  to={`/u/${p.handle}/ask`}
+                  variant="ghost"
+                  icon
+                  aria-label={`Ask ${p.display_name} anonymously`}
+                  title="Ask anonymously"
+                >
+                  <MessageCircleQuestion size={18} />
+                </ButtonLink>
+                <ButtonLink
+                  to={`/messages/new?to=${encodeURIComponent(p.handle ?? "")}`}
+                  variant="secondary"
+                  icon
+                  aria-label={`Message ${p.display_name}`}
+                  title="Message"
+                >
+                  <MessagesSquare size={18} />
+                </ButtonLink>
+                <Button variant={relationship ? "secondary" : "primary"} loading={follow.isPending} onClick={onFollow}>
+                  {relationship === "active" ? "Following" : relationship === "pending" ? "Requested" : "Follow"}
+                </Button>
+              </>
             ) : (
               <ButtonLink to={`/login?next=/u/${p.handle}`}>Follow</ButtonLink>
             )}

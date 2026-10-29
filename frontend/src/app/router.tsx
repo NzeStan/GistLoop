@@ -25,6 +25,10 @@ const organising = () => import("@/features/events/OrganiserPages");
 const podcasts = () => import("@/features/podcasts/PodcastPages");
 const notifications = () => import("@/features/discovery/NotificationsPage");
 const profile = () => import("@/features/profile/ProfilePage");
+const inbox = () => import("@/features/inbox/InboxPages");
+const messages = () => import("@/features/messages/MessagesPages");
+const opportunities = () => import("@/features/opportunities/OpportunityPages");
+const promote = () => import("@/features/promotions/PromotePages");
 
 const HomePage = page(() => import("@/features/marketing/HomePage"));
 const AboutPage = page(marketing, "AboutPage");
@@ -75,6 +79,21 @@ const PodcastShowRedirect = page(podcasts, "PodcastShowRedirect");
 const PodcastEpisodeRedirect = page(podcasts, "PodcastEpisodeRedirect");
 const ProfilePage = page(profile);
 const CreatorRedirect = page(profile, "CreatorRedirect");
+const InboxPage = page(inbox, "InboxPage");
+const AskPage = page(inbox, "AskPage");
+const MessagesPage = page(messages, "MessagesPage");
+const NewMessagePage = page(messages, "NewMessagePage");
+const ConversationPage = page(messages, "ConversationPage");
+const OpportunitiesPage = page(opportunities);
+const OpportunityPage = page(opportunities, "OpportunityPage");
+const PostOpportunityPage = page(opportunities, "PostOpportunityPage");
+const MyOpportunitiesPage = page(opportunities, "MyOpportunitiesPage");
+const ApplicantsPage = page(opportunities, "ApplicantsPage");
+const AnnouncementsPage = page(() => import("@/features/announcements/AnnouncementsPage"));
+const CampaignsPage = page(promote, "CampaignsPage");
+const NewCampaignPage = page(promote, "NewCampaignPage");
+const CampaignPage = page(promote, "CampaignPage");
+const PremiumPage = page(() => import("@/features/premium/PremiumPage"));
 const SettingsLayout = page(() => import("@/features/settings/SettingsLayout"));
 const ProfileSettings = page(settings, "ProfileSettings");
 const AccountSettings = page(settings, "AccountSettings");
@@ -141,6 +160,10 @@ export const routes: RouteObject[] = [
           { path: "posts/:postId", element: <PostPage /> },
           { path: "tags/:tag", element: <HashtagPage /> },
           { path: "u/:handle", element: <ProfilePage /> },
+          { path: "u/:handle/ask", element: <AskPage /> },
+          { path: "opportunities", element: <OpportunitiesPage /> },
+          { path: "opportunities/:opportunityId", element: <OpportunityPage /> },
+          { path: "premium", element: <PremiumPage /> },
           { path: "creators/:handle", element: <CreatorRedirect /> },
           { path: "search", element: <SearchPage /> },
         ],
@@ -158,6 +181,17 @@ export const routes: RouteObject[] = [
           { path: "marketplace/orders", element: <OrdersPage /> },
           { path: "events/new", element: <CreateEventPage /> },
           { path: "events/tickets", element: <MyTicketsPage /> },
+          { path: "inbox", element: <InboxPage /> },
+          { path: "messages", element: <MessagesPage /> },
+          { path: "messages/new", element: <NewMessagePage /> },
+          { path: "messages/:conversationId", element: <ConversationPage /> },
+          { path: "announcements", element: <AnnouncementsPage /> },
+          { path: "opportunities/new", element: <PostOpportunityPage /> },
+          { path: "opportunities/mine", element: <MyOpportunitiesPage /> },
+          { path: "opportunities/:opportunityId/applicants", element: <ApplicantsPage /> },
+          { path: "promote", element: <CampaignsPage /> },
+          { path: "promote/new", element: <NewCampaignPage /> },
+          { path: "promote/:campaignId", element: <CampaignPage /> },
           {
             path: "settings",
             element: <SettingsLayout />,

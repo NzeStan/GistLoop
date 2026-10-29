@@ -154,6 +154,13 @@
   text-decoration: none;
 }
 
+/* The sidebar lists these on large screens. */
+@media (min-width: 64rem) {
+  .menuMobileOnly {
+    display: none;
+  }
+}
+
 .body {
   display: grid;
   gap: var(--space-6);

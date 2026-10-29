@@ -135,6 +135,11 @@ function OwnerActions({ listing: l }: { listing: Listing }) {
             </Button>
           )
         )}
+        {l.status === "active" && l.visibility === "public" && (
+          <ButtonLink variant="secondary" to={`/promote/new?type=marketplace.listing&id=${l.id}`}>
+            Boost
+          </ButtonLink>
+        )}
         <ButtonLink variant="ghost" to="/marketplace/orders?role=seller">
           Orders
         </ButtonLink>

@@ -6,6 +6,8 @@ import { api, unwrap } from "../client";
 export const PAYMENT_PURPOSES: Record<string, { label: string; next: string; cta: string }> = {
   "marketplace.order": { label: "your order", next: "/marketplace/orders", cta: "View your orders" },
   "events.registration": { label: "your ticket", next: "/events/tickets", cta: "View your tickets" },
+  "promotions.campaign": { label: "your promotion", next: "/promote", cta: "View your promotions" },
+  "subscriptions.period": { label: "your plan", next: "/premium", cta: "View your plan" },
 };
 
 /**

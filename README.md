@@ -75,15 +75,21 @@ If an image fails to load, the site falls back gracefully (the logo becomes a st
 careers, press kit, safety centre, terms, privacy (NDPA 2023), cookies, community guidelines,
 newsletter (double opt-in), 404 and error pages.
 
-**Browse without an account:** communities, events, marketplace, podcasts, posts, profiles, hashtags
-and search.
+**Browse without an account:** communities, events, marketplace, opportunities, podcasts, posts,
+profiles, hashtags, search, premium plans and people's "ask me anonymously" pages.
 
 **Members:** feed (following, latest, trending), posting with photos (up to 4 per post) and
 visibility controls, likes, reposts, bookmarks, comments, polls, reporting; profile photos;
 communities (join, post, anonymous gist board); events (register, waitlist, calendar export, create
 an event with a cover image, sell paid tickets, "your tickets"); marketplace (sell with photos, buy
 with Paystack or cash on pickup, orders for buyers and sellers: pay, mark as sent, confirm receipt,
-cancel); podcast subscriptions and playback; notifications with live unread counts; people search;
+cancel); private messages (requests from people you don't follow, groups, mute, archive) and an
+anonymous inbox (people ask without their names; answer privately or publicly, block senders);
+institution announcements; opportunities (browse, save, apply with a CV, post a role, review
+applicants); promotions (boost your own posts, listings and opportunities, or run an advert, paid
+with Paystack, reviewed before going live, with results); premium plans (Paystack, no auto-renewal;
+the ad-free perk hides sponsored items); podcast subscriptions and playback; notifications and
+messages with live unread counts; people search;
 full settings (profile, photo, email, password, privacy, notification preferences, signed-in devices,
 data export, account deletion with password confirmation).
 

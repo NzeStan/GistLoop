@@ -1,14 +1,20 @@
 import {
   Bell,
   Bookmark,
+  Briefcase,
   CalendarDays,
+  Crown,
   Home,
+  Inbox,
   LogOut,
+  Megaphone,
   MessageCircleQuestion,
+  MessagesSquare,
   Mic,
   Search,
   Settings,
   ShoppingBag,
+  TrendingUp,
   User,
   Users,
 } from "lucide-react";
@@ -16,6 +22,7 @@ import { type FormEvent, Suspense, useEffect, useId, useRef, useState } from "re
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
 
 import { useNotificationCounts } from "@/api/queries/discovery";
+import { useMessagingUnread } from "@/api/queries/messaging";
 import { useAuth } from "@/auth/AuthProvider";
 import { Logo } from "@/components/Logo";
 import { Avatar } from "@/components/ui/Avatar";
@@ -28,13 +35,19 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
   { to: "/feed", label: "Home", icon: Home },
+  { to: "/messages", label: "Messages", icon: MessagesSquare },
+  { to: "/notifications", label: "Notifications", icon: Bell },
   { to: "/communities", label: "Communities", icon: Users },
   { to: "/gist", label: "Anonymous gist", icon: MessageCircleQuestion },
+  { to: "/inbox", label: "Anonymous inbox", icon: Inbox },
+  { to: "/announcements", label: "Announcements", icon: Megaphone },
   { to: "/events", label: "Events", icon: CalendarDays },
+  { to: "/opportunities", label: "Opportunities", icon: Briefcase },
   { to: "/marketplace", label: "Marketplace", icon: ShoppingBag },
   { to: "/podcasts", label: "Podcasts", icon: Mic },
-  { to: "/notifications", label: "Notifications", icon: Bell },
   { to: "/bookmarks", label: "Bookmarks", icon: Bookmark },
+  { to: "/promote", label: "Promote", icon: TrendingUp },
+  { to: "/premium", label: "Premium", icon: Crown },
   { to: "/settings", label: "Settings", icon: Settings },
 ];
 
@@ -90,9 +103,17 @@ function AccountMenu() {
               <User size={16} aria-hidden /> Your profile
             </Link>
           )}
-          <Link role="menuitem" to="/settings" className={styles.menuItem} onClick={() => setOpen(false)}>
-            <Settings size={16} aria-hidden /> Settings
-          </Link>
+          {NAV.filter(({ to }) => to !== "/feed").map(({ to, label, icon: Icon }) => (
+            <Link
+              key={to}
+              role="menuitem"
+              to={to}
+              className={to === "/settings" ? styles.menuItem : `${styles.menuItem} ${styles.menuMobileOnly}`}
+              onClick={() => setOpen(false)}
+            >
+              <Icon size={16} aria-hidden /> {label}
+            </Link>
+          ))}
           <button
             role="menuitem"
             type="button"
@@ -142,6 +163,9 @@ export function AppLayout() {
   const { me, status } = useAuth();
   const counts = useNotificationCounts(status === "signed-in");
   const unread = counts.data?.unread ?? 0;
+  const messaging = useMessagingUnread(status === "signed-in");
+  const unreadMessages = (messaging.data?.conversations ?? 0) + (messaging.data?.requests ?? 0);
+  const badges: Record<string, number> = { "/notifications": unread, "/messages": unreadMessages };
   const profilePath = me?.handle ? `/u/${me.handle}` : "/settings";
 
   return (
@@ -155,6 +179,14 @@ export function AppLayout() {
               <Search size={20} aria-hidden />
             </ButtonLink>
             <ThemeToggle />
+            <Link
+              to="/messages"
+              className={styles.bell}
+              aria-label={`Messages${unreadMessages ? `, ${unreadMessages} unread` : ""}`}
+            >
+              <MessagesSquare size={20} aria-hidden />
+              <UnreadBadge count={unreadMessages} />
+            </Link>
             <Link
               to="/notifications"
               className={styles.bell}
@@ -176,7 +208,7 @@ export function AppLayout() {
                 <NavLink to={to} className={styles.navLink}>
                   <Icon size={20} aria-hidden />
                   <span>{label}</span>
-                  {to === "/notifications" && <UnreadBadge count={unread} />}
+                  <UnreadBadge count={badges[to] ?? 0} />
                 </NavLink>
               </li>
             ))}
@@ -204,14 +236,14 @@ export function AppLayout() {
         {[
           { to: "/feed", label: "Home", icon: Home },
           { to: "/communities", label: "Communities", icon: Users },
-          { to: "/events", label: "Events", icon: CalendarDays },
+          { to: "/messages", label: "Messages", icon: MessagesSquare },
           { to: "/notifications", label: "Alerts", icon: Bell },
           { to: profilePath, label: "Profile", icon: User },
         ].map(({ to, label, icon: Icon }) => (
           <NavLink key={label} to={to} className={styles.bottomLink}>
             <span className={styles.bottomIcon}>
               <Icon size={22} aria-hidden />
-              {label === "Alerts" && <UnreadBadge count={unread} />}
+              <UnreadBadge count={badges[to] ?? 0} />
             </span>
             <span>{label}</span>
           </NavLink>
