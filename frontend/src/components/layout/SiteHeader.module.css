@@ -1,0 +1,111 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in oklch, var(--color-bg) 82%, transparent);
+  backdrop-filter: saturate(1.6) blur(14px);
+  border-bottom: 1px solid color-mix(in oklch, var(--color-border) 70%, transparent);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  height: var(--header-height);
+}
+
+.nav {
+  display: none;
+  gap: var(--space-1);
+  margin-inline: auto;
+}
+
+.link {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transition:
+    color var(--duration) var(--ease),
+    background var(--duration) var(--ease);
+}
+
+.link:hover,
+.link[aria-current="page"] {
+  color: var(--color-text);
+  background: var(--color-bg-muted);
+  text-decoration: none;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+.desktopOnly {
+  display: none;
+  gap: var(--space-2);
+}
+
+.menuButton {
+  display: inline-flex;
+}
+
+.mobileMenu {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
+  padding-block: var(--space-4) var(--space-6);
+  box-shadow: var(--shadow-md);
+}
+
+.mobileMenu nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileLink {
+  padding: var(--space-3) var(--space-2);
+  font-weight: 650;
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mobileLink[aria-current="page"] {
+  color: var(--color-primary);
+}
+
+.mobileActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.mobileActions > :only-child {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 64rem) {
+  .nav,
+  .desktopOnly {
+    display: flex;
+  }
+
+  .actions {
+    margin-left: 0;
+  }
+
+  .menuButton {
+    display: none;
+  }
+
+  .mobileMenu {
+    display: none;
+  }
+}

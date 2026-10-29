@@ -1,0 +1,120 @@
+.button {
+  --_bg: var(--color-primary);
+  --_fg: var(--color-on-primary);
+  --_bg-hover: var(--color-primary-hover);
+  --_border: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 2.5rem;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--_border);
+  border-radius: var(--radius-full);
+  background: var(--_bg);
+  color: var(--_fg);
+  font-weight: 650;
+  font-size: var(--text-sm);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration) var(--ease),
+    border-color var(--duration) var(--ease),
+    transform var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
+  user-select: none;
+}
+
+.button:hover {
+  background: var(--_bg-hover);
+  text-decoration: none;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.primary {
+  box-shadow: var(--shadow-brand);
+}
+
+.secondary {
+  --_bg: var(--color-surface);
+  --_fg: var(--color-text);
+  --_bg-hover: var(--color-bg-muted);
+  --_border: var(--color-border-strong);
+}
+
+.soft {
+  --_bg: var(--color-primary-soft);
+  --_fg: var(--color-link);
+  --_bg-hover: var(--color-primary-soft-hover);
+}
+
+.ghost {
+  --_bg: transparent;
+  --_fg: var(--color-text);
+  --_bg-hover: var(--color-bg-muted);
+}
+
+.danger {
+  --_bg: var(--color-danger);
+  --_fg: #fff;
+  --_bg-hover: color-mix(in oklch, var(--color-danger) 85%, black);
+}
+
+.inverse {
+  --_bg: #fff;
+  --_fg: var(--primary-800);
+  --_bg-hover: var(--primary-50);
+}
+
+.sm {
+  min-height: 2rem;
+  padding: 0 var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.lg {
+  min-height: 3rem;
+  padding: 0 var(--space-6);
+  font-size: var(--text-base);
+}
+
+.block {
+  width: 100%;
+}
+
+.icon {
+  min-height: 2.5rem;
+  width: 2.5rem;
+  padding: 0;
+}
+
+.icon.sm {
+  min-height: 2rem;
+  width: 2rem;
+}
+
+.spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

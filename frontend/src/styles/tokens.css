@@ -1,0 +1,184 @@
+/*
+ * Design tokens. Every colour below is derived from two brand values injected from
+ * src/config/brand.ts: --brand-primary and --brand-accent. Change those, not these.
+ * (The fallbacks only apply in unit tests, where the HTML shell isn't built.)
+ */
+:root {
+  --_primary: var(--brand-primary, #6d28d9);
+  --_accent: var(--brand-accent, #ff6b57);
+
+  /* Primary scale */
+  --primary-50: color-mix(in oklch, var(--_primary) 6%, white);
+  --primary-100: color-mix(in oklch, var(--_primary) 12%, white);
+  --primary-200: color-mix(in oklch, var(--_primary) 25%, white);
+  --primary-300: color-mix(in oklch, var(--_primary) 45%, white);
+  --primary-400: color-mix(in oklch, var(--_primary) 70%, white);
+  --primary-500: color-mix(in oklch, var(--_primary) 85%, white);
+  --primary-600: var(--_primary);
+  --primary-700: color-mix(in oklch, var(--_primary) 82%, black);
+  --primary-800: color-mix(in oklch, var(--_primary) 65%, black);
+  --primary-900: color-mix(in oklch, var(--_primary) 45%, black);
+
+  /* Accent scale */
+  --accent-50: color-mix(in oklch, var(--_accent) 8%, white);
+  --accent-100: color-mix(in oklch, var(--_accent) 16%, white);
+  --accent-500: var(--_accent);
+  --accent-700: color-mix(in oklch, var(--_accent) 70%, black);
+
+  /* Neutrals (slightly tinted with the brand for harmony) */
+  --gray-0: #ffffff;
+  --gray-50: color-mix(in oklch, var(--_primary) 2%, #fafafa);
+  --gray-100: color-mix(in oklch, var(--_primary) 3%, #f4f4f5);
+  --gray-200: color-mix(in oklch, var(--_primary) 4%, #e4e4e7);
+  --gray-300: color-mix(in oklch, var(--_primary) 4%, #d4d4d8);
+  --gray-400: color-mix(in oklch, var(--_primary) 4%, #a1a1aa);
+  --gray-500: color-mix(in oklch, var(--_primary) 5%, #71717a);
+  --gray-600: color-mix(in oklch, var(--_primary) 5%, #52525b);
+  --gray-700: color-mix(in oklch, var(--_primary) 6%, #3f3f46);
+  --gray-800: color-mix(in oklch, var(--_primary) 6%, #27272a);
+  --gray-900: color-mix(in oklch, var(--_primary) 8%, #18181b);
+  --gray-950: color-mix(in oklch, var(--_primary) 8%, #0c0c0f);
+
+  /* Semantic colours (light) */
+  --color-bg: var(--gray-0);
+  --color-bg-subtle: var(--gray-50);
+  --color-bg-muted: var(--gray-100);
+  --color-surface: var(--gray-0);
+  --color-surface-raised: var(--gray-0);
+  --color-border: var(--gray-200);
+  --color-border-strong: var(--gray-300);
+  --color-text: var(--gray-900);
+  --color-text-muted: var(--gray-600);
+  --color-text-subtle: var(--gray-500);
+  --color-primary: var(--primary-600);
+  --color-primary-hover: var(--primary-700);
+  --color-primary-soft: var(--primary-50);
+  --color-primary-soft-hover: var(--primary-100);
+  --color-on-primary: #ffffff;
+  --color-link: var(--primary-700);
+  --color-accent: var(--accent-500);
+  --color-accent-soft: var(--accent-50);
+  --color-focus: color-mix(in oklch, var(--_primary) 55%, white);
+  --color-success: #15803d;
+  --color-success-soft: #dcfce7;
+  --color-warning: #b45309;
+  --color-warning-soft: #fef3c7;
+  --color-danger: #b91c1c;
+  --color-danger-soft: #fee2e2;
+  --gradient-brand: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-500) 45%, var(--accent-500) 100%);
+  --gradient-soft: linear-gradient(180deg, var(--primary-50) 0%, var(--color-bg) 100%);
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: clamp(1.75rem, 1.4rem + 1.4vw, 2.25rem);
+  --text-4xl: clamp(2.1rem, 1.6rem + 2.2vw, 3rem);
+  --text-5xl: clamp(2.5rem, 1.8rem + 3.2vw, 4rem);
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.6;
+
+  /* Spacing, radius, shadow, motion */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgb(15 15 30 / 0.06);
+  --shadow-md: 0 4px 16px -4px rgb(15 15 30 / 0.12);
+  --shadow-lg: 0 20px 48px -16px rgb(15 15 30 / 0.22);
+  --shadow-brand: 0 18px 40px -18px color-mix(in oklch, var(--_primary) 70%, transparent);
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration: 180ms;
+
+  /* Layout */
+  --container: 72rem;
+  --container-narrow: 44rem;
+  --header-height: 4rem;
+  --gutter: clamp(1rem, 0.6rem + 1.8vw, 2rem);
+
+  color-scheme: light;
+}
+
+/* Dark theme: automatic from the system, or forced with data-theme="dark". */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: var(--gray-950);
+    --color-bg-subtle: var(--gray-900);
+    --color-bg-muted: var(--gray-800);
+    --color-surface: var(--gray-900);
+    --color-surface-raised: var(--gray-800);
+    --color-border: var(--gray-800);
+    --color-border-strong: var(--gray-700);
+    --color-text: #f4f4f5;
+    --color-text-muted: var(--gray-400);
+    --color-text-subtle: var(--gray-500);
+    --color-primary: var(--primary-500);
+    --color-primary-hover: var(--primary-400);
+    --color-primary-soft: color-mix(in oklch, var(--_primary) 22%, var(--gray-950));
+    --color-primary-soft-hover: color-mix(in oklch, var(--_primary) 32%, var(--gray-950));
+    --color-link: var(--primary-300);
+    --color-accent-soft: color-mix(in oklch, var(--_accent) 20%, var(--gray-950));
+    --color-success-soft: #052e16;
+    --color-warning-soft: #422006;
+    --color-danger-soft: #450a0a;
+    --color-success: #4ade80;
+    --color-warning: #fbbf24;
+    --color-danger: #f87171;
+    --gradient-soft: linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--_primary) 18%, var(--gray-950)) 0%,
+      var(--color-bg) 100%
+    );
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg: var(--gray-950);
+  --color-bg-subtle: var(--gray-900);
+  --color-bg-muted: var(--gray-800);
+  --color-surface: var(--gray-900);
+  --color-surface-raised: var(--gray-800);
+  --color-border: var(--gray-800);
+  --color-border-strong: var(--gray-700);
+  --color-text: #f4f4f5;
+  --color-text-muted: var(--gray-400);
+  --color-text-subtle: var(--gray-500);
+  --color-primary: var(--primary-500);
+  --color-primary-hover: var(--primary-400);
+  --color-primary-soft: color-mix(in oklch, var(--_primary) 22%, var(--gray-950));
+  --color-primary-soft-hover: color-mix(in oklch, var(--_primary) 32%, var(--gray-950));
+  --color-link: var(--primary-300);
+  --color-accent-soft: color-mix(in oklch, var(--_accent) 20%, var(--gray-950));
+  --color-success-soft: #052e16;
+  --color-warning-soft: #422006;
+  --color-danger-soft: #450a0a;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
+  --gradient-soft: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--_primary) 18%, var(--gray-950)) 0%,
+    var(--color-bg) 100%
+  );
+  color-scheme: dark;
+}

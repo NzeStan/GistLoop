@@ -1,0 +1,29 @@
+# Local development services: PostgreSQL, Redis and Mailpit (a fake inbox for emails).
+#   docker compose up -d
+# Then run the backend and frontend as described in README.md.
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: gistloop
+      POSTGRES_PASSWORD: gistloop
+      POSTGRES_DB: gistloop
+    ports: ["5432:5432"]
+    volumes: [postgres-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gistloop"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web inbox: http://localhost:8025
+
+volumes:
+  postgres-data:

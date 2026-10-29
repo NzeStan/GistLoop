@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /feed
+Disallow: /settings
+Disallow: /notifications
+Disallow: /search
+Disallow: /api/
+Disallow: /bff/
+Disallow: /admin/

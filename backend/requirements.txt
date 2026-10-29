@@ -1,0 +1,25 @@
+# GistLoop API: the University platform packages, installed from PyPI.
+# Compatible-release pins: bug fixes (0.1.x) arrive automatically; 0.2 needs a deliberate upgrade.
+university-core[postgres,redis,celery,openapi,argon2,cors,images]>=0.1.1,<0.2
+university-institution>=0.1.2,<0.2
+university-social>=0.1.1,<0.2
+university-moderation>=0.1.2,<0.2
+university-anonymous>=0.1.1,<0.2
+university-community>=0.1.2,<0.2
+university-notifications>=0.1.1,<0.2
+university-events>=0.1.2,<0.2
+university-creator>=0.1.2,<0.2
+university-payments>=0.1.2,<0.2
+university-marketplace>=0.1.1,<0.2
+university-media>=0.1.1,<0.2
+university-podcast>=0.1.2,<0.2
+university-analytics>=0.1.0,<0.2
+university-trending>=0.1.0,<0.2
+university-search>=0.1.2,<0.2
+university-opportunities>=0.1.0,<0.2
+university-messaging>=0.1.0,<0.2
+university-promotions>=0.1.0,<0.2
+university-subscriptions>=0.1.0,<0.2
+
+gunicorn>=23,<24
+whitenoise>=6.7,<7
