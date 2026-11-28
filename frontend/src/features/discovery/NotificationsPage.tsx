@@ -25,8 +25,27 @@ import { contentHref } from "@/lib/links";
 
 import styles from "./Discovery.module.css";
 
-const targetOf = (n: Notification) =>
-  !n.target || n.target.available === false ? null : contentHref(n.target.type, n.target.id);
+/** Where a notification takes you: a page for the kind of notice, else the thing it's about. */
+function targetOf(n: Notification): string | null {
+  const data = (n.data ?? {}) as Record<string, string | undefined>;
+  const verb = n.verb;
+  if (verb.startsWith("podcast.guest") && data.guest_id) return `/podcasts/guest-spots/${data.guest_id}`;
+  if (verb.startsWith("social.follow_request") || verb === "social.follow.requested") return "/settings/people";
+  if (verb.startsWith("community.member.invited") || verb === "community.invited") return "/communities/invitations";
+  if (verb.startsWith("institution.membership")) return "/settings/schools";
+  if (verb.startsWith("security.") || verb.startsWith("user.")) return "/settings/security";
+  if (verb.startsWith("moderation.")) return "/settings/moderation";
+  if (verb.startsWith("payments.payout")) return "/settings/wallet";
+  if (verb.startsWith("payments.refund")) return "/settings/wallet";
+  if (verb.startsWith("creator.verification")) return "/creator";
+  if (verb.startsWith("creator.")) return data.campaign_id ? `/sponsorships/${data.campaign_id}` : "/creator";
+  if (verb.startsWith("subscriptions.")) return "/premium";
+  if (verb.startsWith("marketplace.") && data.order_id) return `/marketplace/orders/${data.order_id}`;
+  if (verb.startsWith("marketplace.order") || verb.startsWith("marketplace.dispute")) return "/marketplace/orders";
+  if (verb.startsWith("marketplace.review")) return "/marketplace/sell";
+  if (!n.target || n.target.available === false) return null;
+  return contentHref(n.target.type, n.target.id);
+}
 
 export default function NotificationsPage() {
   const [tab, setTab] = useState<"all" | "unread">("all");

@@ -1,28 +1,42 @@
-import { EyeOff, Flag, Heart, MessageCircle, ShieldAlert, Trash2 } from "lucide-react";
+import { Eye, EyeOff, Flag, Heart, MessageCircle, Megaphone, ShieldAlert, Trash2 } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { Link } from "react-router";
 
 import { errorMessage } from "@/api/errors";
 import {
+  type GistAudience,
+  type ShareStatus,
   useAddGistComment,
   useDeleteGist,
+  useDeleteGistComment,
   useGist,
   useGistComments,
   useGistReaction,
+  useGistShareStatus,
+  useHideGist,
   usePostGist,
-} from "@/api/queries/communities";
+  useShareGistToSocials,
+} from "@/api/queries/gist";
 import type { AnonymousPost } from "@/api/types";
 import { LoadMore } from "@/components/LoadMore";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Alert, Textarea } from "@/components/ui/Form";
+import { Alert, Checkbox, Textarea } from "@/components/ui/Form";
 import { Spinner } from "@/components/ui/Spinner";
 import { EmptyState, ErrorState } from "@/components/ui/States";
 import { useToast } from "@/components/ui/Toast";
 import { ReportDialog } from "@/features/feed/ReportDialog";
 import styles from "@/features/feed/Post.module.css";
 import { formatCount, timeAgo } from "@/lib/format";
+
+const SHARE_LABELS: Record<ShareStatus, string> = {
+  pending_review: "Waiting for an editor to share it",
+  approved: "Being shared on our social pages",
+  sent: "Shared on GistLoop's social pages",
+  rejected: "Not shared on our social pages",
+  taken_down: "Removed from our social pages",
+};
 
 export function GistSafetyNote() {
   return (
@@ -34,9 +48,10 @@ export function GistSafetyNote() {
   );
 }
 
-function GistComments({ post, communityId }: { post: AnonymousPost; communityId: string }) {
+function GistComments({ post }: { post: AnonymousPost }) {
   const comments = useGistComments(post.id);
-  const add = useAddGistComment(post.id, communityId);
+  const add = useAddGistComment(post.id);
+  const remove = useDeleteGistComment(post.id);
   const toast = useToast();
   const [body, setBody] = useState("");
   const onSubmit = (event: FormEvent) => {
@@ -58,6 +73,21 @@ function GistComments({ post, communityId }: { post: AnonymousPost; communityId:
               {comment.author.is_op && <Badge tone="accent">OP</Badge>}
               {comment.viewer.is_author && <Badge>You</Badge>}
               <span className={styles.handle}>{timeAgo(comment.created_at)}</span>
+              {comment.viewer.is_author && (
+                <button
+                  type="button"
+                  className={styles.action}
+                  aria-label="Delete your reply"
+                  onClick={() =>
+                    remove.mutate(comment.id, {
+                      onSuccess: () => toast.success("Reply deleted"),
+                      onError: (e) => toast.error(errorMessage(e)),
+                    })
+                  }
+                >
+                  <Trash2 size={14} aria-hidden />
+                </button>
+              )}
             </div>
             <p className="pre-wrap">{comment.body}</p>
           </div>
@@ -71,7 +101,7 @@ function GistComments({ post, communityId }: { post: AnonymousPost; communityId:
           <Textarea
             id={`gist-comment-${post.id}`}
             placeholder="Reply anonymously…"
-            maxLength={2000}
+            maxLength={1000}
             value={body}
             onChange={(e) => setBody(e.target.value)}
           />
@@ -84,17 +114,56 @@ function GistComments({ post, communityId }: { post: AnonymousPost; communityId:
   );
 }
 
+/** The author's own control over sharing their gist on GistLoop's social media pages. */
+function SocialShareControl({ post, status }: { post: AnonymousPost; status: ShareStatus | undefined }) {
+  const share = useShareGistToSocials();
+  const toast = useToast();
+  if (!post.viewer.is_author) return null;
+  const shared = status && status !== "rejected" && status !== "taken_down";
+  return (
+    <div className="cluster" style={{ fontSize: "var(--text-xs)", gap: "var(--space-2)" }}>
+      {status && (
+        <Badge tone={status === "sent" ? "success" : status === "rejected" ? "danger" : "neutral"}>
+          <Megaphone size={12} aria-hidden /> {SHARE_LABELS[status]}
+        </Badge>
+      )}
+      {status !== "rejected" && (
+        <button
+          type="button"
+          className="link-button"
+          disabled={share.isPending}
+          onClick={() =>
+            share.mutate(
+              { postId: post.id, share: !shared },
+              {
+                onSuccess: () =>
+                  toast.success(
+                    shared ? "It won't be shared (or has been removed)." : "Sent to our editors to review.",
+                  ),
+                onError: (e) => toast.error(errorMessage(e)),
+              },
+            )
+          }
+        >
+          {shared ? "Don't share on social media" : "Ask to share on GistLoop's social pages"}
+        </button>
+      )}
+    </div>
+  );
+}
+
 export function GistCard({
   post,
-  communityId,
   expanded = false,
+  shareStatus,
 }: {
   post: AnonymousPost;
-  communityId: string;
   expanded?: boolean;
+  shareStatus?: ShareStatus;
 }) {
-  const react = useGistReaction(communityId);
-  const remove = useDeleteGist(communityId);
+  const react = useGistReaction();
+  const remove = useDeleteGist();
+  const hide = useHideGist();
   const toast = useToast();
   const [open, setOpen] = useState(expanded);
   const [reporting, setReporting] = useState(false);
@@ -124,6 +193,7 @@ export function GistCard({
           {post.status && post.status !== "published" && <Badge tone="warning">{post.status}</Badge>}
         </div>
         <p className={`${styles.body} pre-wrap`}>{post.body}</p>
+        <SocialShareControl post={post} status={shareStatus} />
         <div className={styles.actions}>
           <button type="button" className={styles.action} aria-expanded={open} onClick={() => setOpen((v) => !v)}>
             <MessageCircle size={18} aria-hidden /> {formatCount(post.counts.comments)}
@@ -153,12 +223,30 @@ export function GistCard({
               <Trash2 size={18} aria-hidden />
             </button>
           ) : (
-            <button type="button" className={styles.action} aria-label="Report" onClick={() => setReporting(true)}>
-              <Flag size={18} aria-hidden />
-            </button>
+            <>
+              <button
+                type="button"
+                className={styles.action}
+                aria-label="Hide this gist from your board"
+                onClick={() =>
+                  hide.mutate(
+                    { postId: post.id, hidden: false },
+                    {
+                      onSuccess: () => toast.success("Hidden. You won't see it on this board again."),
+                      onError: (e) => toast.error(errorMessage(e)),
+                    },
+                  )
+                }
+              >
+                <Eye size={18} aria-hidden />
+              </button>
+              <button type="button" className={styles.action} aria-label="Report" onClick={() => setReporting(true)}>
+                <Flag size={18} aria-hidden />
+              </button>
+            </>
           )}
         </div>
-        {open && <GistComments post={post} communityId={communityId} />}
+        {open && <GistComments post={post} />}
       </div>
       <ReportDialog
         open={reporting}
@@ -170,22 +258,33 @@ export function GistCard({
   );
 }
 
-export function GistBoard({ communityId, canPost }: { communityId: string; canPost: boolean }) {
-  const gist = useGist(communityId);
-  const create = usePostGist(communityId);
+export function GistBoard({ audience, canPost }: { audience: GistAudience; canPost: boolean }) {
+  const gist = useGist(audience);
+  const create = usePostGist(audience);
   const toast = useToast();
   const [body, setBody] = useState("");
+  const [shareToSocials, setShareToSocials] = useState(false);
   const posts = gist.data?.pages.flatMap((p) => p.results) ?? [];
+  const mine = posts.filter((p) => p.viewer.is_author).map((p) => p.id);
+  const shareStatus = useGistShareStatus(mine);
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (!body.trim()) return;
-    create.mutate(body, {
-      onSuccess: () => {
-        setBody("");
-        toast.success("Your gist is live, anonymously.");
+    create.mutate(
+      { body, shareToSocials },
+      {
+        onSuccess: () => {
+          setBody("");
+          setShareToSocials(false);
+          toast.success(
+            shareToSocials
+              ? "Your gist is live. Our editors will review it for our social pages."
+              : "Your gist is live, anonymously.",
+          );
+        },
       },
-    });
+    );
   };
 
   return (
@@ -200,9 +299,14 @@ export function GistBoard({ communityId, canPost }: { communityId: string; canPo
             <Textarea
               id="gist-body"
               placeholder="Spill the gist… nobody will know it's you."
-              maxLength={5000}
+              maxLength={3000}
               value={body}
               onChange={(e) => setBody(e.target.value)}
+            />
+            <Checkbox
+              label="Also share it on GistLoop's social media pages (still anonymous; an editor checks it first)"
+              checked={shareToSocials}
+              onChange={(e) => setShareToSocials(e.target.checked)}
             />
             {create.isError && <Alert tone="error">{errorMessage(create.error)}</Alert>}
             <div className="cluster" style={{ justifyContent: "space-between" }}>
@@ -230,14 +334,12 @@ export function GistBoard({ communityId, canPost }: { communityId: string; canPo
         <ErrorState error={gist.error} onRetry={() => void gist.refetch()} />
       ) : posts.length === 0 ? (
         <EmptyState icon={EyeOff} title="No gist yet">
-          {canPost
-            ? "Be the first to share something, anonymously."
-            : "Join this community to read and share anonymous gist."}
+          {canPost ? "Be the first to share something, anonymously." : "Only members can read and share gist here."}
         </EmptyState>
       ) : (
         <div className={styles.list}>
           {posts.map((post) => (
-            <GistCard key={post.id} post={post} communityId={communityId} />
+            <GistCard key={post.id} post={post} shareStatus={shareStatus.data?.[post.id]} />
           ))}
           <LoadMore
             hasMore={gist.hasNextPage}

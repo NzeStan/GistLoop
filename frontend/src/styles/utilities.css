@@ -104,3 +104,21 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+/* A button that looks like a text link (secondary actions inside text). */
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.link-button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}

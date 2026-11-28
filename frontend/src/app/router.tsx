@@ -29,6 +29,8 @@ const inbox = () => import("@/features/inbox/InboxPages");
 const messages = () => import("@/features/messages/MessagesPages");
 const opportunities = () => import("@/features/opportunities/OpportunityPages");
 const promote = () => import("@/features/promotions/PromotePages");
+const schools = () => import("@/features/schools/SchoolPages");
+const people = () => import("@/features/profile/PeoplePages");
 
 const HomePage = page(() => import("@/features/marketing/HomePage"));
 const AboutPage = page(marketing, "AboutPage");
@@ -78,7 +80,6 @@ const PodcastPage = page(podcasts, "PodcastPage");
 const PodcastShowRedirect = page(podcasts, "PodcastShowRedirect");
 const PodcastEpisodeRedirect = page(podcasts, "PodcastEpisodeRedirect");
 const ProfilePage = page(profile);
-const CreatorRedirect = page(profile, "CreatorRedirect");
 const InboxPage = page(inbox, "InboxPage");
 const AskPage = page(inbox, "AskPage");
 const MessagesPage = page(messages, "MessagesPage");
@@ -94,6 +95,39 @@ const CampaignsPage = page(promote, "CampaignsPage");
 const NewCampaignPage = page(promote, "NewCampaignPage");
 const CampaignPage = page(promote, "CampaignPage");
 const PremiumPage = page(() => import("@/features/premium/PremiumPage"));
+const SchoolsPage = page(schools, "SchoolsPage");
+const SchoolPage = page(schools, "SchoolPage");
+const SchoolAdminPage = page(() => import("@/features/schools/SchoolAdmin"));
+const MySchoolsSettings = page(() => import("@/features/schools/MySchools"));
+const PeopleSettings = page(people, "PeopleSettings");
+const FollowersPage = page(people, "FollowersPage");
+const FollowingPage = page(people, "FollowingPage");
+const OAuthCallbackPage = page(() => import("@/features/auth/SocialSignIn"), "OAuthCallbackPage");
+const studio = () => import("@/features/podcasts/StudioPages");
+const creator = () => import("@/features/creator/CreatorPages");
+const manageCommunity = () => import("@/features/communities/ManageCommunity");
+const manageEvent = () => import("@/features/events/ManageEvent");
+const shops = () => import("@/features/marketplace/ShopPages");
+const StudioHome = page(studio, "StudioHome");
+const StudioShowPage = page(studio, "StudioShowPage");
+const StudioEpisodePage = page(studio, "StudioEpisodePage");
+const GuestSpotPage = page(studio, "GuestSpotPage");
+const CreatorsPage = page(creator, "CreatorsPage");
+const CreatorPage = page(creator, "CreatorPage");
+const CreatorHubPage = page(creator, "CreatorHubPage");
+const SponsorshipsPage = page(creator, "SponsorshipsPage");
+const SponsorshipPage = page(creator, "SponsorshipPage");
+const NewSponsorshipPage = page(creator, "NewSponsorshipPage");
+const ManageCommunityPage = page(manageCommunity);
+const CommunityInvitationsPage = page(manageCommunity, "CommunityInvitationsPage");
+const JoinWithCodePage = page(manageCommunity, "JoinWithCodePage");
+const MyEventsPage = page(manageEvent, "MyEventsPage");
+const ManageEventPage = page(manageEvent, "ManageEventPage");
+const SellerPage = page(shops, "SellerPage");
+const OrderPage = page(shops, "OrderPage");
+const StaffPage = page(() => import("@/features/staff/StaffPages"));
+const WalletSettings = page(() => import("@/features/settings/WalletSettings"));
+const SafetySettings = page(() => import("@/features/settings/SafetySettings"));
 const SettingsLayout = page(() => import("@/features/settings/SettingsLayout"));
 const ProfileSettings = page(settings, "ProfileSettings");
 const AccountSettings = page(settings, "AccountSettings");
@@ -139,6 +173,7 @@ export const routes: RouteObject[] = [
             ],
           },
           { path: "reset-password", element: <ResetPasswordPage /> },
+          { path: "auth/callback/:provider", element: <OAuthCallbackPage /> },
           { path: "verify-email", element: <VerifyEmailPage /> },
           { path: "confirm-email", element: <ConfirmEmailChangePage /> },
         ],
@@ -161,10 +196,18 @@ export const routes: RouteObject[] = [
           { path: "tags/:tag", element: <HashtagPage /> },
           { path: "u/:handle", element: <ProfilePage /> },
           { path: "u/:handle/ask", element: <AskPage /> },
+          { path: "u/:handle/followers", element: <FollowersPage /> },
+          { path: "u/:handle/following", element: <FollowingPage /> },
+          { path: "schools", element: <SchoolsPage /> },
+          { path: "schools/:institutionId", element: <SchoolPage /> },
           { path: "opportunities", element: <OpportunitiesPage /> },
           { path: "opportunities/:opportunityId", element: <OpportunityPage /> },
           { path: "premium", element: <PremiumPage /> },
-          { path: "creators/:handle", element: <CreatorRedirect /> },
+          { path: "creators", element: <CreatorsPage /> },
+          { path: "creators/:handle", element: <CreatorPage /> },
+          { path: "sponsorships", element: <SponsorshipsPage /> },
+          { path: "sponsorships/:campaignId", element: <SponsorshipPage /> },
+          { path: "sellers/:handle", element: <SellerPage /> },
           { path: "search", element: <SearchPage /> },
         ],
       },
@@ -192,12 +235,30 @@ export const routes: RouteObject[] = [
           { path: "promote", element: <CampaignsPage /> },
           { path: "promote/new", element: <NewCampaignPage /> },
           { path: "promote/:campaignId", element: <CampaignPage /> },
+          { path: "schools/:institutionId/manage", element: <SchoolAdminPage /> },
+          { path: "studio", element: <StudioHome /> },
+          { path: "studio/:podcastId", element: <StudioShowPage /> },
+          { path: "studio/:podcastId/episodes/:episodeId", element: <StudioEpisodePage /> },
+          { path: "podcasts/guest-spots/:guestId", element: <GuestSpotPage /> },
+          { path: "creator", element: <CreatorHubPage /> },
+          { path: "sponsorships/new", element: <NewSponsorshipPage /> },
+          { path: "c/:communityId/manage", element: <ManageCommunityPage /> },
+          { path: "communities/invitations", element: <CommunityInvitationsPage /> },
+          { path: "join/:code", element: <JoinWithCodePage /> },
+          { path: "events/mine", element: <MyEventsPage /> },
+          { path: "events/manage/:eventId", element: <ManageEventPage /> },
+          { path: "marketplace/orders/:orderId", element: <OrderPage /> },
+          { path: "staff", element: <StaffPage /> },
           {
             path: "settings",
             element: <SettingsLayout />,
             children: [
               { index: true, element: <ProfileSettings /> },
               { path: "account", element: <AccountSettings /> },
+              { path: "schools", element: <MySchoolsSettings /> },
+              { path: "people", element: <PeopleSettings /> },
+              { path: "wallet", element: <WalletSettings /> },
+              { path: "moderation", element: <SafetySettings /> },
               { path: "privacy", element: <PrivacySettings /> },
               { path: "notifications", element: <NotificationSettings /> },
               { path: "security", element: <SecuritySettings /> },

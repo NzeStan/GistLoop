@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import importlib.util
 import os
+import shutil
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -67,6 +68,9 @@ ALLOWED_HOSTS += [h for h in ("127.0.0.1", "localhost") if h not in ALLOWED_HOST
 
 # The public website. Email links (verify, reset password) point here.
 FRONTEND_URL = env("FRONTEND_URL", "http://localhost:5173").rstrip("/")
+# The public https address other services fetch from (RSS readers, social networks, TikTok, transcription).
+# One origin serves the site and the API, so it defaults to FRONTEND_URL.
+PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/") or FRONTEND_URL
 
 # ------------------------------------------------------------------ apps
 INSTALLED_APPS = [
@@ -103,6 +107,9 @@ INSTALLED_APPS = [
     # GistLoop.
     "gistloop.bff",
     "gistloop.contact",
+    "gistloop.youtube",  # YouTube videos for podcast episodes, channel import
+    "gistloop.syndication",  # posting to GistLoop's Facebook Page, Instagram, X, Telegram, TikTok
+    "gistloop.platform",  # loads every module's background jobs at start-up
     "gistloop.demo",  # manage.py seed_demo (development only)
 ]
 
@@ -230,9 +237,19 @@ SPECTACULAR_SETTINGS = spectacular_settings(
 )
 
 # ------------------------------------------------------------ University
+from gistloop.bff.oauth_settings import identity_providers_from_env  # noqa: E402
+
 UNIVERSITY = {
     "AUTH": {
         "JWT": {"SIGNING_KEY": os.environ.get("JWT_SIGNING_KEY")},
+        # "Continue with Google / Yahoo / GitHub": each is offered once its client ID and secret are
+        # set (OAUTH_GOOGLE_CLIENT_ID, ...). Redirect URI to register: {FRONTEND_URL}/auth/callback/<provider>
+        "IDENTITY_PROVIDERS": identity_providers_from_env(),
+        # An existing account is matched by email only when the provider says it verified the address.
+        "LINK_EXTERNAL_IDENTITY_BY_VERIFIED_EMAIL": True,
+        # "Email me a sign-in code" (no password). The code goes to the account's verified address, so it
+        # is as strong as a password reset by email.
+        "PASSWORDLESS": {"ENABLED": env_bool("PASSWORDLESS_LOGIN", True)},
     },
     "SECURITY": {
         "HMAC_KEY": os.environ.get("UNIVERSITY_HMAC_KEY"),
@@ -285,14 +302,70 @@ UNIVERSITY = {
     "INSTITUTION": {
         "ALLOW_MULTIPLE_INSTITUTIONS": True,
     },
+    # People may add a place name to a post ("UNILAG main library").
+    "SOCIAL": {"LOCATION_ENABLED": True},
     # Links the modules put in emails and notifications. Each one is a route on the website.
     "NOTIFICATIONS": {
+        # Notification work runs on the Celery worker when there is one.
+        "ASYNC_HANDLERS": bool(os.environ.get("CELERY_BROKER_URL")),
+        # Push notifications (Android, iOS and web browsers) through Firebase Cloud Messaging: set
+        # FCM_PROJECT_ID and FCM_CREDENTIALS_FILE (a service-account JSON key). Without them, no pushes.
+        **(
+            {
+                "PUSH_PROVIDER": "university.notifications.push.FCMPushProvider",
+                "PUSH_PROVIDER_OPTIONS": {
+                    "project_id": os.environ["FCM_PROJECT_ID"],
+                    "credentials_file": os.environ["FCM_CREDENTIALS_FILE"],
+                },
+            }
+            if os.environ.get("FCM_PROJECT_ID") and os.environ.get("FCM_CREDENTIALS_FILE")
+            else {}
+        ),
         "OPEN_URL": FRONTEND_URL + "/notifications/{id}",
         "LIST_URL": FRONTEND_URL + "/notifications",
         "PREFERENCES_URL": FRONTEND_URL + "/settings/notifications",
     },
     "EVENTS": {"EVENT_URL": FRONTEND_URL + "/events/{slug}", "PAID_TICKETS_ENABLED": True},
-    "PODCAST": {"SHOW_URL": FRONTEND_URL + "/podcasts/{slug}"},
+    "PODCAST": {
+        "SHOW_URL": FRONTEND_URL + "/podcasts/{slug}",
+        # Absolute links in RSS feeds (enclosures, covers): the public address.
+        "PUBLIC_API_URL": PUBLIC_BASE_URL,
+        # Automatic transcripts ("Generate transcript" in the podcast studio) when DEEPGRAM_API_KEY is set.
+        "TRANSCRIPTION_PROVIDER": (
+            {
+                "class": "gistloop.platform.transcription.DeepgramTranscriptionProvider",
+                "options": {"api_key": os.environ["DEEPGRAM_API_KEY"]},
+            }
+            if os.environ.get("DEEPGRAM_API_KEY")
+            else None
+        ),
+    },
+    "MEDIA": {
+        # Signed media links that leave the site (RSS, TikTok, transcription) need the public address.
+        "PUBLIC_BASE_URL": PUBLIC_BASE_URL,
+        # Transcoding, durations and clips need FFmpeg on the server (the API Docker image installs it).
+        **(
+            {"PROCESSOR": "university.media.processing.FFmpegProcessor"}
+            if env_bool("MEDIA_FFMPEG", shutil.which("ffmpeg") is not None)
+            else {}
+        ),
+        # Large podcast uploads straight to object storage (S3, R2, MinIO): set MEDIA_S3_BUCKET (and the
+        # standard AWS_* credentials; pip install boto3). The bucket must back the "private" storage.
+        **(
+            {
+                "DIRECT_UPLOADS": {
+                    "class": "university.media.direct.S3DirectUploadProvider",
+                    "options": {
+                        "bucket": os.environ["MEDIA_S3_BUCKET"],
+                        "region": os.environ.get("MEDIA_S3_REGION") or None,
+                        "endpoint_url": os.environ.get("MEDIA_S3_ENDPOINT_URL") or None,
+                    },
+                }
+            }
+            if os.environ.get("MEDIA_S3_BUCKET")
+            else {}
+        ),
+    },
     "CREATOR": {"PROFILE_URL": FRONTEND_URL + "/creators/{handle}"},
     "PAYMENTS": {
         # Paystack is used when PAYSTACK_SECRET_KEY is set (test keys start sk_test_). Its webhook
@@ -327,7 +400,11 @@ UNIVERSITY = {
 }
 
 # ------------------------------------------------------------ GistLoop
+from gistloop.syndication.env_settings import syndication_from_env  # noqa: E402
+
 GISTLOOP = {
+    # Sharing to GistLoop's own social media accounts. Each channel turns on when its keys are set.
+    "SYNDICATION": syndication_from_env(),
     # Where contact-form messages are emailed. Empty: stored only (read them in the admin).
     "CONTACT_RECIPIENTS": env_list("CONTACT_RECIPIENTS"),
     # The refresh-token cookie. "__Secure-" requires HTTPS, so development uses a plain name.
@@ -340,37 +417,33 @@ CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
 CELERY_TASK_ACKS_LATE = True
 CELERY_TASK_REJECT_ON_WORKER_LOST = True
 CELERY_WORKER_PREFETCH_MULTIPLIER = 1
+
+
+def _job(task: str, every: int, *args: object) -> dict[str, object]:
+    """A beat entry for a University (or GistLoop) task, run every ``every`` seconds."""
+    return {"task": "university.core.run_task", "schedule": every, "args": [task, list(args), {}]}
+
+
+MINUTE, HOUR, DAY = 60, 60 * 60, 24 * 60 * 60
+# Every periodic job the installed modules provide. Each is safe to run more often than needed.
 CELERY_BEAT_SCHEDULE = {
-    "university-retention": {
-        "task": "university.core.run_task",
-        "schedule": 60 * 60 * 6,
-        "args": ["university.core.purge", [], {}],
-    },
-    "trending": {
-        "task": "university.core.run_task",
-        "schedule": 60 * 5,
-        "args": ["university.trending.compute_trending", [], {}],
-    },
-    "promotions-complete": {
-        "task": "university.core.run_task",
-        "schedule": 60 * 5,
-        "args": ["university.promotions.complete_finished", [], {}],
-    },
-    "subscriptions-sweep": {
-        "task": "university.core.run_task",
-        "schedule": 60 * 60,
-        "args": ["university.subscriptions.sweep", [], {}],
-    },
-    "opportunities-close": {
-        "task": "university.core.run_task",
-        "schedule": 60 * 60,
-        "args": ["university.opportunities.close_expired", [], {}],
-    },
-    "payments-expire": {
-        "task": "university.core.run_task",
-        "schedule": 60 * 15,
-        "args": ["university.payments.expire_intents", [], {}],
-    },
+    "retention-purge": _job("university.core.purge", 6 * HOUR),
+    "trending": _job("university.trending.compute_trending", 5 * MINUTE),
+    "payments-expire": _job("university.payments.expire_intents", 15 * MINUTE),
+    "payments-retry-refunds": _job("university.payments.retry_refunds", 30 * MINUTE),
+    "marketplace-expire-unpaid": _job("university.marketplace.expire_unpaid_orders", 15 * MINUTE),
+    "marketplace-auto-complete": _job("university.marketplace.auto_complete_orders", HOUR),
+    "events-release-holds": _job("university.events.release_expired_holds", 5 * MINUTE),
+    "events-reminders": _job("university.events.send_reminders", 15 * MINUTE),
+    "podcast-publish-scheduled": _job("university.podcast.publish_due_episodes", MINUTE),
+    "notifications-digest-daily": _job("university.notifications.send_digests", DAY, "daily"),
+    "notifications-digest-weekly": _job("university.notifications.send_digests", 7 * DAY, "weekly"),
+    "creator-sync-accounts": _job("university.creator.sync_linked_accounts", DAY),
+    "opportunities-close": _job("university.opportunities.close_expired", HOUR),
+    "promotions-complete": _job("university.promotions.complete_finished", 5 * MINUTE),
+    "subscriptions-sweep": _job("university.subscriptions.sweep", HOUR),
+    "youtube-import": _job("gistloop.youtube.sync_channels", HOUR),
+    "social-retry": _job("gistloop.syndication.retry_failed", 30 * MINUTE),
 }
 
 # ------------------------------------------------------------------ email

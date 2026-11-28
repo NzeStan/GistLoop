@@ -296,6 +296,53 @@ const plan = {
   ],
   entitlements: [{ key: "premium.ad_free", label: "No adverts" }],
 };
+const school = {
+  id: "i1",
+  name: "University of Lagos",
+  short_name: "UNILAG",
+  slug: "unilag",
+  type: "university",
+  ownership: "public",
+  country: "NG",
+  region: "Lagos",
+  city: "Akoka",
+  website: "https://unilag.edu.ng",
+  description: "",
+  founded_year: 1962,
+  status: "active",
+  is_verified: true,
+  verification_methods: [],
+  available_verification_methods: ["institution_email", "manual"],
+  created_at: "2026-10-01T10:00:00Z",
+};
+const membership = {
+  id: "m1",
+  institution: {
+    id: "i1",
+    name: "University of Lagos",
+    short_name: "UNILAG",
+    slug: "unilag",
+    type: "university",
+    country: "NG",
+    region: "Lagos",
+    city: "Akoka",
+    is_verified: true,
+  },
+  role: "student",
+  status: "verified",
+  campus: null,
+  academic_unit: null,
+  programme: null,
+  level: null,
+  identifier_hint: "",
+  entry_year: 2024,
+  graduation_year: null,
+  is_primary: true,
+  verified_at: "2026-10-01T10:00:00Z",
+  verification_method: "institution_email",
+  status_reason: "",
+  created_at: "2026-10-01T10:00:00Z",
+};
 const page = (results: unknown[]) => ({ count: results.length, next: null, previous: null, results });
 const cursor = (results: unknown[]) => ({ next: null, previous: null, results });
 
@@ -330,6 +377,50 @@ const order = {
 };
 
 const API: [RegExp, unknown][] = [
+  // Schools
+  [
+    /\/api\/v1\/institutions\/i1\/(campuses|units|programmes|levels|sessions|domains)\//,
+    [{ id: "cp1", name: "Akoka campus", slug: "akoka", is_main: true, is_active: true, city: "Akoka" }],
+  ],
+  [/\/api\/v1\/institutions\/i1\/announcements\//, page([])],
+  [/\/api\/v1\/institutions\/i1\/memberships\//, page([])],
+  [/\/api\/v1\/institutions\/i1\/$/, school],
+  [/\/api\/v1\/institutions\//, page([school])],
+  [/\/api\/v1\/me\/memberships\//, [membership]],
+  [/\/api\/v1\/me\/permissions\//, { scope_type: "platform", scope_id: "", permissions: ["*"] }],
+  [/\/api\/v1\/social\/audiences\//, cursor([post])],
+  // Studio, creators, sponsorships
+  [/\/api\/v1\/me\/podcasts\//, page([])],
+  [/\/api\/v1\/me\/community-invitations\//, []],
+  [/\/api\/v1\/me\/podcast-subscriptions\//, page([])],
+  [/\/api\/v1\/creator-categories\//, [{ key: "tech", name: "Tech" }]],
+  [/\/api\/v1\/creators\//, page([])],
+  [/\/api\/v1\/me\/campaigns\//, page([])],
+  [/\/api\/v1\/campaigns\//, page([])],
+  [/\/api\/v1\/youtube\/episodes\//, []],
+  // Events, money, safety
+  [/\/api\/v1\/me\/events\//, page([eventSummary])],
+  [/\/api\/v1\/payments\/me\/balance\//, [{ currency: "NGN", held: 0, available: 150000, payout: 0 }]],
+  [/\/api\/v1\/payments\/me\/payouts\//, page([])],
+  [/\/api\/v1\/payments\/providers\//, [{ key: "paystack", label: "Paystack" }]],
+  [/\/api\/v1\/payments\/$/, page([])],
+  [/\/api\/v1\/moderation\/me\//, page([])],
+  [/\/api\/v1\/moderation\/cases\//, page([])],
+  [/\/api\/v1\/social\/me\/(blocks|mutes|restrictions|follow-requests)\//, page([])],
+  [
+    /\/api\/v1\/me\/security\//,
+    {
+      login_alerts_enabled: true,
+      mfa_enabled: false,
+      mfa_channel: "",
+      mfa_enabled_at: null,
+      updated_at: "2026-10-01T10:00:00Z",
+    },
+  ],
+  [/\/api\/v1\/me\/(identities|api-keys)\//, []],
+  [/\/api\/v1\/me\/activity\//, cursor([])],
+  [/\/api\/v1\/me\/consents\//, {}],
+  [/\/api\/v1\/notifications\/devices\//, []],
   // Anonymous inbox
   [
     /\/api\/v1\/anonymous\/me\/inbox\/messages\//,
@@ -697,6 +788,10 @@ const PUBLIC: [string, RegExp][] = [
   ["/opportunities/op1", /Sign in to apply/],
   ["/u/tunde/ask", /Sign in to ask/],
   ["/premium", /More GistLoop, no adverts/],
+  ["/schools", /University of Lagos/],
+  ["/schools/i1", /Verified school/],
+  ["/creators", /Student creators/],
+  ["/sponsorships", /Paid campaigns for student creators/],
   ["/nowhere", /This conversation has moved on/],
 ];
 
@@ -735,6 +830,18 @@ const MEMBER: [string, RegExp][] = [
   ["/promote/new?type=social.post&id=p1", /Boost your post/],
   ["/promote/cp1", /Click rate/],
   ["/premium", /Your plan/],
+  ["/schools/i1", /Hackathon this weekend/],
+  ["/schools/i1/manage", /Manage UNILAG/],
+  ["/settings/schools", /Main school/],
+  ["/settings/people", /Follow requests/],
+  ["/settings/wallet", /Available to withdraw/],
+  ["/settings/moderation", /Decisions about your account/],
+  ["/settings/security", /Two-step sign-in/],
+  ["/studio", /Your podcasts/],
+  ["/creator", /Become a creator/],
+  ["/events/mine", /Campus Hackathon/],
+  ["/communities/invitations", /No invitations/],
+  ["/staff", /Staff console/],
 ];
 
 describe("every page renders", () => {

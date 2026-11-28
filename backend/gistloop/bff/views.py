@@ -133,6 +133,51 @@ class MFALoginView(BrowserAPIView):
         return _signed_in(result)
 
 
+class PasswordlessRequestView(BrowserAPIView):
+    """Email (or text) me a sign-in code instead of using a password."""
+
+    throttle_scope = "otp_request"
+
+    @extend_schema(
+        request=auth_serializers.PasswordlessRequestSerializer,
+        responses={
+            202: inline_serializer(
+                "BrowserCodeSent",
+                fields={
+                    "challenge_id": serializers.UUIDField(),
+                    "channel": serializers.CharField(),
+                },
+            )
+        },
+    )
+    def post(self, request: Request) -> Response:
+        serializer = auth_serializers.PasswordlessRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        challenge = login.request_passwordless_code(
+            identifier=serializer.validated_data["identifier"], meta=_meta(request)
+        )
+        return _no_store(
+            Response(
+                {"challenge_id": str(challenge.challenge_id), "channel": challenge.channel},
+                status=status.HTTP_202_ACCEPTED,
+            )
+        )
+
+
+class PasswordlessVerifyView(BrowserAPIView):
+    throttle_scope = "otp_verify"
+
+    @extend_schema(request=auth_serializers.ChallengeCompleteSerializer, responses=BrowserTokens)
+    def post(self, request: Request) -> Response:
+        serializer = auth_serializers.ChallengeCompleteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        result = login.complete_passwordless_login(
+            challenge_id=data["challenge_id"], code=data["code"], meta=_meta(request, data)
+        )
+        return _signed_in(result)
+
+
 class RefreshView(BrowserAPIView):
     throttle_scope = "token_refresh"
 
@@ -184,3 +229,136 @@ class LogoutView(BrowserAPIView):
         except UniversityError:
             return None
         return UserSession.objects.select_related("user").filter(pk=tokens.session_id).first()
+
+
+# ------------------------------------------------------- Google / Yahoo / GitHub
+OAUTH_COOKIE = "gl_oauth"
+OAUTH_COOKIE_PATH = "/bff/auth/oauth/"
+OAUTH_MAX_AGE = 600  # The person has ten minutes to finish at the provider.
+_OAUTH_SALT = "gistloop.bff.oauth"
+
+
+def _oauth_provider(key: str) -> Any:
+    from university.core.exceptions import NotFound
+    from university.security.providers import get_identity_provider
+
+    from gistloop.bff.oauth import OAuthProvider
+
+    provider = get_identity_provider(key)  # NotFound when it isn't configured.
+    if not isinstance(provider, OAuthProvider):
+        raise NotFound("Unknown identity provider.")
+    return provider
+
+
+ProviderList = inline_serializer(
+    "OAuthProviderList",
+    fields={
+        "providers": serializers.ListField(
+            child=inline_serializer(
+                "OAuthProvider",
+                fields={
+                    "key": serializers.CharField(),
+                    "name": serializers.CharField(),
+                },
+            )
+        )
+    },
+)
+
+
+class OAuthProvidersView(APIView):
+    """The sign-in providers this deployment offers (the website shows a button for each)."""
+
+    authentication_classes: list[Any] = []
+    permission_classes = [permissions.AllowAny]
+    versioning_class = None
+
+    @extend_schema(responses=ProviderList)
+    def get(self, request: Request) -> Response:
+        from university.core.conf import university_settings
+
+        configured = university_settings.get("AUTH.IDENTITY_PROVIDERS", {}) or {}
+        providers = []
+        for key in configured:
+            try:
+                providers.append({"key": key, "name": _oauth_provider(key).name})
+            except UniversityError:
+                continue
+        return Response({"providers": providers})
+
+
+class OAuthStartView(BrowserAPIView):
+    throttle_scope = "login"
+
+    @extend_schema(
+        request=inline_serializer(
+            "OAuthStart",
+            fields={
+                "mode": serializers.ChoiceField(choices=["login", "link"], default="login"),
+            },
+        ),
+        responses=inline_serializer("OAuthRedirect", fields={"authorize_url": serializers.URLField()}),
+    )
+    def post(self, request: Request, provider: str) -> Response:
+        from django.core import signing
+
+        mode = request.data.get("mode", "login")
+        if mode not in {"login", "link"}:
+            mode = "login"
+        auth = _oauth_provider(provider).authorization_request()
+        response = _no_store(Response({"authorize_url": auth.url}))
+        payload = {"p": provider, "s": auth.state, "n": auth.nonce, "v": auth.verifier, "m": mode}
+        response.set_cookie(
+            OAUTH_COOKIE,
+            signing.dumps(payload, salt=_OAUTH_SALT),
+            max_age=OAUTH_MAX_AGE,
+            path=OAUTH_COOKIE_PATH,
+            secure=bool(getattr(settings, "GISTLOOP", {}).get("REFRESH_COOKIE_SECURE", True)),
+            httponly=True,
+            # Lax: the person comes back from the provider's site.
+            samesite="Lax",
+        )
+        return response
+
+
+class OAuthCompleteView(BrowserAPIView):
+    throttle_scope = "login"
+
+    @extend_schema(
+        request=inline_serializer(
+            "OAuthComplete",
+            fields={
+                "code": serializers.CharField(),
+                "state": serializers.CharField(),
+            },
+        ),
+        responses={
+            200: BrowserTokens,
+            201: inline_serializer("OAuthLinked", fields={"linked": serializers.BooleanField()}),
+        },
+    )
+    def post(self, request: Request, provider: str) -> Response:
+        from django.core import signing
+        from university.core.crypto import constant_time_equals
+        from university.security.services import external
+
+        failed = AuthenticationFailed("That sign-in link has expired. Please try again.", code="oauth_state_invalid")
+        try:
+            saved = signing.loads(request.COOKIES.get(OAUTH_COOKIE, ""), salt=_OAUTH_SALT, max_age=OAUTH_MAX_AGE)
+        except signing.BadSignature:
+            raise failed from None
+        state = str(request.data.get("state", ""))
+        if saved.get("p") != provider or not state or not constant_time_equals(state, str(saved.get("s", ""))):
+            raise failed
+        _oauth_provider(provider)
+        credential = {"code": request.data.get("code", ""), "code_verifier": saved["v"], "nonce": saved["n"]}
+        if saved.get("m") == "link":
+            authenticated = JWTAuthentication().authenticate(request)
+            if not authenticated:
+                raise AuthenticationFailed("Sign in first to link an account.", code="not_signed_in")
+            external.link_provider(authenticated[0], provider, credential)
+            response = _no_store(Response({"linked": True}, status=status.HTTP_201_CREATED))
+        else:
+            response = _signed_in(external.login_with_provider(provider, credential, meta=_meta(request)))
+        response.delete_cookie(OAUTH_COOKIE, path=OAUTH_COOKIE_PATH, samesite="Lax")
+        return response

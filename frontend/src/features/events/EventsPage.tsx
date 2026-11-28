@@ -73,6 +73,9 @@ export default function EventsPage() {
       actions={
         status === "signed-in" ? (
           <div className="cluster">
+            <ButtonLink to="/events/mine" variant="secondary">
+              Your events
+            </ButtonLink>
             <ButtonLink to="/events/tickets" variant="secondary">
               Your tickets
             </ButtonLink>

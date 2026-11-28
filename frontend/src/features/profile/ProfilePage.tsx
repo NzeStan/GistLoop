@@ -1,29 +1,127 @@
-import { CalendarDays, Link as LinkIcon, MessageCircleQuestion, MessagesSquare, Settings, Store } from "lucide-react";
-import { Link, Navigate, useParams } from "react-router";
+import { useRecordView } from "@/api/queries/analytics";
+import {
+  Ban,
+  CalendarDays,
+  GraduationCap,
+  Link as LinkIcon,
+  MessageCircleQuestion,
+  MessagesSquare,
+  MoreHorizontal,
+  Settings,
+  ShieldMinus,
+  Store,
+  VolumeX,
+} from "lucide-react";
+import { useState } from "react";
+import { Link, useParams } from "react-router";
 
 import { errorMessage } from "@/api/errors";
 import { useProfile } from "@/api/queries/account";
+import { type Relation, useRelationList, useSetRelation } from "@/api/queries/relationships";
 import { useFollow, useUserPosts } from "@/api/queries/social";
 import { useAuth } from "@/auth/AuthProvider";
 import { Seo } from "@/components/Seo";
+import { ShareMenu } from "@/components/ShareMenu";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { Dialog } from "@/components/ui/Dialog";
 import { PageLoader } from "@/components/ui/Spinner";
 import { ErrorState } from "@/components/ui/States";
 import { useToast } from "@/components/ui/Toast";
 import { PostList } from "@/features/feed/PostList";
 import { formatCount } from "@/lib/format";
+import { ROLE_LABELS } from "@/api/queries/institutions";
 import { safeUrl } from "@/lib/links";
 
 import styles from "./Profile.module.css";
+
+const RELATIONS: { relation: Relation; on: string; off: string; icon: typeof Ban; explain: string }[] = [
+  {
+    relation: "mute",
+    on: "Mute",
+    off: "Unmute",
+    icon: VolumeX,
+    explain: "You won't see their posts in your feeds. They won't know.",
+  },
+  {
+    relation: "restrict",
+    on: "Restrict",
+    off: "Unrestrict",
+    icon: ShieldMinus,
+    explain: "Their comments on your posts are only visible to them, and they can't message you without a request.",
+  },
+  {
+    relation: "block",
+    on: "Block",
+    off: "Unblock",
+    icon: Ban,
+    explain: "Neither of you can see or interact with the other. Following stops on both sides.",
+  },
+];
+
+/** Mute, restrict or block someone (each list is checked so the button says the right thing). */
+function SafetyMenu({ userId, name }: { userId: string; name: string }) {
+  const [open, setOpen] = useState(false);
+  const blocks = useRelationList("block", open);
+  const mutes = useRelationList("mute", open);
+  const restricts = useRelationList("restrict", open);
+  const set = useSetRelation();
+  const toast = useToast();
+  const lists = { block: blocks.data, mute: mutes.data, restrict: restricts.data };
+  return (
+    <>
+      <Button variant="ghost" icon aria-label={`More options for ${name}`} onClick={() => setOpen(true)}>
+        <MoreHorizontal size={18} />
+      </Button>
+      <Dialog open={open} onClose={() => setOpen(false)} title={`${name}: privacy and safety`}>
+        <ul className="stack" style={{ listStyle: "none", padding: 0 }}>
+          {RELATIONS.map(({ relation, on, off, icon: Icon, explain }) => {
+            const active = Boolean(lists[relation]?.some((u) => u.id === userId));
+            return (
+              <li key={relation} className="cluster" style={{ justifyContent: "space-between" }}>
+                <span style={{ flex: "1 1 14rem" }}>
+                  <strong>
+                    <Icon size={16} aria-hidden /> {active ? `${off} ${name}` : `${on} ${name}`}
+                  </strong>
+                  <br />
+                  <span className="muted" style={{ fontSize: "var(--text-sm)" }}>
+                    {explain}
+                  </span>
+                </span>
+                <Button
+                  size="sm"
+                  variant={relation === "block" && !active ? "danger" : "secondary"}
+                  loading={set.isPending && set.variables?.relation === relation}
+                  disabled={lists[relation] === undefined}
+                  onClick={() =>
+                    set.mutate(
+                      { userId, relation, on: !active },
+                      {
+                        onSuccess: () => toast.success(`${active ? off : on}${relation === "mute" ? "d" : "ed"}`),
+                        onError: (e) => toast.error(errorMessage(e)),
+                      },
+                    )
+                  }
+                >
+                  {active ? off : on}
+                </Button>
+              </li>
+            );
+          })}
+        </ul>
+      </Dialog>
+    </>
+  );
+}
 
 export default function ProfilePage() {
   const { handle } = useParams();
   const { me, status } = useAuth();
   const profile = useProfile(handle);
   const posts = useUserPosts(profile.data?.id);
+  useRecordView("users.user", profile.data?.id);
   const follow = useFollow();
   const toast = useToast();
 
@@ -69,6 +167,8 @@ export default function ProfilePage() {
               </ButtonLink>
             ) : status === "signed-in" ? (
               <>
+                <ShareMenu title={`${p.display_name} (@${p.handle})`} path={`/u/${p.handle}`} compact variant="ghost" />
+                <SafetyMenu userId={p.id} name={p.display_name} />
                 <ButtonLink
                   to={`/u/${p.handle}/ask`}
                   variant="ghost"
@@ -123,12 +223,24 @@ export default function ProfilePage() {
               <span>
                 <strong>{formatCount(social.posts_count)}</strong> posts
               </span>
-              <span>
+              <Link to={`/u/${p.handle}/followers`}>
                 <strong>{formatCount(social.followers_count)}</strong> followers
-              </span>
-              <span>
+              </Link>
+              <Link to={`/u/${p.handle}/following`}>
                 <strong>{formatCount(social.following_count)}</strong> following
-              </span>
+              </Link>
+            </div>
+          )}
+          {p.extras.institutions && p.extras.institutions.length > 0 && (
+            <div className={styles.communities}>
+              {p.extras.institutions.map((i) => (
+                <Link key={i.institution_id} to={`/schools/${i.institution_id}`}>
+                  <Badge tone="primary">
+                    <GraduationCap size={12} aria-hidden /> {i.short_name || i.name}
+                    {i.role !== "student" && ` · ${ROLE_LABELS[i.role] ?? i.role}`}
+                  </Badge>
+                </Link>
+              ))}
             </div>
           )}
           {p.extras.communities && p.extras.communities.length > 0 && (
@@ -152,10 +264,4 @@ export default function ProfilePage() {
       />
     </div>
   );
-}
-
-/** /creators/:handle (links from the creator module) → the person's profile. */
-export function CreatorRedirect() {
-  const { handle } = useParams();
-  return <Navigate to={`/u/${handle}`} replace />;
 }

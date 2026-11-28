@@ -88,13 +88,18 @@ export function usePost(id: string | undefined) {
   });
 }
 
-export function useComments(postId: string | undefined) {
+/** Top-level comments, or the replies to ``parent``. */
+export function useComments(postId: string | undefined, parent?: string) {
   return useQuery({
-    queryKey: socialKeys.comments(postId ?? ""),
+    queryKey: parent ? [...socialKeys.comments(postId ?? ""), parent] : socialKeys.comments(postId ?? ""),
     enabled: Boolean(postId),
     queryFn: async () =>
       asPage<Comment>(
-        await unwrap(api.GET("/api/v1/social/posts/{post_id}/comments/", { params: { path: { post_id: postId! } } })),
+        await unwrap(
+          api.GET("/api/v1/social/posts/{post_id}/comments/", {
+            params: { path: { post_id: postId! }, query: { parent: parent || undefined } },
+          }),
+        ),
       ).results,
   });
 }
@@ -106,6 +111,9 @@ export interface NewPost {
   comments_enabled?: boolean;
   /** Ids of images uploaded with {@link useUploadMedia}. */
   media?: string[];
+  poll?: { options: string[]; allows_multiple?: boolean; duration_hours?: number };
+  /** A place name, e.g. "UNILAG main library". */
+  location?: string;
 }
 
 /** Update a post wherever it's cached (feeds, profile lists, the detail view). */
@@ -213,11 +221,11 @@ export function useToggleRepost() {
 export function useAddComment(postId: string) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (body: string) =>
+    mutationFn: (input: string | { body: string; parent?: string }) =>
       unwrap(
         api.POST("/api/v1/social/posts/{post_id}/comments/", {
           params: { path: { post_id: postId } },
-          body: { body },
+          body: typeof input === "string" ? { body: input } : input,
         }),
       ),
     onSuccess: () => {
@@ -281,5 +289,39 @@ export function useReport() {
   return useMutation({
     mutationFn: (report: { content_type: string; object_id: string; reason: string; details?: string }) =>
       request("POST", "/api/v1/moderation/reports/", { body: report }),
+  });
+}
+
+/** Edit your post's text (within the edit window) or turn its comments on or off. */
+export function useEditPost() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, body }: { id: string; body: { body?: string; comments_enabled?: boolean } }) =>
+      request<Post>("PATCH", `/api/v1/social/posts/${id}/`, { body }),
+    onSuccess: (post) => {
+      patchPostEverywhere(queryClient, post.id, () => post);
+      void queryClient.invalidateQueries({ queryKey: socialKeys.post(post.id) });
+    },
+  });
+}
+
+export function useEditComment(postId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, body }: { id: string; body: string }) =>
+      unwrap(
+        api.PATCH("/api/v1/social/comments/{comment_id}/", { params: { path: { comment_id: id } }, body: { body } }),
+      ),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: socialKeys.comments(postId) }),
+  });
+}
+
+/** Repost with your own words on top. */
+export function useQuotePost() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, body }: { id: string; body: string }) =>
+      request<Post>("POST", `/api/v1/social/posts/${id}/repost/`, { body: { body } }),
+    onSuccess: () => queryClient.invalidateQueries({ predicate: isPostList }),
   });
 }

@@ -1,9 +1,11 @@
+import { can, usePermissions } from "@/api/queries/institutions";
 import {
   Bell,
   Bookmark,
   Briefcase,
   CalendarDays,
   Crown,
+  GraduationCap,
   Home,
   Inbox,
   LogOut,
@@ -15,7 +17,11 @@ import {
   Settings,
   ShoppingBag,
   TrendingUp,
+  Handshake,
+  ShieldCheck,
+  Sparkles,
   User,
+  Wallet,
   Users,
 } from "lucide-react";
 import { type FormEvent, Suspense, useEffect, useId, useRef, useState } from "react";
@@ -33,10 +39,21 @@ import { TrendingRail } from "@/features/discovery/TrendingRail";
 import styles from "./AppLayout.module.css";
 import { ThemeToggle } from "./ThemeToggle";
 
+/** In the account menu: places to make and run things. */
+const MORE = [
+  { to: "/studio", label: "Podcast studio", icon: Mic },
+  { to: "/creator", label: "Creator profile", icon: Sparkles },
+  { to: "/sponsorships", label: "Sponsorships", icon: Handshake },
+  { to: "/events/mine", label: "Your events", icon: CalendarDays },
+  { to: "/marketplace/sell", label: "Your shop", icon: ShoppingBag },
+  { to: "/settings/wallet", label: "Payments", icon: Wallet },
+];
+
 const NAV = [
   { to: "/feed", label: "Home", icon: Home },
   { to: "/messages", label: "Messages", icon: MessagesSquare },
   { to: "/notifications", label: "Notifications", icon: Bell },
+  { to: "/schools", label: "Schools", icon: GraduationCap },
   { to: "/communities", label: "Communities", icon: Users },
   { to: "/gist", label: "Anonymous gist", icon: MessageCircleQuestion },
   { to: "/inbox", label: "Anonymous inbox", icon: Inbox },
@@ -60,8 +77,22 @@ function UnreadBadge({ count }: { count: number }) {
   );
 }
 
+const STAFF_PERMISSIONS = [
+  "moderation.cases.view",
+  "syndication.review",
+  "promotions.review",
+  "payments.payouts.manage",
+  "creator.verify",
+  "users.suspend",
+  "audit.view",
+  "analytics.view",
+  "institution.manage",
+];
+
 function AccountMenu() {
   const { me, signOut } = useAuth();
+  const perms = usePermissions("platform", "");
+  const isStaff = STAFF_PERMISSIONS.some((code) => can(perms.data, code));
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -114,6 +145,16 @@ function AccountMenu() {
               <Icon size={16} aria-hidden /> {label}
             </Link>
           ))}
+          {MORE.map(({ to, label, icon: Icon }) => (
+            <Link key={to} role="menuitem" to={to} className={styles.menuItem} onClick={() => setOpen(false)}>
+              <Icon size={16} aria-hidden /> {label}
+            </Link>
+          ))}
+          {isStaff && (
+            <Link role="menuitem" to="/staff" className={styles.menuItem} onClick={() => setOpen(false)}>
+              <ShieldCheck size={16} aria-hidden /> Staff console
+            </Link>
+          )}
           <button
             role="menuitem"
             type="button"
@@ -235,6 +276,7 @@ export function AppLayout() {
       <nav className={styles.bottomNav} aria-label="App">
         {[
           { to: "/feed", label: "Home", icon: Home },
+          { to: "/schools", label: "Schools", icon: GraduationCap },
           { to: "/communities", label: "Communities", icon: Users },
           { to: "/messages", label: "Messages", icon: MessagesSquare },
           { to: "/notifications", label: "Alerts", icon: Bell },

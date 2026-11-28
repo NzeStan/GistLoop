@@ -16,6 +16,7 @@ import { startCheckout } from "@/api/queries/payments";
 import type { MarketOrder } from "@/api/types";
 import { PageHeader } from "@/components/PageHeader";
 import { Seo } from "@/components/Seo";
+import { ShopSettings } from "@/features/marketplace/ShopPages";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -126,6 +127,7 @@ export function SellPage() {
         title="Sell something"
         description="List it in a minute. Online payments are held until the buyer confirms."
       />
+      <ShopSettings />
       <Card>
         <form className={styles.form} onSubmit={(e) => void onSubmit(e)} noValidate>
           <Field label="Photos" hint={`Up to ${MAX_PHOTOS}. The first one is the cover.`}>
@@ -349,7 +351,9 @@ function OrderCard({ order: o, role }: { order: MarketOrder; role: "buyer" | "se
             {formatMoney(o.total_minor, o.currency)} · {humanize(o.fulfilment)} · {role === "buyer" ? "from" : "to"}{" "}
             {other?.display_name ?? "someone"} · {timeAgo(o.created_at)}
           </span>
-          <span className="muted">Ref {o.reference}</span>
+          <span className="muted">
+            Ref {o.reference} · <Link to={`/marketplace/orders/${o.id}`}>Details</Link>
+          </span>
         </div>
         <div className="cluster">
           <Badge tone={STATUS_TONE[o.status] ?? "neutral"}>{humanize(o.status)}</Badge>

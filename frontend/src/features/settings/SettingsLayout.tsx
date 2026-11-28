@@ -8,9 +8,13 @@ import styles from "./Settings.module.css";
 const SECTIONS = [
   { to: "/settings", label: "Profile", end: true },
   { to: "/settings/account", label: "Account" },
+  { to: "/settings/schools", label: "Schools" },
   { to: "/settings/privacy", label: "Privacy" },
+  { to: "/settings/people", label: "People" },
   { to: "/settings/notifications", label: "Notifications" },
   { to: "/settings/security", label: "Security" },
+  { to: "/settings/moderation", label: "Reports" },
+  { to: "/settings/wallet", label: "Payments" },
   { to: "/settings/data", label: "Your data" },
 ];
 

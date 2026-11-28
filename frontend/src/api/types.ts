@@ -152,7 +152,7 @@ export interface ProfileExtras {
   };
   communities?: { id: string; name: string; slug: string; role: string }[];
   seller?: { store_name: string; rating: number | null; sales_count: number };
-  institutions?: unknown[];
+  institutions?: { institution_id: string; name: string; short_name: string; role: string }[];
 }
 
 /** Lists may arrive paginated or (for small collections) as plain arrays. */

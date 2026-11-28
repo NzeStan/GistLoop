@@ -1,16 +1,43 @@
-import { Bookmark, Flag, Heart, Megaphone, MessageCircle, MoreHorizontal, Repeat2, Share2, Trash2 } from "lucide-react";
+import {
+  Bookmark,
+  EyeOff,
+  Flag,
+  Heart,
+  MapPin,
+  Megaphone,
+  MessageCircle,
+  MessageSquareOff,
+  MoreHorizontal,
+  Pencil,
+  Quote,
+  Repeat2,
+  RotateCcw,
+  Trash2,
+} from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 
 import { errorMessage } from "@/api/errors";
-import { useDeletePost, useToggleBookmark, useToggleReaction, useToggleRepost, useVote } from "@/api/queries/social";
+import { can, usePermissions } from "@/api/queries/institutions";
+import { useModerateContent } from "@/api/queries/relationships";
+import {
+  useDeletePost,
+  useEditPost,
+  useQuotePost,
+  useToggleBookmark,
+  useToggleReaction,
+  useToggleRepost,
+  useVote,
+} from "@/api/queries/social";
 import type { Post } from "@/api/types";
 import { useAuth } from "@/auth/AuthProvider";
 import { RichText } from "@/components/RichText";
+import { ShareMenu } from "@/components/ShareMenu";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Dialog } from "@/components/ui/Dialog";
+import { Alert, Field, Textarea } from "@/components/ui/Form";
 import { Skeleton } from "@/components/ui/Spinner";
 import { useToast } from "@/components/ui/Toast";
 import { formatCount, formatDateTime, timeAgo } from "@/lib/format";
@@ -24,6 +51,11 @@ function PollView({ post }: { post: Post }) {
   const poll = post.poll!;
   const voted = poll.options.some((o) => o.voted);
   const showResults = voted || poll.closed;
+  const [picked, setPicked] = useState<string[]>([]);
+  const choose = (id: string) =>
+    poll.allows_multiple
+      ? setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]))
+      : vote.mutate([id], { onError: (e) => toast.error(errorMessage(e)) });
   return (
     <div className={styles.poll}>
       {poll.options.map((option) => {
@@ -34,8 +66,8 @@ function PollView({ post }: { post: Post }) {
             type="button"
             className={styles.pollOption}
             disabled={showResults || vote.isPending}
-            aria-pressed={option.voted}
-            onClick={() => vote.mutate([option.id], { onError: (e) => toast.error(errorMessage(e)) })}
+            aria-pressed={option.voted || picked.includes(option.id)}
+            onClick={() => choose(option.id)}
           >
             {showResults && <span className={styles.pollBar} style={{ width: `${share}%` }} aria-hidden />}
             <span>{option.text}</span>
@@ -43,10 +75,82 @@ function PollView({ post }: { post: Post }) {
           </button>
         );
       })}
+      {poll.allows_multiple && !showResults && (
+        <Button
+          size="sm"
+          disabled={picked.length === 0}
+          loading={vote.isPending}
+          onClick={() => vote.mutate(picked, { onError: (e) => toast.error(errorMessage(e)) })}
+        >
+          Vote
+        </Button>
+      )}
       <span className="muted" style={{ fontSize: "var(--text-xs)" }}>
-        {formatCount(poll.total_votes)} votes{poll.closed ? " · Final results" : ""}
+        {formatCount(poll.total_votes)} votes
+        {poll.closed ? " · Final results" : poll.closes_at ? ` · Closes ${timeAgo(poll.closes_at)}` : ""}
       </span>
     </div>
+  );
+}
+
+function EditDialog({ post, open, onClose }: { post: Post; open: boolean; onClose: () => void }) {
+  const edit = useEditPost();
+  const toast = useToast();
+  const [body, setBody] = useState(post.body);
+  return (
+    <Dialog open={open} onClose={onClose} title="Edit post">
+      <form
+        className="stack"
+        onSubmit={(e) => {
+          e.preventDefault();
+          edit.mutate({ id: post.id, body: { body } }, { onSuccess: () => (onClose(), toast.success("Post updated")) });
+        }}
+      >
+        <Field label="Your post">
+          <Textarea rows={5} maxLength={2000} value={body} onChange={(e) => setBody(e.target.value)} />
+        </Field>
+        {edit.isError && <Alert tone="error">{errorMessage(edit.error)}</Alert>}
+        <div className="cluster" style={{ justifyContent: "flex-end" }}>
+          <Button variant="ghost" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button type="submit" loading={edit.isPending} disabled={!body.trim()}>
+            Save
+          </Button>
+        </div>
+      </form>
+    </Dialog>
+  );
+}
+
+function QuoteDialog({ post, open, onClose }: { post: Post; open: boolean; onClose: () => void }) {
+  const quote = useQuotePost();
+  const toast = useToast();
+  const [body, setBody] = useState("");
+  return (
+    <Dialog open={open} onClose={onClose} title="Quote this post">
+      <form
+        className="stack"
+        onSubmit={(e) => {
+          e.preventDefault();
+          quote.mutate({ id: post.id, body }, { onSuccess: () => (onClose(), setBody(""), toast.success("Posted")) });
+        }}
+      >
+        <Field label="Add your take">
+          <Textarea rows={3} maxLength={2000} value={body} onChange={(e) => setBody(e.target.value)} />
+        </Field>
+        <div className={styles.repost}>
+          <strong>{post.author.display_name}</strong>
+          <span className="muted"> · {post.body.slice(0, 160)}</span>
+        </div>
+        {quote.isError && <Alert tone="error">{errorMessage(quote.error)}</Alert>}
+        <div className="cluster" style={{ justifyContent: "flex-end" }}>
+          <Button type="submit" loading={quote.isPending} disabled={!body.trim()}>
+            Post
+          </Button>
+        </div>
+      </form>
+    </Dialog>
   );
 }
 
@@ -58,27 +162,21 @@ export function PostCard({ post, linkToDetail = true }: { post: Post; linkToDeta
   const bookmark = useToggleBookmark();
   const repost = useToggleRepost();
   const remove = useDeletePost();
+  const edit = useEditPost();
+  const moderate = useModerateContent();
+  const signedIn = status === "signed-in";
+  const perms = usePermissions("platform", "", signedIn);
   const [menu, setMenu] = useState(false);
   const [reporting, setReporting] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [quoting, setQuoting] = useState(false);
 
-  const signedIn = status === "signed-in";
   const requireAuth = (action: () => void) => () => (signedIn ? action() : navigate(`/login?next=/posts/${post.id}`));
   const href = `/posts/${post.id}`;
   const profile = post.author.handle ? `/u/${post.author.handle}` : undefined;
-
-  const share = async () => {
-    const url = `${window.location.origin}${href}`;
-    try {
-      if (navigator.share) await navigator.share({ url, title: `${post.author.display_name} on GistLoop` });
-      else {
-        await navigator.clipboard.writeText(url);
-        toast.success("Link copied");
-      }
-    } catch {
-      /* Share sheet dismissed */
-    }
-  };
+  const moderator = can(perms.data, "social.content.moderate");
+  const hidden = post.status === "hidden";
 
   return (
     <article className={styles.card} aria-labelledby={`post-${post.id}-author`}>
@@ -122,6 +220,29 @@ export function PostCard({ post, linkToDetail = true }: { post: Post; linkToDeta
           <div className="cluster" style={{ "--cluster-gap": "var(--space-2)" } as React.CSSProperties}>
             {post.viewer.is_author ? (
               <>
+                {!post.is_repost && (
+                  <Button size="sm" variant="secondary" leading={<Pencil size={14} />} onClick={() => setEditing(true)}>
+                    Edit
+                  </Button>
+                )}
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  leading={<MessageSquareOff size={14} />}
+                  loading={edit.isPending}
+                  onClick={() =>
+                    edit.mutate(
+                      { id: post.id, body: { comments_enabled: !post.comments_enabled } },
+                      {
+                        onSuccess: () =>
+                          toast.success(post.comments_enabled ? "Comments turned off" : "Comments turned on"),
+                        onError: (e) => toast.error(errorMessage(e)),
+                      },
+                    )
+                  }
+                >
+                  {post.comments_enabled ? "Turn off comments" : "Turn on comments"}
+                </Button>
                 {post.visibility === "public" && !post.is_repost && (
                   <ButtonLink
                     size="sm"
@@ -151,16 +272,44 @@ export function PostCard({ post, linkToDetail = true }: { post: Post; linkToDeta
                 Report
               </Button>
             )}
+            {moderator && (
+              <Button
+                size="sm"
+                variant="secondary"
+                leading={hidden ? <RotateCcw size={14} /> : <EyeOff size={14} />}
+                loading={moderate.isPending}
+                onClick={() =>
+                  moderate.mutate(
+                    { kind: "posts", id: post.id, action: hidden ? "restore" : "hide" },
+                    {
+                      onSuccess: () => toast.success(hidden ? "Restored" : "Hidden from everyone"),
+                      onError: (e) => toast.error(errorMessage(e)),
+                    },
+                  )
+                }
+              >
+                {hidden ? "Restore (moderator)" : "Hide (moderator)"}
+              </Button>
+            )}
           </div>
         )}
 
         {post.status && post.status !== "published" && (
           <Badge tone="warning" className={styles.status}>
-            {post.status === "hidden" ? "Hidden by moderators" : post.status}
+            {hidden ? "Hidden by moderators" : post.status}
           </Badge>
         )}
 
         {post.body && <RichText text={post.body} className={styles.body} />}
+
+        {post.location && (
+          <span
+            className={styles.handle}
+            style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-1)" }}
+          >
+            <MapPin size={14} aria-hidden /> {post.location}
+          </span>
+        )}
 
         {post.media.length > 0 && (
           <div className={styles.media}>
@@ -198,6 +347,16 @@ export function PostCard({ post, linkToDetail = true }: { post: Post; linkToDeta
           >
             <Repeat2 size={18} aria-hidden /> {formatCount(post.counts.reposts)}
           </button>
+          {!post.is_repost && (
+            <button
+              type="button"
+              className={styles.action}
+              aria-label="Quote"
+              onClick={requireAuth(() => setQuoting(true))}
+            >
+              <Quote size={16} aria-hidden />
+            </button>
+          )}
           <button
             type="button"
             className={styles.action}
@@ -216,13 +375,21 @@ export function PostCard({ post, linkToDetail = true }: { post: Post; linkToDeta
           >
             <Bookmark size={18} aria-hidden />
           </button>
-          <button type="button" className={styles.action} aria-label="Share" onClick={share}>
-            <Share2 size={18} aria-hidden />
-          </button>
+          {post.visibility === "public" && (
+            <ShareMenu
+              compact
+              variant="ghost"
+              title={`${post.author.display_name} on GistLoop`}
+              text={post.body.slice(0, 120)}
+              path={href}
+            />
+          )}
         </div>
       </div>
 
       <ReportDialog open={reporting} onClose={() => setReporting(false)} contentType="social.post" objectId={post.id} />
+      {editing && <EditDialog post={post} open={editing} onClose={() => setEditing(false)} />}
+      {quoting && <QuoteDialog post={post} open={quoting} onClose={() => setQuoting(false)} />}
       <Dialog open={confirmDelete} onClose={() => setConfirmDelete(false)} title="Delete this post?">
         <div className="stack">
           <p className="muted">This can't be undone. It will disappear from your profile and everyone's feeds.</p>

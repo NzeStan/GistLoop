@@ -1,3 +1,8 @@
+import { UserPlus } from "lucide-react";
+
+import { useAddParticipants } from "@/api/queries/staff";
+import { PersonPicker } from "@/components/PersonPicker";
+import { Dialog } from "@/components/ui/Dialog";
 import { Archive, BellOff, LogOut, MessagesSquare, PenSquare, X } from "lucide-react";
 import { type FormEvent, type KeyboardEvent, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router";
@@ -279,6 +284,31 @@ export function NewMessagePage() {
 }
 
 /** /messages/:conversationId: one conversation. */
+function AddPeople({ conversationId }: { conversationId: string }) {
+  const add = useAddParticipants(conversationId);
+  const toast = useToast();
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button size="sm" variant="ghost" leading={<UserPlus size={14} />} onClick={() => setOpen(true)}>
+        Add people
+      </Button>
+      <Dialog open={open} onClose={() => setOpen(false)} title="Add people to the group">
+        <PersonPicker
+          label="Who?"
+          action="Add"
+          onPick={(p) =>
+            add.mutate([p.id], {
+              onSuccess: () => toast.success(`${p.display_name} added`),
+              onError: (e) => toast.error(errorMessage(e)),
+            })
+          }
+        />
+      </Dialog>
+    </>
+  );
+}
+
 export function ConversationPage() {
   const { conversationId } = useParams();
   const { me } = useAuth();
@@ -349,6 +379,7 @@ export function ConversationPage() {
           >
             {c.archived ? "Unarchive" : "Archive"}
           </Button>
+          {c.kind === "group" && <AddPeople conversationId={c.id} />}
           {c.kind === "group" && (
             <Button
               size="sm"

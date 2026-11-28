@@ -1,3 +1,4 @@
+import { useRecordView } from "@/api/queries/analytics";
 import { Lock, ShieldCheck, Users } from "lucide-react";
 import { useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router";
@@ -7,6 +8,7 @@ import { useCommunity, useJoinCommunity } from "@/api/queries/communities";
 import { useAudiencePosts } from "@/api/queries/social";
 import { useAuth } from "@/auth/AuthProvider";
 import { Seo } from "@/components/Seo";
+import { ShareMenu } from "@/components/ShareMenu";
 import { Badge } from "@/components/ui/Badge";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -32,6 +34,7 @@ export default function CommunityPage() {
   const initial = params.get("tab");
   const [tab, setTab] = useState<Tab>(initial === "gist" || initial === "about" ? initial : "posts");
   const posts = useAudiencePosts("community", communityId);
+  useRecordView("community.community", community.data?.id);
 
   if (community.isPending) return <PageLoader />;
   if (community.isError) return <ErrorState error={community.error} onRetry={() => void community.refetch()} />;
@@ -88,24 +91,32 @@ export default function CommunityPage() {
               </div>
             </div>
           </div>
-          {status === "signed-in" ? (
-            <Button
-              variant={member ? "secondary" : "primary"}
-              loading={join.isPending}
-              disabled={pending}
-              onClick={toggle}
-            >
-              {member
-                ? "Leave"
-                : pending
-                  ? "Request pending"
-                  : c.privacy === "public"
-                    ? "Join community"
-                    : "Ask to join"}
-            </Button>
-          ) : (
-            <ButtonLink to={`/login?next=/c/${c.id}`}>Sign in to join</ButtonLink>
-          )}
+          <div className="cluster">
+            <ShareMenu title={c.name} path={`/c/${c.id}`} />
+            {["owner", "admin", "moderator"].includes(viewer.role ?? "") && (
+              <ButtonLink to={`/c/${c.id}/manage`} variant="secondary">
+                Manage
+              </ButtonLink>
+            )}
+            {status === "signed-in" ? (
+              <Button
+                variant={member ? "secondary" : "primary"}
+                loading={join.isPending}
+                disabled={pending}
+                onClick={toggle}
+              >
+                {member
+                  ? "Leave"
+                  : pending
+                    ? "Request pending"
+                    : c.privacy === "public"
+                      ? "Join community"
+                      : "Ask to join"}
+              </Button>
+            ) : (
+              <ButtonLink to={`/login?next=/c/${c.id}`}>Sign in to join</ButtonLink>
+            )}
+          </div>
         </div>
         {c.description && (
           <p className="muted" style={{ padding: "0 var(--space-6) var(--space-5)" }}>
@@ -148,7 +159,7 @@ export default function CommunityPage() {
               </p>
             </Card>
           ) : member ? (
-            <GistBoard communityId={c.id} canPost={member} />
+            <GistBoard audience={{ type: "community", id: c.id }} canPost={member} />
           ) : (
             <Card>
               <p>Anonymous gist is for members only. Join {c.name} to read and share.</p>

@@ -43,8 +43,17 @@ export function toApiError(status: number, body: unknown): ApiError {
   return new ApiError(message, status, error?.code ?? `http_${status}`, error?.details ?? {}, error?.request_id);
 }
 
+/** An error whose message is written for people (shown as-is by {@link errorMessage}). */
+export class UserFacingError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UserFacingError";
+  }
+}
+
 export function errorMessage(error: unknown): string {
   if (error instanceof ApiError) return error.message;
+  if (error instanceof UserFacingError) return error.message;
   if (error instanceof Error && error.name === "AuthError") return error.message;
   if (error instanceof TypeError) return FRIENDLY[0]!;
   return "Something went wrong. Please try again.";

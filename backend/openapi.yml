@@ -8956,6 +8956,43 @@ paths:
                 items:
                   $ref: '#/components/schemas/Permission'
           description: ''
+  /api/v1/platform/restrictions/:
+    get:
+      operationId: platform_restrictions_list
+      description: |-
+        People currently stopped from posting or commenting (lift them with
+        ``POST /api/v1/moderation/restrictions/{id}/lift/``).
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: user
+        schema:
+          type: string
+        description: Only this user (id).
+      tags:
+      - platform
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRestrictionList'
+          description: ''
   /api/v1/podcasts/:
     get:
       operationId: podcasts_list
@@ -11883,6 +11920,257 @@ paths:
                 items:
                   $ref: '#/components/schemas/SubscriptionPlan'
           description: ''
+  /api/v1/syndication/anonymous/{post_id}/share/:
+    post:
+      operationId: syndication_anonymous_share_create
+      description: The author of an anonymous post asks for it to be shared on GistLoop's
+        social media (or withdraws).
+      parameters:
+      - in: path
+        name: post_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - syndication
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialShareStatus'
+          description: ''
+    delete:
+      operationId: syndication_anonymous_share_destroy
+      description: The author of an anonymous post asks for it to be shared on GistLoop's
+        social media (or withdraws).
+      parameters:
+      - in: path
+        name: post_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - syndication
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/syndication/anonymous/share-status/:
+    get:
+      operationId: syndication_anonymous_share_status_retrieve
+      description: Share status of the viewer's own anonymous posts (other posts are
+        never reported).
+      parameters:
+      - in: query
+        name: ids
+        schema:
+          type: string
+        description: Comma-separated post IDs (up to 100).
+        required: true
+      tags:
+      - syndication
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialShareStatus'
+          description: ''
+  /api/v1/syndication/channels/:
+    get:
+      operationId: syndication_channels_list
+      tags:
+      - syndication
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SocialChannel'
+          description: ''
+  /api/v1/syndication/items/:
+    get:
+      operationId: syndication_items_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - approved
+          - pending_review
+          - rejected
+          - sent
+          - taken_down
+      tags:
+      - syndication
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSocialPostList'
+          description: ''
+  /api/v1/syndication/items/{item_id}/approve/:
+    post:
+      operationId: syndication_items_approve_create
+      parameters:
+      - in: path
+        name: item_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - syndication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialNoteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SocialNoteRequest'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialPost'
+          description: ''
+  /api/v1/syndication/items/{item_id}/reject/:
+    post:
+      operationId: syndication_items_reject_create
+      parameters:
+      - in: path
+        name: item_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - syndication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialNoteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SocialNoteRequest'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialPost'
+          description: ''
+  /api/v1/syndication/items/{item_id}/retry/:
+    post:
+      operationId: syndication_items_retry_create
+      parameters:
+      - in: path
+        name: item_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - syndication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialNoteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SocialNoteRequest'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialPost'
+          description: ''
+  /api/v1/syndication/items/{item_id}/take-down/:
+    post:
+      operationId: syndication_items_take_down_create
+      parameters:
+      - in: path
+        name: item_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - syndication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialNoteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SocialNoteRequest'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialPost'
+          description: ''
   /api/v1/trending/:
     get:
       operationId: trending_list
@@ -12178,6 +12466,236 @@ paths:
               schema:
                 $ref: '#/components/schemas/EventsVenue'
           description: ''
+  /api/v1/youtube/episodes/:
+    get:
+      operationId: youtube_episodes_list
+      description: The YouTube videos of a podcast's episodes that the viewer can
+        see.
+      parameters:
+      - in: query
+        name: podcast
+        schema:
+          type: string
+        description: Podcast ID.
+        required: true
+      tags:
+      - youtube
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/YouTubeEpisodeVideo'
+          description: ''
+  /api/v1/youtube/episodes/{episode_id}/:
+    get:
+      operationId: youtube_episodes_retrieve
+      parameters:
+      - in: path
+        name: episode_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - youtube
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YouTubeEpisodeVideo'
+          description: ''
+    put:
+      operationId: youtube_episodes_update
+      parameters:
+      - in: path
+        name: episode_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - youtube
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/YouTubeEpisodeVideoWriteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/YouTubeEpisodeVideoWriteRequest'
+        required: true
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YouTubeEpisodeVideo'
+          description: ''
+    delete:
+      operationId: youtube_episodes_destroy
+      parameters:
+      - in: path
+        name: episode_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - youtube
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/youtube/episodes/{episode_id}/publish/:
+    post:
+      operationId: youtube_episodes_publish_create
+      description: Publish an episode, including one whose only media is a YouTube
+        video.
+      parameters:
+      - in: path
+        name: episode_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - youtube
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PodcastPublishRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PodcastPublishRequest'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PodcastEpisode'
+          description: ''
+  /api/v1/youtube/podcasts/{podcast_id}/channel/:
+    get:
+      operationId: youtube_podcasts_channel_retrieve
+      parameters:
+      - in: path
+        name: podcast_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - youtube
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YouTubeChannel'
+          description: ''
+    put:
+      operationId: youtube_podcasts_channel_update
+      parameters:
+      - in: path
+        name: podcast_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - youtube
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/YouTubeChannelWriteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/YouTubeChannelWriteRequest'
+        required: true
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YouTubeChannel'
+          description: ''
+    delete:
+      operationId: youtube_podcasts_channel_destroy
+      parameters:
+      - in: path
+        name: podcast_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - youtube
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/youtube/podcasts/{podcast_id}/channel/sync/:
+    post:
+      operationId: youtube_podcasts_channel_sync_create
+      description: Import new uploads now instead of waiting for the hourly check.
+      parameters:
+      - in: path
+        name: podcast_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - youtube
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YouTubeSyncResult'
+          description: ''
   /bff/auth/login/:
     post:
       operationId: bff_auth_login_create
@@ -12246,6 +12764,138 @@ paths:
       responses:
         '204':
           description: No response body
+  /bff/auth/oauth/{provider}/complete/:
+    post:
+      operationId: bff_auth_oauth_complete_create
+      description: Reads no ambient credentials except the refresh cookie, which every
+        view checks itself.
+      parameters:
+      - in: path
+        name: provider
+        schema:
+          type: string
+        required: true
+      tags:
+      - bff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthCompleteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OAuthCompleteRequest'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrowserTokens'
+          description: ''
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthLinked'
+          description: ''
+  /bff/auth/oauth/{provider}/start/:
+    post:
+      operationId: bff_auth_oauth_start_create
+      description: Reads no ambient credentials except the refresh cookie, which every
+        view checks itself.
+      parameters:
+      - in: path
+        name: provider
+        schema:
+          type: string
+        required: true
+      tags:
+      - bff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthStartRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OAuthStartRequest'
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthRedirect'
+          description: ''
+  /bff/auth/oauth/providers/:
+    get:
+      operationId: bff_auth_oauth_providers_retrieve
+      description: The sign-in providers this deployment offers (the website shows
+        a button for each).
+      tags:
+      - bff
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthProviderList'
+          description: ''
+  /bff/auth/passwordless/:
+    post:
+      operationId: bff_auth_passwordless_create
+      description: Email (or text) me a sign-in code instead of using a password.
+      tags:
+      - bff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordlessRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordlessRequestRequest'
+        required: true
+      security:
+      - {}
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrowserCodeSent'
+          description: ''
+  /bff/auth/passwordless/verify/:
+    post:
+      operationId: bff_auth_passwordless_verify_create
+      description: Reads no ambient credentials except the refresh cookie, which every
+        view checks itself.
+      tags:
+      - bff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeCompleteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChallengeCompleteRequest'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrowserTokens'
+          description: ''
   /bff/auth/refresh/:
     post:
       operationId: bff_auth_refresh_create
@@ -13322,6 +13972,17 @@ components:
           description: JPEG, PNG or WebP, up to 5 MB. Cropped square; metadata removed.
       required:
       - file
+    BrowserCodeSent:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+          format: uuid
+        channel:
+          type: string
+      required:
+      - challenge_id
+      - channel
     BrowserTokens:
       type: object
       properties:
@@ -18233,6 +18894,14 @@ components:
       description: |-
         * `email` - Email
         * `sms` - SMS
+    ModeEnum:
+      enum:
+      - login
+      - link
+      type: string
+      description: |-
+        * `login` - login
+        * `link` - link
     ModerationActionEnum:
       enum:
       - dismiss
@@ -18557,6 +19226,59 @@ components:
           type: integer
       required:
       - updated
+    OAuthCompleteRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+        state:
+          type: string
+          minLength: 1
+      required:
+      - code
+      - state
+    OAuthLinked:
+      type: object
+      properties:
+        linked:
+          type: boolean
+      required:
+      - linked
+    OAuthProvider:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+      required:
+      - key
+      - name
+    OAuthProviderList:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OAuthProvider'
+      required:
+      - providers
+    OAuthRedirect:
+      type: object
+      properties:
+        authorize_url:
+          type: string
+          format: uri
+      required:
+      - authorize_url
+    OAuthStartRequest:
+      type: object
+      properties:
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/ModeEnum'
+          default: login
     Opportunity:
       type: object
       description: ModelSerializer with explicit-fields enforcement.
@@ -19798,6 +20520,29 @@ components:
       - next
       - previous
       - results
+    PaginatedRestrictionList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Restriction'
     PaginatedRoleList:
       type: object
       required:
@@ -19821,6 +20566,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Role'
+    PaginatedSocialPostList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialPost'
     PaginatedUserSummaryList:
       type: object
       properties:
@@ -22832,6 +23600,36 @@ components:
           type: string
           default: ''
           maxLength: 20000
+    Restriction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        user:
+          $ref: '#/components/schemas/RestrictionPerson'
+        kind:
+          type: string
+        reason:
+          type: string
+        ends_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        action_id:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - action_id
+      - created_at
+      - ends_at
+      - id
+      - kind
+      - reason
+      - user
     RestrictionKindEnum:
       enum:
       - posting
@@ -22842,6 +23640,21 @@ components:
         * `posting` - Cannot create posts
         * `commenting` - Cannot comment
         * `all` - Cannot create any content
+    RestrictionPerson:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        handle:
+          type: string
+          nullable: true
+        display_name:
+          type: string
+      required:
+      - display_name
+      - handle
+      - id
     ReviewRequest:
       type: object
       properties:
@@ -23282,6 +24095,46 @@ components:
       required:
       - id
       - type
+    SocialChannel:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        enabled:
+          type: boolean
+        video_only:
+          type: boolean
+      required:
+      - enabled
+      - key
+      - name
+      - video_only
+    SocialDelivery:
+      type: object
+      properties:
+        channel:
+          type: string
+        status:
+          type: string
+        external_url:
+          type: string
+        error:
+          type: string
+        attempts:
+          type: integer
+        sent_at:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - attempts
+      - channel
+      - error
+      - external_url
+      - sent_at
+      - status
     SocialFeedPage:
       type: object
       description: 'A page of a feed: cursor feeds send ``next``/``previous``; ranked
@@ -23317,6 +24170,12 @@ components:
       required:
       - handle
       - id
+    SocialNoteRequest:
+      type: object
+      properties:
+        note:
+          type: string
+          maxLength: 255
     SocialPoll:
       type: object
       properties:
@@ -23361,6 +24220,57 @@ components:
       - text
       - vote_count
       - voted
+    SocialPost:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        kind:
+          $ref: '#/components/schemas/SocialPostKindEnum'
+        object_id:
+          type: string
+        title:
+          type: string
+        text:
+          type: string
+        link_url:
+          type: string
+        card_url:
+          type: string
+          readOnly: true
+        has_video:
+          type: boolean
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/SocialPostStatusEnum'
+        review_note:
+          type: string
+        reviewed_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        deliveries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialDelivery'
+      required:
+      - card_url
+      - created_at
+      - deliveries
+      - has_video
+      - id
+      - kind
+      - link_url
+      - object_id
+      - review_note
+      - reviewed_at
+      - status
+      - text
+      - title
     SocialPostCounts:
       type: object
       properties:
@@ -23374,6 +24284,28 @@ components:
       - comments
       - reactions
       - reposts
+    SocialPostKindEnum:
+      enum:
+      - anonymous_post
+      - podcast_episode
+      type: string
+      description: |-
+        * `anonymous_post` - anonymous_post
+        * `podcast_episode` - podcast_episode
+    SocialPostStatusEnum:
+      enum:
+      - pending_review
+      - approved
+      - sent
+      - rejected
+      - taken_down
+      type: string
+      description: |-
+        * `pending_review` - Waiting for review
+        * `approved` - Approved (sending)
+        * `sent` - Sent
+        * `rejected` - Rejected
+        * `taken_down` - Taken down
     SocialPostViewer:
       type: object
       properties:
@@ -23444,6 +24376,15 @@ components:
       required:
       - id
       - unavailable
+    SocialShareStatus:
+      type: object
+      properties:
+        statuses:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+      - statuses
     SocialVisibilityEnum:
       enum:
       - public
@@ -23885,6 +24826,89 @@ components:
         * `on_site` - On site
         * `remote` - Remote
         * `hybrid` - Hybrid
+    YouTubeChannel:
+      type: object
+      properties:
+        channel_id:
+          type: string
+          readOnly: true
+        channel_url:
+          type: string
+          readOnly: true
+        auto_import:
+          type: boolean
+          readOnly: true
+        import_since:
+          type: string
+          format: date-time
+          readOnly: true
+        last_synced_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        last_error:
+          type: string
+          readOnly: true
+      required:
+      - auto_import
+      - channel_id
+      - channel_url
+      - import_since
+      - last_error
+      - last_synced_at
+    YouTubeChannelWriteRequest:
+      type: object
+      properties:
+        channel:
+          type: string
+          minLength: 1
+          description: The channel ID (UC...) or a /channel/UC... link.
+          maxLength: 200
+        auto_import:
+          type: boolean
+          default: true
+      required:
+      - channel
+    YouTubeEpisodeVideo:
+      type: object
+      properties:
+        episode_id:
+          type: string
+          format: uuid
+          readOnly: true
+        video_id:
+          type: string
+          readOnly: true
+        watch_url:
+          type: string
+          format: uri
+          readOnly: true
+        imported:
+          type: boolean
+          readOnly: true
+      required:
+      - episode_id
+      - imported
+      - video_id
+      - watch_url
+    YouTubeEpisodeVideoWriteRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          minLength: 1
+          description: A YouTube link (watch, youtu.be, shorts or live) or ID.
+          maxLength: 300
+      required:
+      - url
+    YouTubeSyncResult:
+      type: object
+      properties:
+        imported:
+          type: integer
+      required:
+      - imported
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

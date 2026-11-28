@@ -45,7 +45,7 @@ describe("sign in", () => {
     renderLogin();
     await userEvent.click(screen.getByRole("button", { name: "Sign in" }));
     expect(await screen.findByText("Enter your email or username")).toBeInTheDocument();
-    expect(fetchMock).not.toHaveBeenCalled();
+    expect(fetchMock.mock.calls.some(([url]) => String(url).includes("/bff/auth/login/"))).toBe(false);
   });
 
   it("explains wrong credentials without saying which part was wrong", async () => {

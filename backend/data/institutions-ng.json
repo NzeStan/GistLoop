@@ -1,0 +1,3702 @@
+[
+ {
+  "name": "University of Ibadan",
+  "short_name": "UI",
+  "slug": "ui",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Oyo",
+  "city": "Ibadan",
+  "website": "https://ui.edu.ng",
+  "domains": [
+   {
+    "domain": "ui.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ibadan"
+   }
+  ]
+ },
+ {
+  "name": "University of Lagos",
+  "short_name": "UNILAG",
+  "slug": "unilag",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Lagos",
+  "city": "Akoka",
+  "website": "https://unilag.edu.ng",
+  "domains": [
+   {
+    "domain": "unilag.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Akoka campus",
+    "slug": "akoka",
+    "is_main": true,
+    "city": "Akoka"
+   },
+   {
+    "name": "College of Medicine, Idi-Araba",
+    "slug": "idi-araba",
+    "is_main": false,
+    "city": ""
+   }
+  ]
+ },
+ {
+  "name": "University of Nigeria, Nsukka",
+  "short_name": "UNN",
+  "slug": "unn",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Enugu",
+  "city": "Nsukka",
+  "website": "https://unn.edu.ng",
+  "domains": [
+   {
+    "domain": "unn.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Nsukka campus",
+    "slug": "nsukka",
+    "is_main": true,
+    "city": "Nsukka"
+   },
+   {
+    "name": "Enugu campus",
+    "slug": "enugu",
+    "is_main": false,
+    "city": ""
+   }
+  ]
+ },
+ {
+  "name": "Obafemi Awolowo University",
+  "short_name": "OAU",
+  "slug": "oau",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Osun",
+  "city": "Ile-Ife",
+  "website": "https://oauife.edu.ng",
+  "domains": [
+   {
+    "domain": "oauife.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ile-Ife"
+   }
+  ]
+ },
+ {
+  "name": "Ahmadu Bello University",
+  "short_name": "ABU",
+  "slug": "abu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kaduna",
+  "city": "Zaria",
+  "website": "https://abu.edu.ng",
+  "domains": [
+   {
+    "domain": "abu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Samaru campus",
+    "slug": "samaru",
+    "is_main": true,
+    "city": "Zaria"
+   },
+   {
+    "name": "Kongo campus",
+    "slug": "kongo",
+    "is_main": false,
+    "city": ""
+   }
+  ]
+ },
+ {
+  "name": "University of Benin",
+  "short_name": "UNIBEN",
+  "slug": "uniben",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Edo",
+  "city": "Benin City",
+  "website": "https://uniben.edu",
+  "domains": [
+   {
+    "domain": "uniben.edu",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Ugbowo campus",
+    "slug": "ugbowo",
+    "is_main": true,
+    "city": "Benin City"
+   },
+   {
+    "name": "Ekenwan campus",
+    "slug": "ekenwan",
+    "is_main": false,
+    "city": ""
+   }
+  ]
+ },
+ {
+  "name": "University of Ilorin",
+  "short_name": "UNILORIN",
+  "slug": "unilorin",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kwara",
+  "city": "Ilorin",
+  "website": "https://unilorin.edu.ng",
+  "domains": [
+   {
+    "domain": "unilorin.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ilorin"
+   }
+  ]
+ },
+ {
+  "name": "University of Jos",
+  "short_name": "UNIJOS",
+  "slug": "unijos",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Plateau",
+  "city": "Jos",
+  "website": "https://unijos.edu.ng",
+  "domains": [
+   {
+    "domain": "unijos.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Jos"
+   }
+  ]
+ },
+ {
+  "name": "University of Calabar",
+  "short_name": "UNICAL",
+  "slug": "unical",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Cross River",
+  "city": "Calabar",
+  "website": "https://unical.edu.ng",
+  "domains": [
+   {
+    "domain": "unical.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Calabar"
+   }
+  ]
+ },
+ {
+  "name": "University of Port Harcourt",
+  "short_name": "UNIPORT",
+  "slug": "uniport",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Rivers",
+  "city": "Port Harcourt",
+  "website": "https://uniport.edu.ng",
+  "domains": [
+   {
+    "domain": "uniport.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Port Harcourt"
+   }
+  ]
+ },
+ {
+  "name": "University of Maiduguri",
+  "short_name": "UNIMAID",
+  "slug": "unimaid",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Borno",
+  "city": "Maiduguri",
+  "website": "https://unimaid.edu.ng",
+  "domains": [
+   {
+    "domain": "unimaid.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Maiduguri"
+   }
+  ]
+ },
+ {
+  "name": "Bayero University Kano",
+  "short_name": "BUK",
+  "slug": "buk",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kano",
+  "city": "Kano",
+  "website": "https://buk.edu.ng",
+  "domains": [
+   {
+    "domain": "buk.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kano"
+   }
+  ]
+ },
+ {
+  "name": "Usmanu Danfodiyo University, Sokoto",
+  "short_name": "UDUS",
+  "slug": "udus",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Sokoto",
+  "city": "Sokoto",
+  "website": "https://udusok.edu.ng",
+  "domains": [
+   {
+    "domain": "udusok.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Sokoto"
+   }
+  ]
+ },
+ {
+  "name": "University of Uyo",
+  "short_name": "UNIUYO",
+  "slug": "uniuyo",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Akwa Ibom",
+  "city": "Uyo",
+  "website": "https://uniuyo.edu.ng",
+  "domains": [
+   {
+    "domain": "uniuyo.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Uyo"
+   }
+  ]
+ },
+ {
+  "name": "Nnamdi Azikiwe University",
+  "short_name": "UNIZIK",
+  "slug": "unizik",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Anambra",
+  "city": "Awka",
+  "website": "https://unizik.edu.ng",
+  "domains": [
+   {
+    "domain": "unizik.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Awka"
+   }
+  ]
+ },
+ {
+  "name": "University of Abuja",
+  "short_name": "UNIABUJA",
+  "slug": "uniabuja",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "FCT",
+  "city": "Abuja",
+  "website": "https://uniabuja.edu.ng",
+  "domains": [
+   {
+    "domain": "uniabuja.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Abuja"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Technology, Akure",
+  "short_name": "FUTA",
+  "slug": "futa",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ondo",
+  "city": "Akure",
+  "website": "https://futa.edu.ng",
+  "domains": [
+   {
+    "domain": "futa.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Akure"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Technology, Minna",
+  "short_name": "FUTMINNA",
+  "slug": "futminna",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Niger",
+  "city": "Minna",
+  "website": "https://futminna.edu.ng",
+  "domains": [
+   {
+    "domain": "futminna.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Minna"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Technology, Owerri",
+  "short_name": "FUTO",
+  "slug": "futo",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Imo",
+  "city": "Owerri",
+  "website": "https://futo.edu.ng",
+  "domains": [
+   {
+    "domain": "futo.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Owerri"
+   }
+  ]
+ },
+ {
+  "name": "Modibbo Adama University, Yola",
+  "short_name": "MAU",
+  "slug": "mau",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Adamawa",
+  "city": "Yola",
+  "website": "https://mau.edu.ng",
+  "domains": [
+   {
+    "domain": "mau.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Yola"
+   }
+  ]
+ },
+ {
+  "name": "Abubakar Tafawa Balewa University",
+  "short_name": "ATBU",
+  "slug": "atbu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Bauchi",
+  "city": "Bauchi",
+  "website": "https://atbu.edu.ng",
+  "domains": [
+   {
+    "domain": "atbu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Bauchi"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Agriculture, Abeokuta",
+  "short_name": "FUNAAB",
+  "slug": "funaab",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ogun",
+  "city": "Abeokuta",
+  "website": "https://funaab.edu.ng",
+  "domains": [
+   {
+    "domain": "funaab.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Abeokuta"
+   }
+  ]
+ },
+ {
+  "name": "Joseph Sarwuan Tarka University, Makurdi",
+  "short_name": "JOSTUM",
+  "slug": "jostum",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Benue",
+  "city": "Makurdi",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Makurdi"
+   }
+  ]
+ },
+ {
+  "name": "Michael Okpara University of Agriculture, Umudike",
+  "short_name": "MOUAU",
+  "slug": "mouau",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Abia",
+  "city": "Umudike",
+  "website": "https://mouau.edu.ng",
+  "domains": [
+   {
+    "domain": "mouau.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Umudike"
+   }
+  ]
+ },
+ {
+  "name": "Nigerian Defence Academy",
+  "short_name": "NDA",
+  "slug": "nda",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kaduna",
+  "city": "Kaduna",
+  "website": "https://nda.edu.ng",
+  "domains": [
+   {
+    "domain": "nda.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kaduna"
+   }
+  ]
+ },
+ {
+  "name": "National Open University of Nigeria",
+  "short_name": "NOUN",
+  "slug": "noun",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "FCT",
+  "city": "Abuja",
+  "website": "https://noun.edu.ng",
+  "domains": [
+   {
+    "domain": "noun.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Abuja"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Petroleum Resources, Effurun",
+  "short_name": "FUPRE",
+  "slug": "fupre",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Delta",
+  "city": "Effurun",
+  "website": "https://fupre.edu.ng",
+  "domains": [
+   {
+    "domain": "fupre.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Effurun"
+   }
+  ]
+ },
+ {
+  "name": "Federal University Oye-Ekiti",
+  "short_name": "FUOYE",
+  "slug": "fuoye",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ekiti",
+  "city": "Oye-Ekiti",
+  "website": "https://fuoye.edu.ng",
+  "domains": [
+   {
+    "domain": "fuoye.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Oye-Ekiti"
+   }
+  ]
+ },
+ {
+  "name": "Federal University Lokoja",
+  "short_name": "FULOKOJA",
+  "slug": "fulokoja",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kogi",
+  "city": "Lokoja",
+  "website": "https://fulokoja.edu.ng",
+  "domains": [
+   {
+    "domain": "fulokoja.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Lokoja"
+   }
+  ]
+ },
+ {
+  "name": "Alex Ekwueme Federal University, Ndufu-Alike",
+  "short_name": "AE-FUNAI",
+  "slug": "ae-funai",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ebonyi",
+  "city": "Ndufu-Alike",
+  "website": "https://funai.edu.ng",
+  "domains": [
+   {
+    "domain": "funai.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ndufu-Alike"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Lafia",
+  "short_name": "FULAFIA",
+  "slug": "fulafia",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Nasarawa",
+  "city": "Lafia",
+  "website": "https://fulafia.edu.ng",
+  "domains": [
+   {
+    "domain": "fulafia.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Lafia"
+   }
+  ]
+ },
+ {
+  "name": "Federal University Dutse",
+  "short_name": "FUD",
+  "slug": "fud",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Jigawa",
+  "city": "Dutse",
+  "website": "https://fud.edu.ng",
+  "domains": [
+   {
+    "domain": "fud.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Dutse"
+   }
+  ]
+ },
+ {
+  "name": "Federal University Dutsin-Ma",
+  "short_name": "FUDMA",
+  "slug": "fudma",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Katsina",
+  "city": "Dutsin-Ma",
+  "website": "https://fudutsinma.edu.ng",
+  "domains": [
+   {
+    "domain": "fudutsinma.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Dutsin-Ma"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Kashere",
+  "short_name": "FUK",
+  "slug": "fuk",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Gombe",
+  "city": "Kashere",
+  "website": "https://fukashere.edu.ng",
+  "domains": [
+   {
+    "domain": "fukashere.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kashere"
+   }
+  ]
+ },
+ {
+  "name": "Federal University Wukari",
+  "short_name": "FUW",
+  "slug": "fuw",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Taraba",
+  "city": "Wukari",
+  "website": "https://fuwukari.edu.ng",
+  "domains": [
+   {
+    "domain": "fuwukari.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Wukari"
+   }
+  ]
+ },
+ {
+  "name": "Federal University Gusau",
+  "short_name": "FUGUS",
+  "slug": "fugus",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Zamfara",
+  "city": "Gusau",
+  "website": "https://fugusau.edu.ng",
+  "domains": [
+   {
+    "domain": "fugusau.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Gusau"
+   }
+  ]
+ },
+ {
+  "name": "Federal University Birnin Kebbi",
+  "short_name": "FUBK",
+  "slug": "fubk",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kebbi",
+  "city": "Birnin Kebbi",
+  "website": "https://fubk.edu.ng",
+  "domains": [
+   {
+    "domain": "fubk.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Birnin Kebbi"
+   }
+  ]
+ },
+ {
+  "name": "Federal University Otuoke",
+  "short_name": "FUO",
+  "slug": "fuo",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Bayelsa",
+  "city": "Otuoke",
+  "website": "https://fuotuoke.edu.ng",
+  "domains": [
+   {
+    "domain": "fuotuoke.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Otuoke"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Health Sciences, Otukpo",
+  "short_name": "FUHSO",
+  "slug": "fuhso",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Benue",
+  "city": "Otukpo",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Otukpo"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Health Sciences, Azare",
+  "short_name": "FUHSA",
+  "slug": "fuhsa",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Bauchi",
+  "city": "Azare",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Azare"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Health Sciences, Ila-Orangun",
+  "short_name": "FUHSI",
+  "slug": "fuhsi",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Osun",
+  "city": "Ila-Orangun",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ila-Orangun"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Agriculture, Zuru",
+  "short_name": "FUAZ",
+  "slug": "fuaz",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kebbi",
+  "city": "Zuru",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Zuru"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Technology, Babura",
+  "short_name": "FUTB",
+  "slug": "futb",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Jigawa",
+  "city": "Babura",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Babura"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Technology, Ikot Abasi",
+  "short_name": "FUTIA",
+  "slug": "futia",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Akwa Ibom",
+  "city": "Ikot Abasi",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ikot Abasi"
+   }
+  ]
+ },
+ {
+  "name": "Air Force Institute of Technology, Kaduna",
+  "short_name": "AFIT",
+  "slug": "afit",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kaduna",
+  "city": "Kaduna",
+  "website": "https://afit.edu.ng",
+  "domains": [
+   {
+    "domain": "afit.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kaduna"
+   }
+  ]
+ },
+ {
+  "name": "Nigerian Army University, Biu",
+  "short_name": "NAUB",
+  "slug": "naub",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Borno",
+  "city": "Biu",
+  "website": "https://naub.edu.ng",
+  "domains": [
+   {
+    "domain": "naub.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Biu"
+   }
+  ]
+ },
+ {
+  "name": "Nigeria Police Academy, Wudil",
+  "short_name": "POLAC",
+  "slug": "polac",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kano",
+  "city": "Wudil",
+  "website": "https://polac.edu.ng",
+  "domains": [
+   {
+    "domain": "polac.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Wudil"
+   }
+  ]
+ },
+ {
+  "name": "Nigeria Maritime University, Okerenkoko",
+  "short_name": "NMU",
+  "slug": "nmu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Delta",
+  "city": "Okerenkoko",
+  "website": "https://nmu.edu.ng",
+  "domains": [
+   {
+    "domain": "nmu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Okerenkoko"
+   }
+  ]
+ },
+ {
+  "name": "Federal University of Education, Zaria",
+  "short_name": "FUEZ",
+  "slug": "fuez",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kaduna",
+  "city": "Zaria",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Zaria"
+   }
+  ]
+ },
+ {
+  "name": "Alvan Ikoku Federal University of Education, Owerri",
+  "short_name": "AIFUE",
+  "slug": "aifue",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Imo",
+  "city": "Owerri",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Owerri"
+   }
+  ]
+ },
+ {
+  "name": "Adeyemi Federal University of Education, Ondo",
+  "short_name": "AFUED",
+  "slug": "afued",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ondo",
+  "city": "Ondo",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ondo"
+   }
+  ]
+ },
+ {
+  "name": "Lagos State University",
+  "short_name": "LASU",
+  "slug": "lasu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Lagos",
+  "city": "Ojo",
+  "website": "https://lasu.edu.ng",
+  "domains": [
+   {
+    "domain": "lasu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Ojo campus",
+    "slug": "ojo",
+    "is_main": true,
+    "city": "Ojo"
+   },
+   {
+    "name": "Epe campus",
+    "slug": "epe",
+    "is_main": false,
+    "city": ""
+   },
+   {
+    "name": "Ikeja campus (LASUCOM)",
+    "slug": "ikeja",
+    "is_main": false,
+    "city": ""
+   }
+  ]
+ },
+ {
+  "name": "Lagos State University of Science and Technology",
+  "short_name": "LASUSTECH",
+  "slug": "lasustech",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Lagos",
+  "city": "Ikorodu",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ikorodu"
+   }
+  ]
+ },
+ {
+  "name": "Lagos State University of Education",
+  "short_name": "LASUED",
+  "slug": "lasued",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Lagos",
+  "city": "Ijanikin",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ijanikin"
+   }
+  ]
+ },
+ {
+  "name": "Ekiti State University",
+  "short_name": "EKSU",
+  "slug": "eksu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ekiti",
+  "city": "Ado-Ekiti",
+  "website": "https://eksu.edu.ng",
+  "domains": [
+   {
+    "domain": "eksu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ado-Ekiti"
+   }
+  ]
+ },
+ {
+  "name": "Olabisi Onabanjo University",
+  "short_name": "OOU",
+  "slug": "oou",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ogun",
+  "city": "Ago-Iwoye",
+  "website": "https://oouagoiwoye.edu.ng",
+  "domains": [
+   {
+    "domain": "oouagoiwoye.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Ago-Iwoye campus",
+    "slug": "ago-iwoye",
+    "is_main": true,
+    "city": "Ago-Iwoye"
+   },
+   {
+    "name": "Ikenne campus",
+    "slug": "ikenne",
+    "is_main": false,
+    "city": ""
+   }
+  ]
+ },
+ {
+  "name": "Tai Solarin University of Education",
+  "short_name": "TASUED",
+  "slug": "tasued",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ogun",
+  "city": "Ijagun",
+  "website": "https://tasued.edu.ng",
+  "domains": [
+   {
+    "domain": "tasued.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ijagun"
+   }
+  ]
+ },
+ {
+  "name": "Ladoke Akintola University of Technology",
+  "short_name": "LAUTECH",
+  "slug": "lautech",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Oyo",
+  "city": "Ogbomoso",
+  "website": "https://lautech.edu.ng",
+  "domains": [
+   {
+    "domain": "lautech.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ogbomoso"
+   }
+  ]
+ },
+ {
+  "name": "Emmanuel Alayande University of Education",
+  "short_name": "EAUED",
+  "slug": "eaued",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Oyo",
+  "city": "Oyo",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Oyo"
+   }
+  ]
+ },
+ {
+  "name": "Osun State University",
+  "short_name": "UNIOSUN",
+  "slug": "uniosun",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Osun",
+  "city": "Osogbo",
+  "website": "https://uniosun.edu.ng",
+  "domains": [
+   {
+    "domain": "uniosun.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Osogbo"
+   }
+  ]
+ },
+ {
+  "name": "Adekunle Ajasin University",
+  "short_name": "AAUA",
+  "slug": "aaua",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ondo",
+  "city": "Akungba-Akoko",
+  "website": "https://aaua.edu.ng",
+  "domains": [
+   {
+    "domain": "aaua.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Akungba-Akoko"
+   }
+  ]
+ },
+ {
+  "name": "Ondo State University of Science and Technology",
+  "short_name": "OSUSTECH",
+  "slug": "osustech",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ondo",
+  "city": "Okitipupa",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Okitipupa"
+   }
+  ]
+ },
+ {
+  "name": "Kwara State University",
+  "short_name": "KWASU",
+  "slug": "kwasu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kwara",
+  "city": "Malete",
+  "website": "https://kwasu.edu.ng",
+  "domains": [
+   {
+    "domain": "kwasu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Malete"
+   }
+  ]
+ },
+ {
+  "name": "Delta State University",
+  "short_name": "DELSU",
+  "slug": "delsu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Delta",
+  "city": "Abraka",
+  "website": "https://delsu.edu.ng",
+  "domains": [
+   {
+    "domain": "delsu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Abraka"
+   }
+  ]
+ },
+ {
+  "name": "Ambrose Alli University",
+  "short_name": "AAU",
+  "slug": "aau",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Edo",
+  "city": "Ekpoma",
+  "website": "https://aauekpoma.edu.ng",
+  "domains": [
+   {
+    "domain": "aauekpoma.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ekpoma"
+   }
+  ]
+ },
+ {
+  "name": "Edo State University, Uzairue",
+  "short_name": "EDSU",
+  "slug": "edsu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Edo",
+  "city": "Uzairue",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Uzairue"
+   }
+  ]
+ },
+ {
+  "name": "Rivers State University",
+  "short_name": "RSU",
+  "slug": "rsu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Rivers",
+  "city": "Port Harcourt",
+  "website": "https://rsu.edu.ng",
+  "domains": [
+   {
+    "domain": "rsu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Port Harcourt"
+   }
+  ]
+ },
+ {
+  "name": "Ignatius Ajuru University of Education",
+  "short_name": "IAUE",
+  "slug": "iaue",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Rivers",
+  "city": "Port Harcourt",
+  "website": "https://iaue.edu.ng",
+  "domains": [
+   {
+    "domain": "iaue.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Port Harcourt"
+   }
+  ]
+ },
+ {
+  "name": "Niger Delta University",
+  "short_name": "NDU",
+  "slug": "ndu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Bayelsa",
+  "city": "Wilberforce Island",
+  "website": "https://ndu.edu.ng",
+  "domains": [
+   {
+    "domain": "ndu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Wilberforce Island"
+   }
+  ]
+ },
+ {
+  "name": "Bayelsa Medical University",
+  "short_name": "BMU",
+  "slug": "bmu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Bayelsa",
+  "city": "Yenagoa",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Yenagoa"
+   }
+  ]
+ },
+ {
+  "name": "Imo State University",
+  "short_name": "IMSU",
+  "slug": "imsu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Imo",
+  "city": "Owerri",
+  "website": "https://imsu.edu.ng",
+  "domains": [
+   {
+    "domain": "imsu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Owerri"
+   }
+  ]
+ },
+ {
+  "name": "Abia State University",
+  "short_name": "ABSU",
+  "slug": "absu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Abia",
+  "city": "Uturu",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Uturu"
+   }
+  ]
+ },
+ {
+  "name": "Enugu State University of Science and Technology",
+  "short_name": "ESUT",
+  "slug": "esut",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Enugu",
+  "city": "Enugu",
+  "website": "https://esut.edu.ng",
+  "domains": [
+   {
+    "domain": "esut.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Enugu"
+   }
+  ]
+ },
+ {
+  "name": "Chukwuemeka Odumegwu Ojukwu University",
+  "short_name": "COOU",
+  "slug": "coou",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Anambra",
+  "city": "Uli",
+  "website": "https://coou.edu.ng",
+  "domains": [
+   {
+    "domain": "coou.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Uli"
+   }
+  ]
+ },
+ {
+  "name": "Ebonyi State University",
+  "short_name": "EBSU",
+  "slug": "ebsu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ebonyi",
+  "city": "Abakaliki",
+  "website": "https://ebsu.edu.ng",
+  "domains": [
+   {
+    "domain": "ebsu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Abakaliki"
+   }
+  ]
+ },
+ {
+  "name": "Akwa Ibom State University",
+  "short_name": "AKSU",
+  "slug": "aksu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Akwa Ibom",
+  "city": "Ikot Akpaden",
+  "website": "https://aksu.edu.ng",
+  "domains": [
+   {
+    "domain": "aksu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ikot Akpaden"
+   }
+  ]
+ },
+ {
+  "name": "University of Cross River State",
+  "short_name": "UNICROSS",
+  "slug": "unicross",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Cross River",
+  "city": "Calabar",
+  "website": "https://unicross.edu.ng",
+  "domains": [
+   {
+    "domain": "unicross.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Calabar"
+   }
+  ]
+ },
+ {
+  "name": "Benue State University",
+  "short_name": "BSU",
+  "slug": "bsu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Benue",
+  "city": "Makurdi",
+  "website": "https://bsum.edu.ng",
+  "domains": [
+   {
+    "domain": "bsum.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Makurdi"
+   }
+  ]
+ },
+ {
+  "name": "Prince Abubakar Audu University",
+  "short_name": "PAAU",
+  "slug": "paau",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kogi",
+  "city": "Anyigba",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Anyigba"
+   }
+  ]
+ },
+ {
+  "name": "Nasarawa State University, Keffi",
+  "short_name": "NSUK",
+  "slug": "nsuk",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Nasarawa",
+  "city": "Keffi",
+  "website": "https://nsuk.edu.ng",
+  "domains": [
+   {
+    "domain": "nsuk.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Keffi"
+   }
+  ]
+ },
+ {
+  "name": "Plateau State University",
+  "short_name": "PLASU",
+  "slug": "plasu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Plateau",
+  "city": "Bokkos",
+  "website": "https://plasu.edu.ng",
+  "domains": [
+   {
+    "domain": "plasu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Bokkos"
+   }
+  ]
+ },
+ {
+  "name": "Kaduna State University",
+  "short_name": "KASU",
+  "slug": "kasu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kaduna",
+  "city": "Kaduna",
+  "website": "https://kasu.edu.ng",
+  "domains": [
+   {
+    "domain": "kasu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kaduna"
+   }
+  ]
+ },
+ {
+  "name": "Ibrahim Badamasi Babangida University",
+  "short_name": "IBBU",
+  "slug": "ibbu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Niger",
+  "city": "Lapai",
+  "website": "https://ibbu.edu.ng",
+  "domains": [
+   {
+    "domain": "ibbu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Lapai"
+   }
+  ]
+ },
+ {
+  "name": "Yusuf Maitama Sule University",
+  "short_name": "YUMSUK",
+  "slug": "yumsuk",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kano",
+  "city": "Kano",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kano"
+   }
+  ]
+ },
+ {
+  "name": "Umaru Musa Yar'adua University",
+  "short_name": "UMYU",
+  "slug": "umyu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Katsina",
+  "city": "Katsina",
+  "website": "https://umyu.edu.ng",
+  "domains": [
+   {
+    "domain": "umyu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Katsina"
+   }
+  ]
+ },
+ {
+  "name": "Gombe State University",
+  "short_name": "GSU",
+  "slug": "gsu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Gombe",
+  "city": "Gombe",
+  "website": "https://gsu.edu.ng",
+  "domains": [
+   {
+    "domain": "gsu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Gombe"
+   }
+  ]
+ },
+ {
+  "name": "Kebbi State University of Science and Technology",
+  "short_name": "KSUSTA",
+  "slug": "ksusta",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kebbi",
+  "city": "Aliero",
+  "website": "https://ksusta.edu.ng",
+  "domains": [
+   {
+    "domain": "ksusta.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Aliero"
+   }
+  ]
+ },
+ {
+  "name": "Sokoto State University",
+  "short_name": "SSU",
+  "slug": "ssu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Sokoto",
+  "city": "Sokoto",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Sokoto"
+   }
+  ]
+ },
+ {
+  "name": "Adamawa State University",
+  "short_name": "ADSU",
+  "slug": "adsu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Adamawa",
+  "city": "Mubi",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Mubi"
+   }
+  ]
+ },
+ {
+  "name": "Taraba State University",
+  "short_name": "TSU",
+  "slug": "tsu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Taraba",
+  "city": "Jalingo",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Jalingo"
+   }
+  ]
+ },
+ {
+  "name": "Borno State University",
+  "short_name": "BOSU",
+  "slug": "bosu",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Borno",
+  "city": "Maiduguri",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Maiduguri"
+   }
+  ]
+ },
+ {
+  "name": "Bauchi State University",
+  "short_name": "BASUG",
+  "slug": "basug",
+  "type": "university",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Bauchi",
+  "city": "Gadau",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Gadau"
+   }
+  ]
+ },
+ {
+  "name": "Covenant University",
+  "short_name": "CU",
+  "slug": "cu",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Ogun",
+  "city": "Ota",
+  "website": "https://covenantuniversity.edu.ng",
+  "domains": [
+   {
+    "domain": "covenantuniversity.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ota"
+   }
+  ]
+ },
+ {
+  "name": "Babcock University",
+  "short_name": "BU",
+  "slug": "bu",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Ogun",
+  "city": "Ilishan-Remo",
+  "website": "https://babcock.edu.ng",
+  "domains": [
+   {
+    "domain": "babcock.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ilishan-Remo"
+   }
+  ]
+ },
+ {
+  "name": "Afe Babalola University",
+  "short_name": "ABUAD",
+  "slug": "abuad",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "Ekiti",
+  "city": "Ado-Ekiti",
+  "website": "https://abuad.edu.ng",
+  "domains": [
+   {
+    "domain": "abuad.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ado-Ekiti"
+   }
+  ]
+ },
+ {
+  "name": "American University of Nigeria",
+  "short_name": "AUN",
+  "slug": "aun",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "Adamawa",
+  "city": "Yola",
+  "website": "https://aun.edu.ng",
+  "domains": [
+   {
+    "domain": "aun.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Yola"
+   }
+  ]
+ },
+ {
+  "name": "Pan-Atlantic University",
+  "short_name": "PAU",
+  "slug": "pau",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "Lagos",
+  "city": "Ibeju-Lekki",
+  "website": "https://pau.edu.ng",
+  "domains": [
+   {
+    "domain": "pau.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ibeju-Lekki"
+   }
+  ]
+ },
+ {
+  "name": "Redeemer's University",
+  "short_name": "RUN",
+  "slug": "run",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Osun",
+  "city": "Ede",
+  "website": "https://run.edu.ng",
+  "domains": [
+   {
+    "domain": "run.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ede"
+   }
+  ]
+ },
+ {
+  "name": "Landmark University",
+  "short_name": "LMU",
+  "slug": "lmu",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Kwara",
+  "city": "Omu-Aran",
+  "website": "https://lmu.edu.ng",
+  "domains": [
+   {
+    "domain": "lmu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Omu-Aran"
+   }
+  ]
+ },
+ {
+  "name": "Bowen University",
+  "short_name": "BOWEN",
+  "slug": "bowen",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Osun",
+  "city": "Iwo",
+  "website": "https://bowen.edu.ng",
+  "domains": [
+   {
+    "domain": "bowen.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Iwo"
+   }
+  ]
+ },
+ {
+  "name": "Lead City University",
+  "short_name": "LCU",
+  "slug": "lcu",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "Oyo",
+  "city": "Ibadan",
+  "website": "https://lcu.edu.ng",
+  "domains": [
+   {
+    "domain": "lcu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ibadan"
+   }
+  ]
+ },
+ {
+  "name": "Nile University of Nigeria",
+  "short_name": "NUN",
+  "slug": "nun",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "FCT",
+  "city": "Abuja",
+  "website": "https://nileuniversity.edu.ng",
+  "domains": [
+   {
+    "domain": "nileuniversity.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Abuja"
+   }
+  ]
+ },
+ {
+  "name": "Baze University",
+  "short_name": "BAZE",
+  "slug": "baze",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "FCT",
+  "city": "Abuja",
+  "website": "https://bazeuniversity.edu.ng",
+  "domains": [
+   {
+    "domain": "bazeuniversity.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Abuja"
+   }
+  ]
+ },
+ {
+  "name": "Bells University of Technology",
+  "short_name": "BELLS",
+  "slug": "bells",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "Ogun",
+  "city": "Ota",
+  "website": "https://bellsuniversity.edu.ng",
+  "domains": [
+   {
+    "domain": "bellsuniversity.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ota"
+   }
+  ]
+ },
+ {
+  "name": "Igbinedion University, Okada",
+  "short_name": "IUO",
+  "slug": "iuo",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "Edo",
+  "city": "Okada",
+  "website": "https://iuokada.edu.ng",
+  "domains": [
+   {
+    "domain": "iuokada.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Okada"
+   }
+  ]
+ },
+ {
+  "name": "Benson Idahosa University",
+  "short_name": "BIU",
+  "slug": "biu",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Edo",
+  "city": "Benin City",
+  "website": "https://biu.edu.ng",
+  "domains": [
+   {
+    "domain": "biu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Benin City"
+   }
+  ]
+ },
+ {
+  "name": "Ajayi Crowther University",
+  "short_name": "ACU",
+  "slug": "acu",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Oyo",
+  "city": "Oyo",
+  "website": "https://acu.edu.ng",
+  "domains": [
+   {
+    "domain": "acu.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Oyo"
+   }
+  ]
+ },
+ {
+  "name": "Madonna University",
+  "short_name": "MADONNA",
+  "slug": "madonna",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Anambra",
+  "city": "Okija",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Okija"
+   }
+  ]
+ },
+ {
+  "name": "Veritas University",
+  "short_name": "VUNA",
+  "slug": "vuna",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "FCT",
+  "city": "Abuja",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Abuja"
+   }
+  ]
+ },
+ {
+  "name": "Godfrey Okoye University",
+  "short_name": "GOUNI",
+  "slug": "gouni",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Enugu",
+  "city": "Enugu",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Enugu"
+   }
+  ]
+ },
+ {
+  "name": "Caleb University",
+  "short_name": "CALEB",
+  "slug": "caleb",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "Lagos",
+  "city": "Imota",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Imota"
+   }
+  ]
+ },
+ {
+  "name": "Crawford University",
+  "short_name": "CRAWFORD",
+  "slug": "crawford",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Ogun",
+  "city": "Igbesa",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Igbesa"
+   }
+  ]
+ },
+ {
+  "name": "Elizade University",
+  "short_name": "ELIZADE",
+  "slug": "elizade",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "Ondo",
+  "city": "Ilara-Mokin",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ilara-Mokin"
+   }
+  ]
+ },
+ {
+  "name": "Mountain Top University",
+  "short_name": "MTU",
+  "slug": "mtu",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Ogun",
+  "city": "Ibafo",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ibafo"
+   }
+  ]
+ },
+ {
+  "name": "Anchor University",
+  "short_name": "AUL",
+  "slug": "aul",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Lagos",
+  "city": "Ayobo",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ayobo"
+   }
+  ]
+ },
+ {
+  "name": "Augustine University",
+  "short_name": "AUI",
+  "slug": "aui",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Lagos",
+  "city": "Ilara-Epe",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ilara-Epe"
+   }
+  ]
+ },
+ {
+  "name": "Achievers University",
+  "short_name": "AUO",
+  "slug": "auo",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "Ondo",
+  "city": "Owo",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Owo"
+   }
+  ]
+ },
+ {
+  "name": "Joseph Ayo Babalola University",
+  "short_name": "JABU",
+  "slug": "jabu",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Osun",
+  "city": "Ikeji-Arakeji",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ikeji-Arakeji"
+   }
+  ]
+ },
+ {
+  "name": "Gregory University",
+  "short_name": "GUU",
+  "slug": "guu",
+  "type": "university",
+  "ownership": "private",
+  "country": "NG",
+  "region": "Abia",
+  "city": "Uturu",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Uturu"
+   }
+  ]
+ },
+ {
+  "name": "Wesley University",
+  "short_name": "WUO",
+  "slug": "wuo",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Ondo",
+  "city": "Ondo",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ondo"
+   }
+  ]
+ },
+ {
+  "name": "Salem University",
+  "short_name": "SALEM",
+  "slug": "salem",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Kogi",
+  "city": "Lokoja",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Lokoja"
+   }
+  ]
+ },
+ {
+  "name": "Bingham University",
+  "short_name": "BHU",
+  "slug": "bhu",
+  "type": "university",
+  "ownership": "faith_based",
+  "country": "NG",
+  "region": "Nasarawa",
+  "city": "Karu",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Karu"
+   }
+  ]
+ },
+ {
+  "name": "Yaba College of Technology",
+  "short_name": "YABATECH",
+  "slug": "yabatech",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Lagos",
+  "city": "Yaba",
+  "website": "https://yabatech.edu.ng",
+  "domains": [
+   {
+    "domain": "yabatech.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Yaba"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Nekede",
+  "short_name": "FPNO",
+  "slug": "fpno",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Imo",
+  "city": "Owerri",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Owerri"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Ilaro",
+  "short_name": "FPI",
+  "slug": "fpi",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ogun",
+  "city": "Ilaro",
+  "website": "https://federalpolyilaro.edu.ng",
+  "domains": [
+   {
+    "domain": "federalpolyilaro.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ilaro"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Bida",
+  "short_name": "FPB",
+  "slug": "fpb",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Niger",
+  "city": "Bida",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Bida"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Offa",
+  "short_name": "FPO",
+  "slug": "fpo",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kwara",
+  "city": "Offa",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Offa"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Ado-Ekiti",
+  "short_name": "FPA",
+  "slug": "fpa",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ekiti",
+  "city": "Ado-Ekiti",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ado-Ekiti"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Oko",
+  "short_name": "OKOPOLY",
+  "slug": "okopoly",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Anambra",
+  "city": "Oko",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Oko"
+   }
+  ]
+ },
+ {
+  "name": "Auchi Polytechnic",
+  "short_name": "AUCHIPOLY",
+  "slug": "auchipoly",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Edo",
+  "city": "Auchi",
+  "website": "https://auchipoly.edu.ng",
+  "domains": [
+   {
+    "domain": "auchipoly.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Auchi"
+   }
+  ]
+ },
+ {
+  "name": "Kaduna Polytechnic",
+  "short_name": "KADPOLY",
+  "slug": "kadpoly",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kaduna",
+  "city": "Kaduna",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kaduna"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Mubi",
+  "short_name": "FPM",
+  "slug": "fpm",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Adamawa",
+  "city": "Mubi",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Mubi"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Idah",
+  "short_name": "FPIDAH",
+  "slug": "fpidah",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kogi",
+  "city": "Idah",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Idah"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Bauchi",
+  "short_name": "FPTB",
+  "slug": "fptb",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Bauchi",
+  "city": "Bauchi",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Bauchi"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Nasarawa",
+  "short_name": "FPN",
+  "slug": "fpn",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Nasarawa",
+  "city": "Nasarawa",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Nasarawa"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Ede",
+  "short_name": "FEDEDE",
+  "slug": "fedede",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Osun",
+  "city": "Ede",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ede"
+   }
+  ]
+ },
+ {
+  "name": "Akanu Ibiam Federal Polytechnic, Unwana",
+  "short_name": "AIFPU",
+  "slug": "aifpu",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ebonyi",
+  "city": "Unwana",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Unwana"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Ekowe",
+  "short_name": "FPE",
+  "slug": "fpe",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Bayelsa",
+  "city": "Ekowe",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ekowe"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Kaura Namoda",
+  "short_name": "FEDPONAM",
+  "slug": "fedponam",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Zamfara",
+  "city": "Kaura Namoda",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kaura Namoda"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Damaturu",
+  "short_name": "FPD",
+  "slug": "fpd",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Yobe",
+  "city": "Damaturu",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Damaturu"
+   }
+  ]
+ },
+ {
+  "name": "Hussaini Adamu Federal Polytechnic, Kazaure",
+  "short_name": "HAFEDPOLY",
+  "slug": "hafedpoly",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Jigawa",
+  "city": "Kazaure",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kazaure"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Bali",
+  "short_name": "FPBALI",
+  "slug": "fpbali",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Taraba",
+  "city": "Bali",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Bali"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic Ukana",
+  "short_name": "FPUKANA",
+  "slug": "fpukana",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Akwa Ibom",
+  "city": "Ukana",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ukana"
+   }
+  ]
+ },
+ {
+  "name": "Federal Polytechnic of Oil and Gas, Bonny",
+  "short_name": "FPBONNY",
+  "slug": "fpbonny",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Rivers",
+  "city": "Bonny",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Bonny"
+   }
+  ]
+ },
+ {
+  "name": "The Polytechnic, Ibadan",
+  "short_name": "POLYIBADAN",
+  "slug": "polyibadan",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Oyo",
+  "city": "Ibadan",
+  "website": "https://polyibadan.edu.ng",
+  "domains": [
+   {
+    "domain": "polyibadan.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ibadan"
+   }
+  ]
+ },
+ {
+  "name": "Moshood Abiola Polytechnic",
+  "short_name": "MAPOLY",
+  "slug": "mapoly",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ogun",
+  "city": "Abeokuta",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Abeokuta"
+   }
+  ]
+ },
+ {
+  "name": "Institute of Management and Technology, Enugu",
+  "short_name": "IMT",
+  "slug": "imt",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Enugu",
+  "city": "Enugu",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Enugu"
+   }
+  ]
+ },
+ {
+  "name": "Kwara State Polytechnic",
+  "short_name": "KWARAPOLY",
+  "slug": "kwarapoly",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kwara",
+  "city": "Ilorin",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ilorin"
+   }
+  ]
+ },
+ {
+  "name": "Kano State Polytechnic",
+  "short_name": "KANOPOLY",
+  "slug": "kanopoly",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kano",
+  "city": "Kano",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kano"
+   }
+  ]
+ },
+ {
+  "name": "Rufus Giwa Polytechnic",
+  "short_name": "RUGIPO",
+  "slug": "rugipo",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ondo",
+  "city": "Owo",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Owo"
+   }
+  ]
+ },
+ {
+  "name": "Delta State Polytechnic, Ogwashi-Uku",
+  "short_name": "DSPG",
+  "slug": "dspg",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Delta",
+  "city": "Ogwashi-Uku",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ogwashi-Uku"
+   }
+  ]
+ },
+ {
+  "name": "Captain Elechi Amadi Polytechnic",
+  "short_name": "CEAPOLY",
+  "slug": "ceapoly",
+  "type": "polytechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Rivers",
+  "city": "Port Harcourt",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Port Harcourt"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education (Technical), Akoka",
+  "short_name": "FCET-AKOKA",
+  "slug": "fcet-akoka",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Lagos",
+  "city": "Akoka",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Akoka"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education, Abeokuta",
+  "short_name": "FCE-ABEOKUTA",
+  "slug": "fce-abeokuta",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Ogun",
+  "city": "Abeokuta",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Abeokuta"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education (Special), Oyo",
+  "short_name": "FCES-OYO",
+  "slug": "fces-oyo",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Oyo",
+  "city": "Oyo",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Oyo"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education, Okene",
+  "short_name": "FCE-OKENE",
+  "slug": "fce-okene",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kogi",
+  "city": "Okene",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Okene"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education, Pankshin",
+  "short_name": "FCE-PANKSHIN",
+  "slug": "fce-pankshin",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Plateau",
+  "city": "Pankshin",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Pankshin"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education, Yola",
+  "short_name": "FCE-YOLA",
+  "slug": "fce-yola",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Adamawa",
+  "city": "Yola",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Yola"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education, Obudu",
+  "short_name": "FCE-OBUDU",
+  "slug": "fce-obudu",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Cross River",
+  "city": "Obudu",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Obudu"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education, Eha-Amufu",
+  "short_name": "FCE-EHA-AMUFU",
+  "slug": "fce-eha-amufu",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Enugu",
+  "city": "Eha-Amufu",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Eha-Amufu"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education (Technical), Umunze",
+  "short_name": "FCET-UMUNZE",
+  "slug": "fcet-umunze",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Anambra",
+  "city": "Umunze",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Umunze"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education (Technical), Asaba",
+  "short_name": "FCET-ASABA",
+  "slug": "fcet-asaba",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Delta",
+  "city": "Asaba",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Asaba"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education, Kontagora",
+  "short_name": "FCE-KONTAGORA",
+  "slug": "fce-kontagora",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Niger",
+  "city": "Kontagora",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kontagora"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education, Katsina",
+  "short_name": "FCE-KATSINA",
+  "slug": "fce-katsina",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Katsina",
+  "city": "Katsina",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Katsina"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education (Technical), Gombe",
+  "short_name": "FCET-GOMBE",
+  "slug": "fcet-gombe",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Gombe",
+  "city": "Gombe",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Gombe"
+   }
+  ]
+ },
+ {
+  "name": "Federal College of Education, Kano",
+  "short_name": "FCE-KANO",
+  "slug": "fce-kano",
+  "type": "college_of_education",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kano",
+  "city": "Kano",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Kano"
+   }
+  ]
+ },
+ {
+  "name": "Petroleum Training Institute",
+  "short_name": "PTI",
+  "slug": "pti",
+  "type": "monotechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Delta",
+  "city": "Effurun",
+  "website": "https://pti.edu.ng",
+  "domains": [
+   {
+    "domain": "pti.edu.ng",
+    "allow_subdomains": true
+   }
+  ],
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Effurun"
+   }
+  ]
+ },
+ {
+  "name": "Nigerian College of Aviation Technology",
+  "short_name": "NCAT",
+  "slug": "ncat",
+  "type": "monotechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Kaduna",
+  "city": "Zaria",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Zaria"
+   }
+  ]
+ },
+ {
+  "name": "Federal School of Statistics, Ibadan",
+  "short_name": "FSS-IBADAN",
+  "slug": "fss-ibadan",
+  "type": "monotechnic",
+  "ownership": "public",
+  "country": "NG",
+  "region": "Oyo",
+  "city": "Ibadan",
+  "campuses": [
+   {
+    "name": "Main campus",
+    "slug": "main",
+    "is_main": true,
+    "city": "Ibadan"
+   }
+  ]
+ }
+]

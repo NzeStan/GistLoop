@@ -1,14 +1,15 @@
-import { ImagePlus, X } from "lucide-react";
+import { BarChart3, ImagePlus, MapPin, MessageSquareOff, X } from "lucide-react";
 import { type FormEvent, useState } from "react";
 
 import { errorMessage } from "@/api/errors";
+import { useMyMemberships } from "@/api/queries/institutions";
 import { useCreatePost, useDeleteMedia, useUploadMedia } from "@/api/queries/social";
 import type { PostMedia, SocialVisibility } from "@/api/types";
 import { useAuth } from "@/auth/AuthProvider";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { FilePicker } from "@/components/ui/FilePicker";
-import { Alert, Select, Textarea } from "@/components/ui/Form";
+import { Alert, Checkbox, Input, Select, Textarea } from "@/components/ui/Form";
 import { useToast } from "@/components/ui/Toast";
 import { cn } from "@/lib/cn";
 
@@ -18,8 +19,8 @@ const MAX = 2000;
 const MAX_IMAGES = 4;
 
 interface ComposerProps {
-  /** Post into an audience (e.g. a community) instead of choosing a visibility. */
-  audience?: { type: "community"; id: string; name: string };
+  /** Post into an audience (a community, school or campus) instead of choosing a visibility. */
+  audience?: { type: "community" | "institution" | "campus"; id: string; name: string };
   placeholder?: string;
 }
 
@@ -30,11 +31,26 @@ export function Composer({ audience, placeholder = "What's the gist?" }: Compose
   const deleteMedia = useDeleteMedia();
   const toast = useToast();
   const [body, setBody] = useState("");
-  const [visibility, setVisibility] = useState<SocialVisibility>("public");
+  // "public" | "followers" | "private", or "institution:<id>" / "campus:<id>" for your schools.
+  const [visibility, setVisibility] = useState<string>("public");
+  const memberships = useMyMemberships(!audience);
+  const schoolOptions = (memberships.data ?? [])
+    .filter((m) => m.status === "verified")
+    .flatMap((m) => [
+      { value: `institution:${m.institution.id}`, label: `🎓 ${m.institution.short_name || m.institution.name} only` },
+      ...(m.campus
+        ? [{ value: `campus:${m.campus}`, label: `🏫 My campus at ${m.institution.short_name || m.institution.name}` }]
+        : []),
+    ]);
   const [images, setImages] = useState<PostMedia[]>([]);
+  const [place, setPlace] = useState<string | null>(null);
+  const [poll, setPoll] = useState<{ options: string[]; multiple: boolean; days: number } | null>(null);
+  const [noComments, setNoComments] = useState(false);
+  const pollOptions = poll?.options.map((o) => o.trim()).filter(Boolean) ?? [];
   const [uploading, setUploading] = useState(0);
   const remaining = MAX - body.length;
-  const canPost = (body.trim() || images.length > 0) && remaining >= 0 && uploading === 0;
+  const canPost =
+    (body.trim() || images.length > 0) && remaining >= 0 && uploading === 0 && (!poll || pollOptions.length >= 2);
 
   const onPick = async (files: File[]) => {
     const room = MAX_IMAGES - images.length;
@@ -64,12 +80,27 @@ export function Composer({ audience, placeholder = "What's the gist?" }: Compose
     event.preventDefault();
     if (!canPost) return;
     const media = images.map((m) => m.id);
+    const extras = {
+      ...(place?.trim() ? { location: place.trim() } : {}),
+      ...(poll
+        ? { poll: { options: pollOptions, allows_multiple: poll.multiple, duration_hours: poll.days * 24 } }
+        : {}),
+      ...(noComments ? { comments_enabled: false } : {}),
+    };
+    const [scope, scopeId] = visibility.split(":");
     create.mutate(
-      audience ? { body, visibility: audience.type, audience_id: audience.id, media } : { body, visibility, media },
+      audience
+        ? { body, visibility: audience.type, audience_id: audience.id, media, ...extras }
+        : scopeId
+          ? { body, visibility: scope as SocialVisibility, audience_id: scopeId, media, ...extras }
+          : { body, visibility: visibility as SocialVisibility, media, ...extras },
       {
         onSuccess: () => {
           setBody("");
           setImages([]);
+          setPlace(null);
+          setPoll(null);
+          setNoComments(false);
           toast.success("Posted!");
         },
       },
@@ -105,6 +136,66 @@ export function Composer({ audience, placeholder = "What's the gist?" }: Compose
             ))}
           </ul>
         )}
+        {poll && (
+          <fieldset
+            className="stack"
+            style={{ border: 0, padding: 0, "--stack-gap": "var(--space-2)" } as React.CSSProperties}
+          >
+            <legend style={{ fontWeight: 650, fontSize: "var(--text-sm)" }}>Poll</legend>
+            {poll.options.map((option, i) => (
+              <Input
+                key={i}
+                aria-label={`Option ${i + 1}`}
+                placeholder={`Option ${i + 1}`}
+                maxLength={80}
+                value={option}
+                onChange={(e) =>
+                  setPoll((p) => p && { ...p, options: p.options.map((o, j) => (j === i ? e.target.value : o)) })
+                }
+              />
+            ))}
+            <div className="cluster">
+              {poll.options.length < 4 && (
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setPoll((p) => p && { ...p, options: [...p.options, ""] })}
+                >
+                  Add option
+                </Button>
+              )}
+              <Checkbox
+                label="Allow several answers"
+                checked={poll.multiple}
+                onChange={(e) => setPoll((p) => p && { ...p, multiple: e.target.checked })}
+              />
+              <Select
+                aria-label="Poll length"
+                value={poll.days}
+                onChange={(e) => setPoll((p) => p && { ...p, days: Number(e.target.value) })}
+              >
+                {[1, 3, 7, 14].map((d) => (
+                  <option key={d} value={d}>
+                    {d === 1 ? "1 day" : `${d} days`}
+                  </option>
+                ))}
+              </Select>
+              <Button type="button" size="sm" variant="ghost" onClick={() => setPoll(null)}>
+                Remove poll
+              </Button>
+            </div>
+          </fieldset>
+        )}
+        {place !== null && (
+          <Input
+            aria-label="Place"
+            placeholder="Where are you? e.g. UNILAG main library"
+            maxLength={100}
+            value={place}
+            onChange={(e) => setPlace(e.target.value)}
+          />
+        )}
         {create.isError && <Alert tone="error">{errorMessage(create.error)}</Alert>}
         <div className={styles.composerFoot}>
           <FilePicker
@@ -119,6 +210,39 @@ export function Composer({ audience, placeholder = "What's the gist?" }: Compose
           >
             <span className="visually-hidden">Add images</span>
           </FilePicker>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            icon
+            aria-label="Add a poll"
+            aria-pressed={Boolean(poll)}
+            onClick={() => setPoll((p) => (p ? null : { options: ["", ""], multiple: false, days: 1 }))}
+          >
+            <BarChart3 size={18} />
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            icon
+            aria-label="Add a place"
+            aria-pressed={place !== null}
+            onClick={() => setPlace((p) => (p === null ? "" : null))}
+          >
+            <MapPin size={18} />
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            icon
+            aria-label={noComments ? "Allow comments" : "Turn off comments"}
+            aria-pressed={noComments}
+            onClick={() => setNoComments((v) => !v)}
+          >
+            <MessageSquareOff size={18} />
+          </Button>
           {!audience && (
             <>
               <label htmlFor="composer-visibility" className="visually-hidden">
@@ -127,10 +251,15 @@ export function Composer({ audience, placeholder = "What's the gist?" }: Compose
               <Select
                 id="composer-visibility"
                 value={visibility}
-                onChange={(event) => setVisibility(event.target.value as SocialVisibility)}
+                onChange={(event) => setVisibility(event.target.value)}
               >
-                <option value="public">🌍 Everyone</option>
+                <option value="public">🌍 Everyone (all schools)</option>
                 <option value="followers">👥 Followers</option>
+                {schoolOptions.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
                 <option value="private">🔒 Only me</option>
               </Select>
             </>

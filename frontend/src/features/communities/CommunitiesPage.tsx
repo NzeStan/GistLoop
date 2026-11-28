@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router";
 
 import { ApiError, errorMessage } from "@/api/errors";
 import { useCommunities, useCreateCommunity } from "@/api/queries/communities";
+import { useMyMemberships } from "@/api/queries/institutions";
 import type { Community } from "@/api/types";
 import { useAuth } from "@/auth/AuthProvider";
 import { PageHeader, PageHero } from "@/components/PageHeader";
@@ -61,10 +62,21 @@ function CreateCommunityDialog({ open, onClose }: { open: boolean; onClose: () =
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [privacy, setPrivacy] = useState<"public" | "restricted" | "private">("public");
+  const [school, setSchool] = useState("");
+  const memberships = useMyMemberships(open);
+  const schools = (memberships.data ?? []).filter((m) => m.status === "verified");
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
-    create.mutate({ name, description, privacy }, { onSuccess: (community) => navigate(`/c/${community.id}`) });
+    create.mutate(
+      {
+        name,
+        description,
+        privacy,
+        ...(school ? { parent_type: "institution", parent_id: school, requires_scope_membership: true } : {}),
+      },
+      { onSuccess: (community) => navigate(`/c/${community.id}`) },
+    );
   };
 
   return (
@@ -93,6 +105,18 @@ function CreateCommunityDialog({ open, onClose }: { open: boolean; onClose: () =
             <option value="private">Invite only</option>
           </Select>
         </Field>
+        {schools.length > 0 && (
+          <Field label="Part of a school?" hint="School communities are only open to its verified members.">
+            <Select value={school} onChange={(e) => setSchool(e.target.value)}>
+              <option value="">No, anyone can join</option>
+              {schools.map((m) => (
+                <option key={m.id} value={m.institution.id}>
+                  {m.institution.short_name || m.institution.name} members only
+                </option>
+              ))}
+            </Select>
+          </Field>
+        )}
         <div className="cluster" style={{ justifyContent: "flex-end" }}>
           <Button variant="ghost" onClick={onClose}>
             Cancel
@@ -118,9 +142,14 @@ export default function CommunitiesPage() {
       title="Communities"
       description="Find your people: courses, clubs, faiths, fandoms and everything in between."
       actions={
-        <Button leading={<Plus size={16} />} onClick={() => setCreating(true)}>
-          New community
-        </Button>
+        <div className="cluster">
+          <ButtonLink to="/communities/invitations" variant="secondary">
+            Invitations
+          </ButtonLink>
+          <Button leading={<Plus size={16} />} onClick={() => setCreating(true)}>
+            New community
+          </Button>
+        </div>
       }
     />
   ) : (

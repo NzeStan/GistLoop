@@ -212,6 +212,82 @@ export async function completeMfa(challengeId: string, code: string) {
   return completeSignIn(await postBff("login/mfa/", { challenge_id: challengeId, code, device_name: deviceName() }));
 }
 
+/** "Email me a code": no password. Always answers the same, whether or not the account exists. */
+export async function requestSignInCode(identifier: string): Promise<{ challenge_id: string; channel: string }> {
+  const response = await postBff("passwordless/", { identifier });
+  if (!response.ok) throw await authError(response);
+  return (await response.json()) as { challenge_id: string; channel: string };
+}
+
+export async function signInWithCode(challengeId: string, code: string) {
+  return completeSignIn(
+    await postBff("passwordless/verify/", { challenge_id: challengeId, code, device_name: deviceName() }),
+  );
+}
+
+export interface OAuthProvider {
+  key: string;
+  name: string;
+}
+
+/** Google, Yahoo, GitHub… whichever this deployment has keys for. */
+export async function oauthProviders(): Promise<OAuthProvider[]> {
+  try {
+    const response = await fetch("/bff/auth/oauth/providers/", { credentials: "same-origin" });
+    if (!response.ok) return [];
+    return ((await response.json()) as { providers: OAuthProvider[] }).providers;
+  } catch {
+    return [];
+  }
+}
+
+const OAUTH_NEXT = "gistloop:oauth-next";
+
+/**
+ * Go to the provider's sign-in page. ``mode: "link"`` adds it to the signed-in account instead.
+ * ``next`` is where to land afterwards (a path on this site).
+ */
+export async function startOAuth(provider: string, mode: "login" | "link" = "login", next = "/feed"): Promise<void> {
+  const token = current?.access;
+  const response = await postBff(
+    `oauth/${provider}/start/`,
+    { mode },
+    token ? { Authorization: `Bearer ${token}` } : {},
+  );
+  if (!response.ok) throw await authError(response);
+  const { authorize_url } = (await response.json()) as { authorize_url: string };
+  try {
+    sessionStorage.setItem(OAUTH_NEXT, next.startsWith("/") && !next.startsWith("//") ? next : "/feed");
+  } catch {
+    /* Private mode: we'll land on the feed. */
+  }
+  window.location.assign(authorize_url);
+}
+
+/** Back from the provider: finish signing in (or linking). Returns where to go next. */
+export async function completeOAuth(
+  provider: string,
+  code: string,
+  state: string,
+): Promise<{ linked: boolean; next: string; mfa: MfaChallenge | null }> {
+  const token = current?.access;
+  const response = await postBff(
+    `oauth/${provider}/complete/`,
+    { code, state },
+    token ? { Authorization: `Bearer ${token}` } : {},
+  );
+  let next = "/feed";
+  try {
+    next = sessionStorage.getItem(OAUTH_NEXT) || next;
+    sessionStorage.removeItem(OAUTH_NEXT);
+  } catch {
+    /* ignore */
+  }
+  if (response.status === 201) return { linked: true, next, mfa: null };
+  const { mfa } = await completeSignIn(response);
+  return { linked: false, next, mfa };
+}
+
 /** Sign out everywhere this browser is signed in (all tabs). Never throws. */
 export async function signOut(): Promise<void> {
   const token = current?.access;

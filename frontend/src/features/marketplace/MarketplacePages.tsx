@@ -1,4 +1,9 @@
-import { BadgeCheck, MapPin, Package, ShieldCheck, ShoppingBag, Truck } from "lucide-react";
+import { useRecordView } from "@/api/queries/analytics";
+import { useToast } from "@/components/ui/Toast";
+import { errorMessage } from "@/api/errors";
+import { useDeleteListingImage } from "@/api/queries/wallet";
+import { ShareMenu } from "@/components/ShareMenu";
+import { BadgeCheck, MapPin, Package, ShieldCheck, ShoppingBag, Trash2, Truck } from "lucide-react";
 import { useState } from "react";
 import { Link, useParams } from "react-router";
 
@@ -8,9 +13,9 @@ import { useAuth } from "@/auth/AuthProvider";
 import { Seo } from "@/components/Seo";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
-import { ButtonLink } from "@/components/ui/Button";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Input, Select } from "@/components/ui/Form";
+import { Checkbox, Input, Select } from "@/components/ui/Form";
 import { Img } from "@/components/ui/Img";
 import { PageLoader, Skeleton } from "@/components/ui/Spinner";
 import { EmptyState, ErrorState } from "@/components/ui/States";
@@ -59,9 +64,22 @@ export default function MarketplacePage() {
   const [category, setCategory] = useState("");
   const [condition, setCondition] = useState<ListingFilters["condition"] | "">("");
   const [sort, setSort] = useState("");
+  const [city, setCity] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [inStock, setInStock] = useState(false);
   const { status } = useAuth();
   const categories = useMarketCategories();
-  const listings = useListings({ q: useDebounced(q), category, condition: condition || undefined, sort });
+  const debouncedCity = useDebounced(city);
+  const debouncedMax = useDebounced(maxPrice);
+  const listings = useListings({
+    q: useDebounced(q),
+    category,
+    condition: condition || undefined,
+    sort,
+    city: debouncedCity.trim() || undefined,
+    max_price: debouncedMax ? Math.round(Number(debouncedMax) * 100) : undefined,
+    in_stock: inStock || undefined,
+  });
 
   return (
     <BrowseShell
@@ -126,6 +144,27 @@ export default function MarketplacePage() {
           <option value="price">Price: low to high</option>
           <option value="-price">Price: high to low</option>
         </Select>
+        <label htmlFor="market-city" className="visually-hidden">
+          City
+        </label>
+        <Input
+          id="market-city"
+          placeholder="City (e.g. Nsukka)"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
+        <label htmlFor="market-max" className="visually-hidden">
+          Maximum price (₦)
+        </label>
+        <Input
+          id="market-max"
+          type="number"
+          min={0}
+          placeholder="Max ₦"
+          value={maxPrice}
+          onChange={(e) => setMaxPrice(e.target.value)}
+        />
+        <Checkbox label="In stock" checked={inStock} onChange={(e) => setInStock(e.target.checked)} />
       </div>
       <Sponsored placement="marketplace" />
       {listings.isPending ? (
@@ -151,10 +190,46 @@ export default function MarketplacePage() {
   );
 }
 
+/** The seller removing photos from their own listing. */
+function ManagePhotos({ listingId, images }: { listingId: string; images: { id: string; url: string }[] }) {
+  const remove = useDeleteListingImage();
+  const toast = useToast();
+  if (images.length === 0) return null;
+  return (
+    <Card>
+      <h2 style={{ fontSize: "var(--text-base)", marginBottom: "var(--space-2)" }}>Your photos</h2>
+      <div className={styles.gallery}>
+        {images.map((image, index) => (
+          <span key={image.id} style={{ position: "relative" }}>
+            <img src={image.url} alt={`${index + 1} of ${images.length}`} />
+            <Button
+              size="sm"
+              variant="danger"
+              icon
+              aria-label={`Remove photo ${index + 1}`}
+              loading={remove.isPending && remove.variables?.imageId === image.id}
+              style={{ position: "absolute", top: 4, right: 4 }}
+              onClick={() =>
+                remove.mutate(
+                  { listingId, imageId: image.id },
+                  { onSuccess: () => toast.success("Photo removed"), onError: (e) => toast.error(errorMessage(e)) },
+                )
+              }
+            >
+              <Trash2 size={14} />
+            </Button>
+          </span>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
 export function ListingPage() {
   const { listingId } = useParams();
-  const { status } = useAuth();
+  const { status, me } = useAuth();
   const listing = useListing(listingId);
+  useRecordView("marketplace.listing", listing.data?.id);
   const [active, setActive] = useState(0);
 
   if (listing.isPending) return <PageLoader />;
@@ -189,6 +264,7 @@ export function ListingPage() {
               ))}
             </div>
           )}
+          {me?.id === l.seller?.id && <ManagePhotos listingId={l.id} images={images} />}
           <Card>
             <h2 style={{ fontSize: "var(--text-lg)", marginBottom: "var(--space-2)" }}>Description</h2>
             <p className="pre-wrap">{l.description || "No description provided."}</p>
@@ -197,7 +273,10 @@ export function ListingPage() {
         <div className="stack">
           <Card>
             <div className="stack" style={{ "--stack-gap": "var(--space-3)" } as React.CSSProperties}>
-              <h1 style={{ fontSize: "var(--text-2xl)" }}>{l.title}</h1>
+              <div className="cluster" style={{ justifyContent: "space-between" }}>
+                <h1 style={{ fontSize: "var(--text-2xl)" }}>{l.title}</h1>
+                <ShareMenu compact variant="ghost" title={l.title} path={`/marketplace/${l.id}`} />
+              </div>
               <span className={styles.price} style={{ fontSize: "var(--text-3xl)" }}>
                 {formatMoney(l.price_minor, l.currency)}
               </span>
@@ -243,7 +322,7 @@ export function ListingPage() {
             <Card>
               <h2 style={{ fontSize: "var(--text-base)", marginBottom: "var(--space-3)" }}>Seller</h2>
               <Link
-                to={l.seller.handle ? `/u/${l.seller.handle}` : "#"}
+                to={`/sellers/${l.seller.id}`}
                 className="cluster"
                 style={{ textDecoration: "none", color: "inherit" }}
               >

@@ -1,3 +1,7 @@
+import { ShareMenu } from "@/components/ShareMenu";
+import { useRecordView } from "@/api/queries/analytics";
+import { can, usePermissions } from "@/api/queries/institutions";
+import { useVerifyOpportunity } from "@/api/queries/staff";
 import {
   BadgeCheck,
   Bookmark,
@@ -217,6 +221,9 @@ export function OpportunityPage() {
   const { opportunityId } = useParams();
   const { status } = useAuth();
   const opportunity = useOpportunity(opportunityId);
+  useRecordView("opportunities.opportunity", opportunity.data?.id);
+  const platform = usePermissions("platform", "", status === "signed-in");
+  const verify = useVerifyOpportunity();
   const save = useToggleSaveOpportunity();
   const setStatus = useOpportunityStatus();
   const toast = useToast();
@@ -254,6 +261,31 @@ export function OpportunityPage() {
               </Badge>
             )}
             {o.status !== "open" && <Badge tone="warning">{humanize(o.status)}</Badge>}
+            {can(platform.data, "opportunities.verify") && (
+              <Button
+                size="sm"
+                variant="secondary"
+                loading={verify.isPending}
+                onClick={() =>
+                  verify.mutate(
+                    { id: o.id, verified: !o.verified },
+                    {
+                      onSuccess: () =>
+                        toast.success(o.verified ? "Verification removed" : "Marked as a verified organisation"),
+                      onError: (e) => toast.error(errorMessage(e)),
+                    },
+                  )
+                }
+              >
+                {o.verified ? "Remove verification (staff)" : "Verify organisation (staff)"}
+              </Button>
+            )}
+            <ShareMenu
+              compact
+              variant="ghost"
+              title={`${o.title} at ${o.organization_name}`}
+              path={`/opportunities/${o.id}`}
+            />
           </div>
           <h1 style={{ margin: 0, fontSize: "var(--text-2xl)" }}>{o.title}</h1>
           <p className="muted" style={{ margin: 0 }}>

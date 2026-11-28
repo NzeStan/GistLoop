@@ -40,6 +40,15 @@ import { useToast } from "@/components/ui/Toast";
 import { formatDateTime, timeAgo } from "@/lib/format";
 
 import styles from "./Settings.module.css";
+import {
+  ActivityLog,
+  ApiKeys,
+  ConsentSettings,
+  LinkedAccounts,
+  PhoneSettings,
+  PushSettings,
+  TwoStepSettings,
+} from "./SecurityExtras";
 import { passwordSchema } from "../auth/schemas";
 
 function Section({
@@ -448,6 +457,22 @@ export function NotificationSettings() {
             ))}
         </Section>
       )}
+      <PushSettings />
+      {categories.data && categories.data.length > 0 && (
+        <Section
+          title="What to send to my phone or browser"
+          description="Push notifications, for devices you've turned them on for."
+        >
+          {categories.data.map((c) => (
+            <Toggle
+              key={c.key}
+              label={c.label}
+              checked={prefs[c.key]?.push ?? true}
+              onChange={(v) => save({ categories: { ...prefs, [c.key]: { ...(prefs[c.key] ?? {}), push: v } } })}
+            />
+          ))}
+        </Section>
+      )}
     </>
   );
 }
@@ -460,68 +485,75 @@ export function SecuritySettings() {
   const toast = useToast();
   const active = sessions.data?.filter((s) => !s.revoked_at) ?? [];
   return (
-    <Section
-      title="Where you're signed in"
-      description="Sign out of any device you don't recognise, then change your password."
-    >
-      {sessions.isPending ? (
-        <Spinner />
-      ) : sessions.isError ? (
-        <ErrorState error={sessions.error} />
-      ) : (
-        <>
-          <ul className={styles.sessions}>
-            {active.map((s) => (
-              <li key={s.id} className={styles.session}>
-                {/mobile|android|iphone/i.test(s.user_agent) ? (
-                  <Smartphone size={22} aria-hidden />
-                ) : (
-                  <Monitor size={22} aria-hidden />
-                )}
-                <div>
-                  <strong>{s.device_name || "Unknown device"}</strong>{" "}
-                  {s.current && <Badge tone="success">This device</Badge>}
-                  <p className="muted" style={{ fontSize: "var(--text-sm)" }} title={formatDateTime(s.last_seen_at)}>
-                    Active {timeAgo(s.last_seen_at)}
-                    {s.ip_address ? ` · ${s.ip_address}` : ""}
-                  </p>
-                </div>
-                {!s.current && (
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() =>
-                      revoke.mutate(s.id, {
-                        onSuccess: () => toast.success("Signed out of that device"),
-                        onError: (e) => toast.error(errorMessage(e)),
-                      })
-                    }
-                  >
-                    Sign out
-                  </Button>
-                )}
-              </li>
-            ))}
-          </ul>
-          {active.length > 1 && (
-            <Button
-              variant="secondary"
-              leading={<LogOut size={16} />}
-              loading={revokeOthers.isPending}
-              onClick={() =>
-                revokeOthers.mutate(undefined, {
-                  onSuccess: (r) =>
-                    toast.success(`Signed out of ${r.revoked} other device${r.revoked === 1 ? "" : "s"}`),
-                  onError: (e) => toast.error(errorMessage(e)),
-                })
-              }
-            >
-              Sign out everywhere else
-            </Button>
-          )}
-        </>
-      )}
-    </Section>
+    <>
+      <TwoStepSettings />
+      <PhoneSettings />
+      <LinkedAccounts />
+      <Section
+        title="Where you're signed in"
+        description="Sign out of any device you don't recognise, then change your password."
+      >
+        {sessions.isPending ? (
+          <Spinner />
+        ) : sessions.isError ? (
+          <ErrorState error={sessions.error} />
+        ) : (
+          <>
+            <ul className={styles.sessions}>
+              {active.map((s) => (
+                <li key={s.id} className={styles.session}>
+                  {/mobile|android|iphone/i.test(s.user_agent) ? (
+                    <Smartphone size={22} aria-hidden />
+                  ) : (
+                    <Monitor size={22} aria-hidden />
+                  )}
+                  <div>
+                    <strong>{s.device_name || "Unknown device"}</strong>{" "}
+                    {s.current && <Badge tone="success">This device</Badge>}
+                    <p className="muted" style={{ fontSize: "var(--text-sm)" }} title={formatDateTime(s.last_seen_at)}>
+                      Active {timeAgo(s.last_seen_at)}
+                      {s.ip_address ? ` · ${s.ip_address}` : ""}
+                    </p>
+                  </div>
+                  {!s.current && (
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() =>
+                        revoke.mutate(s.id, {
+                          onSuccess: () => toast.success("Signed out of that device"),
+                          onError: (e) => toast.error(errorMessage(e)),
+                        })
+                      }
+                    >
+                      Sign out
+                    </Button>
+                  )}
+                </li>
+              ))}
+            </ul>
+            {active.length > 1 && (
+              <Button
+                variant="secondary"
+                leading={<LogOut size={16} />}
+                loading={revokeOthers.isPending}
+                onClick={() =>
+                  revokeOthers.mutate(undefined, {
+                    onSuccess: (r) =>
+                      toast.success(`Signed out of ${r.revoked} other device${r.revoked === 1 ? "" : "s"}`),
+                    onError: (e) => toast.error(errorMessage(e)),
+                  })
+                }
+              >
+                Sign out everywhere else
+              </Button>
+            )}
+          </>
+        )}
+      </Section>
+      <ActivityLog />
+      <ApiKeys />
+    </>
   );
 }
 
@@ -549,6 +581,7 @@ export function DataSettings() {
 
   return (
     <>
+      <ConsentSettings />
       <Section
         title="Download your data"
         description="Get a copy of your profile, posts, communities and settings as a JSON file."

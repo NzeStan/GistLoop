@@ -24,6 +24,7 @@ import { Spinner } from "@/components/ui/Spinner";
 import { brand } from "@/config/brand";
 
 import styles from "./Auth.module.css";
+import { CodeSignIn, SocialButtons } from "./SocialSignIn";
 import { emailSchema, loginSchema, registerSchema, resetSchema } from "./schemas";
 
 function AuthHeader({ title, children }: { title: string; children?: ReactNode }) {
@@ -45,6 +46,7 @@ export function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
+  const [withCode, setWithCode] = useState(false);
   const form = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
 
   const onSubmit = form.handleSubmit(async ({ identifier, password }) => {
@@ -116,21 +118,29 @@ export function LoginPage() {
     <div className={styles.card}>
       <Seo title="Sign in" />
       <AuthHeader title="Welcome back">Sign in to catch up on the conversation.</AuthHeader>
-      <form className="stack" onSubmit={onSubmit} noValidate>
-        {error && <Alert tone="error">{error}</Alert>}
-        <Field label="Email or username" error={errors.identifier?.message}>
-          <Input autoComplete="username" {...form.register("identifier")} />
-        </Field>
-        <Field label="Password" error={errors.password?.message}>
-          <Input type="password" autoComplete="current-password" {...form.register("password")} />
-        </Field>
-        <div className={styles.row}>
-          <Link to="/forgot-password">Forgot your password?</Link>
-        </div>
-        <Button type="submit" size="lg" block loading={isSubmitting}>
-          Sign in
-        </Button>
-      </form>
+      <SocialButtons next={next} />
+      {withCode ? (
+        <CodeSignIn next={next} onCancel={() => setWithCode(false)} />
+      ) : (
+        <form className="stack" onSubmit={onSubmit} noValidate>
+          {error && <Alert tone="error">{error}</Alert>}
+          <Field label="Email or username" error={errors.identifier?.message}>
+            <Input autoComplete="username" {...form.register("identifier")} />
+          </Field>
+          <Field label="Password" error={errors.password?.message}>
+            <Input type="password" autoComplete="current-password" {...form.register("password")} />
+          </Field>
+          <div className={styles.row}>
+            <Link to="/forgot-password">Forgot your password?</Link>
+          </div>
+          <Button type="submit" size="lg" block loading={isSubmitting}>
+            Sign in
+          </Button>
+          <Button type="button" variant="ghost" onClick={() => setWithCode(true)}>
+            Email me a sign-in code instead
+          </Button>
+        </form>
+      )}
       <p className={styles.switch}>
         New to {brand.name}?{" "}
         <Link to={`/register${params.get("next") ? `?next=${encodeURIComponent(next)}` : ""}`}>Create an account</Link>
@@ -177,6 +187,7 @@ export function RegisterPage() {
     <div className={styles.card}>
       <Seo title="Create your account" description={`Join ${brand.name}: ${brand.tagline}`} />
       <AuthHeader title={`Join ${brand.name}`}>It's free and takes less than a minute.</AuthHeader>
+      <SocialButtons next="/settings/schools" />
       <form className="stack" onSubmit={onSubmit} noValidate>
         {generalError && <Alert tone="error">{errorMessage(generalError)}</Alert>}
         <Field label="Your name" error={errors.display_name?.message}>

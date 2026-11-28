@@ -1,5 +1,6 @@
+import { useRecordView } from "@/api/queries/analytics";
 import { useQuery } from "@tanstack/react-query";
-import { CalendarPlus, CalendarDays, Clock, MapPin, Share2, Ticket, Users, Video } from "lucide-react";
+import { CalendarPlus, CalendarDays, Clock, MapPin, Ticket, Users, Video } from "lucide-react";
 import { useState } from "react";
 import { Navigate, useParams } from "react-router";
 
@@ -10,6 +11,7 @@ import { startCheckout } from "@/api/queries/payments";
 import type { EventDetail } from "@/api/types";
 import { useAuth } from "@/auth/AuthProvider";
 import { Seo } from "@/components/Seo";
+import { ShareMenu } from "@/components/ShareMenu";
 import { Badge } from "@/components/ui/Badge";
 import { AnchorButton, Button, ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -165,19 +167,7 @@ function RegistrationPanel({ event }: { event: EventDetail }) {
 }
 
 function EventView({ event }: { event: EventDetail }) {
-  const toast = useToast();
-  const share = async () => {
-    const url = window.location.href;
-    try {
-      if (navigator.share) await navigator.share({ title: event.title, url });
-      else {
-        await navigator.clipboard.writeText(url);
-        toast.success("Link copied");
-      }
-    } catch {
-      /* dismissed */
-    }
-  };
+  useRecordView("events.event", event.id);
   const where = event.venue
     ? [event.venue.name, event.venue.address, event.venue.city].filter(Boolean).join(", ")
     : event.location_details || humanize(event.format);
@@ -212,9 +202,12 @@ function EventView({ event }: { event: EventDetail }) {
             >
               Add to calendar
             </AnchorButton>
-            <Button variant="ghost" icon aria-label="Share event" onClick={share}>
-              <Share2 size={18} />
-            </Button>
+            <ShareMenu title={event.title} text={event.summary || event.title} path={`/events/${event.slug}`} />
+            {["owner", "organizer", "checkin"].includes(event.viewer?.role ?? "") && (
+              <ButtonLink to={`/events/manage/${event.id}`} variant="secondary">
+                Manage
+              </ButtonLink>
+            )}
           </div>
         </div>
       </Card>

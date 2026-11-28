@@ -12,6 +12,13 @@ export interface ListingFilters {
   category?: string;
   condition?: "new" | "like_new" | "used" | "for_parts" | "not_applicable";
   sort?: string;
+  /** Seller's user id. */
+  seller?: string;
+  city?: string;
+  /** Price bounds in kobo. */
+  min_price?: number;
+  max_price?: number;
+  in_stock?: boolean;
 }
 
 export const marketKeys = {
@@ -20,9 +27,10 @@ export const marketKeys = {
   categories: ["marketCategories"] as const,
 };
 
-export function useListings(filters: ListingFilters = {}) {
+export function useListings(filters: ListingFilters = {}, enabled = true) {
   return useQuery({
     queryKey: marketKeys.list(filters),
+    enabled,
     placeholderData: keepPreviousData,
     queryFn: async () =>
       asPage<Listing>(
@@ -34,6 +42,11 @@ export function useListings(filters: ListingFilters = {}) {
                 category: filters.category || undefined,
                 condition: filters.condition,
                 sort: filters.sort || undefined,
+                seller: filters.seller || undefined,
+                city: filters.city || undefined,
+                min_price: filters.min_price != null ? String(filters.min_price) : undefined,
+                max_price: filters.max_price != null ? String(filters.max_price) : undefined,
+                in_stock: filters.in_stock ? "true" : undefined,
               },
             },
           }),

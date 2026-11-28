@@ -4276,6 +4276,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/platform/restrictions/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * @description People currently stopped from posting or commenting (lift them with
+         *     ``POST /api/v1/moderation/restrictions/{id}/lift/``).
+         */
+        get: operations["platform_restrictions_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/podcasts/": {
         parameters: {
             query?: never;
@@ -5742,6 +5762,137 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/syndication/anonymous/{post_id}/share/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description The author of an anonymous post asks for it to be shared on GistLoop's social media (or withdraws). */
+        post: operations["syndication_anonymous_share_create"];
+        /** @description The author of an anonymous post asks for it to be shared on GistLoop's social media (or withdraws). */
+        delete: operations["syndication_anonymous_share_destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/syndication/anonymous/share-status/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Share status of the viewer's own anonymous posts (other posts are never reported). */
+        get: operations["syndication_anonymous_share_status_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/syndication/channels/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["syndication_channels_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/syndication/items/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["syndication_items_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/syndication/items/{item_id}/approve/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["syndication_items_approve_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/syndication/items/{item_id}/reject/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["syndication_items_reject_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/syndication/items/{item_id}/retry/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["syndication_items_retry_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/syndication/items/{item_id}/take-down/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["syndication_items_take_down_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/trending/": {
         parameters: {
             query?: never;
@@ -5890,6 +6041,89 @@ export interface paths {
         patch: operations["venues_partial_update"];
         trace?: never;
     };
+    "/api/v1/youtube/episodes/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description The YouTube videos of a podcast's episodes that the viewer can see. */
+        get: operations["youtube_episodes_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/youtube/episodes/{episode_id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["youtube_episodes_retrieve"];
+        put: operations["youtube_episodes_update"];
+        post?: never;
+        delete: operations["youtube_episodes_destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/youtube/episodes/{episode_id}/publish/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Publish an episode, including one whose only media is a YouTube video. */
+        post: operations["youtube_episodes_publish_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/youtube/podcasts/{podcast_id}/channel/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["youtube_podcasts_channel_retrieve"];
+        put: operations["youtube_podcasts_channel_update"];
+        post?: never;
+        delete: operations["youtube_podcasts_channel_destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/youtube/podcasts/{podcast_id}/channel/sync/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Import new uploads now instead of waiting for the hourly check. */
+        post: operations["youtube_podcasts_channel_sync_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/bff/auth/login/": {
         parameters: {
             query?: never;
@@ -5935,6 +6169,91 @@ export interface paths {
         put?: never;
         /** @description Reads no ambient credentials except the refresh cookie, which every view checks itself. */
         post: operations["bff_auth_logout_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/bff/auth/oauth/{provider}/complete/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Reads no ambient credentials except the refresh cookie, which every view checks itself. */
+        post: operations["bff_auth_oauth_complete_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/bff/auth/oauth/{provider}/start/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Reads no ambient credentials except the refresh cookie, which every view checks itself. */
+        post: operations["bff_auth_oauth_start_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/bff/auth/oauth/providers/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description The sign-in providers this deployment offers (the website shows a button for each). */
+        get: operations["bff_auth_oauth_providers_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/bff/auth/passwordless/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Email (or text) me a sign-in code instead of using a password. */
+        post: operations["bff_auth_passwordless_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/bff/auth/passwordless/verify/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Reads no ambient credentials except the refresh cookie, which every view checks itself. */
+        post: operations["bff_auth_passwordless_verify_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -6376,6 +6695,11 @@ export interface components {
              * @description JPEG, PNG or WebP, up to 5 MB. Cropped square; metadata removed.
              */
             file: string;
+        };
+        BrowserCodeSent: {
+            /** Format: uuid */
+            challenge_id: string;
+            channel: string;
         };
         BrowserTokens: {
             token_type: string;
@@ -8232,6 +8556,12 @@ export interface components {
          */
         MfaChannelEnum: "email" | "sms";
         /**
+         * @description * `login` - login
+         *     * `link` - link
+         * @enum {string}
+         */
+        ModeEnum: "login" | "link";
+        /**
          * @description * `dismiss` - Dismiss
          *     * `warn` - Warn the author
          *     * `hide` - Hide content
@@ -8357,6 +8687,28 @@ export interface components {
         };
         NotificationUpdated: {
             updated: number;
+        };
+        OAuthCompleteRequest: {
+            code: string;
+            state: string;
+        };
+        OAuthLinked: {
+            linked: boolean;
+        };
+        OAuthProvider: {
+            key: string;
+            name: string;
+        };
+        OAuthProviderList: {
+            providers: components["schemas"]["OAuthProvider"][];
+        };
+        OAuthRedirect: {
+            /** Format: uri */
+            authorize_url: string;
+        };
+        OAuthStartRequest: {
+            /** @default login */
+            mode?: components["schemas"]["ModeEnum"];
         };
         /** @description ModelSerializer with explicit-fields enforcement. */
         Opportunity: {
@@ -8865,6 +9217,21 @@ export interface components {
             previous: string | null;
             results: components["schemas"]["PromotionCampaign"][];
         };
+        PaginatedRestrictionList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Restriction"][];
+        };
         PaginatedRoleList: {
             /** @example 123 */
             count: number;
@@ -8879,6 +9246,21 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Role"][];
+        };
+        PaginatedSocialPostList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["SocialPost"][];
         };
         PaginatedUserSummaryList: {
             count: number;
@@ -10053,6 +10435,19 @@ export interface components {
             /** @default  */
             body?: string;
         };
+        Restriction: {
+            /** Format: uuid */
+            id: string;
+            user: components["schemas"]["RestrictionPerson"];
+            kind: string;
+            reason: string;
+            /** Format: date-time */
+            ends_at: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: uuid */
+            action_id: string | null;
+        };
         /**
          * @description * `posting` - Cannot create posts
          *     * `commenting` - Cannot comment
@@ -10060,6 +10455,12 @@ export interface components {
          * @enum {string}
          */
         RestrictionKindEnum: "posting" | "commenting" | "all";
+        RestrictionPerson: {
+            /** Format: uuid */
+            id: string;
+            handle: string | null;
+            display_name: string;
+        };
         ReviewRequest: {
             /** @default  */
             reason?: string;
@@ -10235,6 +10636,21 @@ export interface components {
             type: string;
             id: string;
         };
+        SocialChannel: {
+            key: string;
+            name: string;
+            enabled: boolean;
+            video_only: boolean;
+        };
+        SocialDelivery: {
+            channel: string;
+            status: string;
+            external_url: string;
+            error: string;
+            attempts: number;
+            /** Format: date-time */
+            sent_at: string | null;
+        };
         /** @description A page of a feed: cursor feeds send ``next``/``previous``; ranked feeds send ``offset``/``limit``. */
         SocialFeedPage: {
             /** Format: uri */
@@ -10249,6 +10665,9 @@ export interface components {
             /** Format: uuid */
             id: string;
             handle: string | null;
+        };
+        SocialNoteRequest: {
+            note?: string;
         };
         SocialPoll: {
             /** Format: uuid */
@@ -10267,11 +10686,44 @@ export interface components {
             vote_count: number;
             voted: boolean;
         };
+        SocialPost: {
+            /** Format: uuid */
+            id: string;
+            kind: components["schemas"]["SocialPostKindEnum"];
+            object_id: string;
+            title: string;
+            text: string;
+            link_url: string;
+            readonly card_url: string;
+            readonly has_video: boolean;
+            status: components["schemas"]["SocialPostStatusEnum"];
+            review_note: string;
+            /** Format: date-time */
+            reviewed_at: string | null;
+            /** Format: date-time */
+            created_at: string;
+            deliveries: components["schemas"]["SocialDelivery"][];
+        };
         SocialPostCounts: {
             reactions: number;
             comments: number;
             reposts: number;
         };
+        /**
+         * @description * `anonymous_post` - anonymous_post
+         *     * `podcast_episode` - podcast_episode
+         * @enum {string}
+         */
+        SocialPostKindEnum: "anonymous_post" | "podcast_episode";
+        /**
+         * @description * `pending_review` - Waiting for review
+         *     * `approved` - Approved (sending)
+         *     * `sent` - Sent
+         *     * `rejected` - Rejected
+         *     * `taken_down` - Taken down
+         * @enum {string}
+         */
+        SocialPostStatusEnum: "pending_review" | "approved" | "sent" | "rejected" | "taken_down";
         SocialPostViewer: {
             reaction: string | null;
             bookmarked: boolean;
@@ -10298,6 +10750,11 @@ export interface components {
             body?: string;
             /** Format: date-time */
             created_at?: string;
+        };
+        SocialShareStatus: {
+            statuses: {
+                [key: string]: string;
+            };
         };
         /**
          * @description * `public` - Everyone
@@ -10486,6 +10943,37 @@ export interface components {
          * @enum {string}
          */
         WorkModeEnum: "on_site" | "remote" | "hybrid";
+        YouTubeChannel: {
+            readonly channel_id: string;
+            readonly channel_url: string;
+            readonly auto_import: boolean;
+            /** Format: date-time */
+            readonly import_since: string;
+            /** Format: date-time */
+            readonly last_synced_at: string | null;
+            readonly last_error: string;
+        };
+        YouTubeChannelWriteRequest: {
+            /** @description The channel ID (UC...) or a /channel/UC... link. */
+            channel: string;
+            /** @default true */
+            auto_import?: boolean;
+        };
+        YouTubeEpisodeVideo: {
+            /** Format: uuid */
+            readonly episode_id: string;
+            readonly video_id: string;
+            /** Format: uri */
+            readonly watch_url: string;
+            readonly imported: boolean;
+        };
+        YouTubeEpisodeVideoWriteRequest: {
+            /** @description A YouTube link (watch, youtu.be, shorts or live) or ID. */
+            url: string;
+        };
+        YouTubeSyncResult: {
+            imported: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -18466,6 +18954,32 @@ export interface operations {
             };
         };
     };
+    platform_restrictions_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description Only this user (id). */
+                user?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRestrictionList"];
+                };
+            };
+        };
+    };
     podcasts_list: {
         parameters: {
             query?: {
@@ -21144,6 +21658,217 @@ export interface operations {
             };
         };
     };
+    syndication_anonymous_share_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                post_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SocialShareStatus"];
+                };
+            };
+        };
+    };
+    syndication_anonymous_share_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                post_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    syndication_anonymous_share_status_retrieve: {
+        parameters: {
+            query: {
+                /** @description Comma-separated post IDs (up to 100). */
+                ids: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SocialShareStatus"];
+                };
+            };
+        };
+    };
+    syndication_channels_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SocialChannel"][];
+                };
+            };
+        };
+    };
+    syndication_items_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                status?: "approved" | "pending_review" | "rejected" | "sent" | "taken_down";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedSocialPostList"];
+                };
+            };
+        };
+    };
+    syndication_items_approve_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SocialNoteRequest"];
+                "multipart/form-data": components["schemas"]["SocialNoteRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SocialPost"];
+                };
+            };
+        };
+    };
+    syndication_items_reject_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SocialNoteRequest"];
+                "multipart/form-data": components["schemas"]["SocialNoteRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SocialPost"];
+                };
+            };
+        };
+    };
+    syndication_items_retry_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SocialNoteRequest"];
+                "multipart/form-data": components["schemas"]["SocialNoteRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SocialPost"];
+                };
+            };
+        };
+    };
+    syndication_items_take_down_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SocialNoteRequest"];
+                "multipart/form-data": components["schemas"]["SocialNoteRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SocialPost"];
+                };
+            };
+        };
+    };
     trending_list: {
         parameters: {
             query?: {
@@ -21395,6 +22120,209 @@ export interface operations {
             };
         };
     };
+    youtube_episodes_list: {
+        parameters: {
+            query: {
+                /** @description Podcast ID. */
+                podcast: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YouTubeEpisodeVideo"][];
+                };
+            };
+        };
+    };
+    youtube_episodes_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                episode_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YouTubeEpisodeVideo"];
+                };
+            };
+        };
+    };
+    youtube_episodes_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                episode_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["YouTubeEpisodeVideoWriteRequest"];
+                "multipart/form-data": components["schemas"]["YouTubeEpisodeVideoWriteRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YouTubeEpisodeVideo"];
+                };
+            };
+        };
+    };
+    youtube_episodes_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                episode_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    youtube_episodes_publish_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                episode_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PodcastPublishRequest"];
+                "multipart/form-data": components["schemas"]["PodcastPublishRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PodcastEpisode"];
+                };
+            };
+        };
+    };
+    youtube_podcasts_channel_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                podcast_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YouTubeChannel"];
+                };
+            };
+        };
+    };
+    youtube_podcasts_channel_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                podcast_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["YouTubeChannelWriteRequest"];
+                "multipart/form-data": components["schemas"]["YouTubeChannelWriteRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YouTubeChannel"];
+                };
+            };
+        };
+    };
+    youtube_podcasts_channel_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                podcast_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    youtube_podcasts_channel_sync_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                podcast_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YouTubeSyncResult"];
+                };
+            };
+        };
+    };
     bff_auth_login_create: {
         parameters: {
             query?: never;
@@ -21466,6 +22394,133 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    bff_auth_oauth_complete_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OAuthCompleteRequest"];
+                "multipart/form-data": components["schemas"]["OAuthCompleteRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BrowserTokens"];
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OAuthLinked"];
+                };
+            };
+        };
+    };
+    bff_auth_oauth_start_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["OAuthStartRequest"];
+                "multipart/form-data": components["schemas"]["OAuthStartRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OAuthRedirect"];
+                };
+            };
+        };
+    };
+    bff_auth_oauth_providers_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OAuthProviderList"];
+                };
+            };
+        };
+    };
+    bff_auth_passwordless_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PasswordlessRequestRequest"];
+                "multipart/form-data": components["schemas"]["PasswordlessRequestRequest"];
+            };
+        };
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BrowserCodeSent"];
+                };
+            };
+        };
+    };
+    bff_auth_passwordless_verify_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChallengeCompleteRequest"];
+                "multipart/form-data": components["schemas"]["ChallengeCompleteRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BrowserTokens"];
+                };
             };
         };
     };
